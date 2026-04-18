@@ -934,9 +934,15 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 const SUPABASE_URL = 'https://qvvxjuapunkxrjrzgoak.supabase.co'; 
 const SUPABASE_KEY = 'sb_publishable_vjIssqyg-pf4oaEWHTT17w_QN2rFpah';                 
 
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-console.log('✅ Supabase conectado!');
+// Carregar Supabase de forma tradicional (sem import)
+const script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+script.onload = function() {
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  window.supabaseClient = supabase;
+  console.log('✅ Supabase conectado!');
+};
+document.head.appendChild(script);
 // =====================================
 
 
