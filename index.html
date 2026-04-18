@@ -930,6 +930,16 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 </div>
 
 <script>
+// ========== SUPABASE CONFIG ==========
+const SUPABASE_URL = 'https://qvvxjuapunkxrjrzgoak.supabase.co'; 
+const SUPABASE_KEY = 'sb_publishable_vjIssqyg-pf4oaEWHTT17w_QN2rFpah';                 
+
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+console.log('✅ Supabase conectado!');
+// =====================================
+
+
 const frentesMap = {
   bio:['Frente 1 — Citologia e Genética','Frente 2 — Ecologia','Frente 3 — Evolução e Zoologia'],
   mat:['Frente 1 — Álgebra','Frente 2 — Geometria','Frente 3 — Estatística e Probabilidade'],
