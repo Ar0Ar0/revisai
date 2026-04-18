@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f0f0f">
+<title>RevisAí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0e10;
+  --bg2: #161618;
+  --bg3: #1e1e21;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #f0f0f0;
+  --text2: #888;
+  --text3: #555;
+  --accent: #c8f135;
+  --accent2: #a8d420;
+  --red: #ff5c5c;
+  --orange: #ff9a3c;
+  --blue: #5ca8ff;
+  --purple: #a78bfa;
+  --green: #4ade80;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.mono { font-family: 'DM Mono', monospace; }
+
+/* LAYOUT */
+.app { display: flex; min-height: 100vh; }
+.sidebar { width: 220px; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1.5rem 0; position: fixed; height: 100vh; z-index: 100; }
+.main { margin-left: 220px; flex: 1; padding: 2rem; max-width: 1100px; }
+.logo { font-size: 20px; font-weight: 700; color: var(--accent); padding: 0 1.5rem 1.5rem; letter-spacing: -0.5px; }
+.logo span { color: var(--text2); font-weight: 400; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 1.5rem; font-size: 13px; color: var(--text2); cursor: pointer; transition: all 0.15s; border-left: 2px solid transparent; }
+.nav-item:hover { color: var(--text); background: var(--bg3); }
+.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(200,241,53,0.05); }
+.nav-icon { width: 16px; height: 16px; opacity: 0.7; flex-shrink: 0; }
+.nav-item.active .nav-icon { opacity: 1; }
+.nav-section { font-size: 10px; color: var(--text3); padding: 1rem 1.5rem 0.4rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.sidebar-footer { margin-top: auto; padding: 1rem 1.5rem; border-top: 1px solid var(--border); }
+.sidebar-footer .btn-upload { width: 100%; background: var(--accent); color: #0e0e10; border: none; border-radius: var(--radius-sm); padding: 9px; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+.sidebar-footer .btn-upload:hover { background: var(--accent2); }
+
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; }
+
+/* CARDS */
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.card-title { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* GRID */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+/* METRIC CARDS */
+.metric { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+.metric-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.metric-value { font-size: 28px; font-weight: 700; color: var(--text); }
+.metric-value.danger { color: var(--red); }
+.metric-value.warn { color: var(--orange); }
+.metric-value.good { color: var(--accent); }
+
+/* BADGES */
+.badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; letter-spacing: 0.04em; font-family: 'DM Mono', monospace; }
+.badge-bio { background: rgba(74,222,128,0.12); color: #4ade80; }
+.badge-mat { background: rgba(92,168,255,0.12); color: #5ca8ff; }
+.badge-port { background: rgba(255,154,60,0.12); color: #ff9a3c; }
+.badge-fis { background: rgba(167,139,250,0.12); color: #a78bfa; }
+.badge-hist { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.badge-quim { background: rgba(255,92,92,0.12); color: #ff5c5c; }
+.badge-geo { background: rgba(45,212,191,0.12); color: #2dd4bf; }
+.badge-red { background: rgba(244,114,182,0.12); color: #f472b6; }
+
+/* TAGS */
+.tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+.tag-urg { background: rgba(255,92,92,0.1); color: var(--red); }
+.tag-warn { background: rgba(255,154,60,0.1); color: var(--orange); }
+.tag-ok { background: rgba(200,241,53,0.1); color: var(--accent); }
+.tag-info { background: rgba(92,168,255,0.1); color: var(--blue); }
+
+/* IMPORTANCE DOTS */
+.imp { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.imp-alto { background: var(--red); }
+.imp-med { background: var(--orange); }
+.imp-baixo { background: var(--accent); }
+
+/* ROWS */
+.row { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.row:last-child { border-bottom: none; }
+.row-name { font-size: 13px; color: var(--text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-sub { font-size: 11px; color: var(--text3); }
+
+/* PROGRESS BAR */
+.prog-bg { height: 4px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 4px; transition: width 0.4s; }
+
+/* BUTTONS */
+.btn { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: all 0.15s; }
+.btn-primary { background: var(--accent); color: #0e0e10; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border2); }
+.btn-ghost:hover { color: var(--text); border-color: var(--border2); background: var(--bg3); }
+.btn-sm { font-size: 11px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--text3); cursor: pointer; font-family: 'DM Mono', monospace; }
+.btn-sm:hover { color: var(--text); border-color: var(--border2); background: var(--bg3); }
+.actions { display: flex; gap: 8px; margin-top: 1rem; }
+
+/* FORMS */
+.field { margin-bottom: 1rem; }
+.field label { display: block; font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.field input, .field select, .field textarea {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text); font-family: 'Syne', sans-serif; font-size: 13px; padding: 9px 12px;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+.field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+.field select option { background: var(--bg2); }
+
+/* TABS */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.tab { font-size: 13px; font-weight: 500; padding: 8px 16px; cursor: pointer; color: var(--text3); background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; font-family: 'Syne', sans-serif; }
+.tab:hover { color: var(--text2); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* PAGE HEADER */
+.page-header { margin-bottom: 2rem; }
+.page-header h2 { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.page-header p { font-size: 13px; color: var(--text3); }
+.back-btn { font-size: 12px; color: var(--text3); cursor: pointer; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 4px; }
+.back-btn:hover { color: var(--text2); }
+
+/* ALERT */
+.alert { border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; margin-bottom: 1rem; border: 1px solid; }
+.alert-danger { background: rgba(255,92,92,0.08); color: var(--red); border-color: rgba(255,92,92,0.2); }
+.alert-warn { background: rgba(255,154,60,0.08); color: var(--orange); border-color: rgba(255,154,60,0.2); }
+.alert-info { background: rgba(92,168,255,0.08); color: var(--blue); border-color: rgba(92,168,255,0.2); }
+.alert-ok { background: rgba(200,241,53,0.08); color: var(--accent); border-color: rgba(200,241,53,0.2); }
+
+/* STREAK */
+.streak-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+/* BAR */
+.bar-bg { width: 70px; height: 4px; background: var(--bg3); border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+.bar-fill { height: 100%; border-radius: 4px; }
+
+/* TOGGLE */
+.toggle-wrap { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.toggle-wrap:last-child { border-bottom: none; }
+.toggle-info .tl { font-size: 13px; color: var(--text); }
+.toggle-info .ts { font-size: 11px; color: var(--text3); }
+.toggle { width: 36px; height: 20px; border-radius: 20px; border: none; cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0; }
+.toggle.on { background: var(--accent); }
+.toggle.off { background: var(--bg3); border: 1px solid var(--border2); }
+.toggle::after { content:''; position: absolute; width: 14px; height: 14px; border-radius: 50%; background: white; top: 3px; transition: left 0.2s; }
+.toggle.on::after { left: 19px; }
+.toggle.off::after { left: 3px; }
+
+/* IMP SELECT */
+.imp-btns { display: flex; gap: 4px; }
+.imp-opt { font-size: 11px; padding: 3px 8px; border-radius: 20px; border: 1px solid var(--border2); cursor: pointer; background: transparent; color: var(--text3); font-family: 'DM Mono', monospace; }
+.imp-opt.sel-baixo { background: rgba(200,241,53,0.1); color: var(--accent); border-color: rgba(200,241,53,0.3); }
+.imp-opt.sel-medio { background: rgba(255,154,60,0.1); color: var(--orange); border-color: rgba(255,154,60,0.3); }
+.imp-opt.sel-alto { background: rgba(255,92,92,0.1); color: var(--red); border-color: rgba(255,92,92,0.3); }
+
+/* PERF BAR */
+.perf-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.perf-row:last-child { border-bottom: none; }
+
+/* FILE ITEM */
+.file-item { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: .75rem; }
+.file-item.needs-fix { border-color: rgba(255,154,60,0.3); }
+.file-header { display: flex; align-items: center; gap: 8px; margin-bottom: .75rem; }
+.file-fields { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+.file-fields .field { margin: 0; }
+.file-fields .field label { font-size: 10px; }
+.file-fields .field input, .file-fields .field select { font-size: 12px; padding: 6px 8px; }
+
+/* BOOK CARD */
+.book-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: .75rem; }
+.book-card.late { border-color: rgba(255,154,60,0.3); }
+.book-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: .75rem 0; }
+.bstat { background: var(--bg3); border-radius: var(--radius-sm); padding: .5rem .75rem; }
+.bstat .bl { font-size: 10px; color: var(--text3); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+.bstat .bv { font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* SIMULADO CARD */
+.sim-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.sim-row:last-child { border-bottom: none; }
+.sim-row:hover { opacity: 0.8; }
+.banca-pill { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; font-family: 'DM Mono', monospace; min-width: 62px; text-align: center; }
+.banca-fuvest { background: rgba(167,139,250,0.12); color: #a78bfa; }
+.banca-unicamp { background: rgba(45,212,191,0.12); color: #2dd4bf; }
+.banca-unesp { background: rgba(255,154,60,0.12); color: #ff9a3c; }
+.banca-enem { background: rgba(92,168,255,0.12); color: #5ca8ff; }
+
+/* QUESTAO */
+.q-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.q-row:last-child { border-bottom: none; }
+.q-num { font-size: 11px; color: var(--text3); min-width: 18px; padding-top: 2px; font-family: 'DM Mono', monospace; }
+.q-body { flex: 1; }
+.q-text { font-size: 13px; color: var(--text); margin-bottom: 6px; line-height: 1.5; }
+.q-meta { display: flex; gap: 6px; align-items: center; }
+.q-btns { display: flex; gap: 5px; flex-shrink: 0; }
+.qbtn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border2); cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; background: transparent; color: var(--text3); }
+.qbtn.certo { background: rgba(200,241,53,0.1); border-color: rgba(200,241,53,0.3); color: var(--accent); }
+.qbtn.errado { background: rgba(255,92,92,0.1); border-color: rgba(255,92,92,0.3); color: var(--red); }
+
+/* OBRA ROW */
+.obra-row { display: flex; align-items: center; gap: 8px; padding: 7px 0 7px 1rem; border-bottom: 1px solid var(--border); }
+.obra-row:last-child { border-bottom: none; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .sidebar { width: 100%; height: auto; position: relative; flex-direction: row; flex-wrap: wrap; padding: .5rem; }
+  .main { margin-left: 0; padding: 1rem; }
+  .grid4, .grid3 { grid-template-columns: 1fr 1fr; }
+  .grid2 { grid-template-columns: 1fr; }
+  .file-fields { grid-template-columns: 1fr 1fr; }
+  .book-stats { grid-template-columns: 1fr 1fr; }
+}
+
+/* SEPARADOR */
+.sep { height: 1px; background: var(--border); margin: 1rem 0; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 4px; }
+
+/* CONSOLIDADA CHECK */
+.check-circle { width: 16px; height: 16px; border-radius: 50%; background: rgba(200,241,53,0.1); border: 1px solid rgba(200,241,53,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* PDF VIEWER */
+.pdf-viewer { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); height: 320px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; cursor: pointer; }
+.pdf-viewer:hover { border-color: var(--border2); }
+.pdf-name { font-size: 13px; color: var(--text2); font-family: 'DM Mono', monospace; }
+.pdf-hint { font-size: 11px; color: var(--text3); }
+
+/* DROP ZONE */
+.drop-zone { border: 1px dashed var(--border2); border-radius: var(--radius); padding: 2.5rem; text-align: center; cursor: pointer; background: var(--bg2); }
+.drop-zone:hover { border-color: var(--accent); background: rgba(200,241,53,0.02); }
+.drop-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.drop-hint { font-size: 12px; color: var(--text3); }
+
+/* NOTA INLINE */
+.nota-input { font-size: 11px; border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; width: 130px; font-family: 'DM Mono', monospace; color: var(--text); background: var(--bg3); }
+
+/* FADE IN */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.page.active { animation: fadeIn 0.2s ease; }
+
+/* EVOLUCAO BAR */
+.evo-bar { height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: 'DM Mono', monospace; }
+
+.section-gap { margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">Revis<span>Aí</span></div>
+  <nav>
+    <div class="nav-section">Estudos</div>
+    <div class="nav-item active" onclick="goTo('dashboard')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill="currentColor" opacity=".5"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill="currentColor" opacity=".5"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-item" onclick="goTo('folhinhas')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M5 5h6M5 8h6M5 11h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Folhinhas
+    </div>
+    <div class="nav-item" onclick="goTo('revisao-mensal')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 4.5v3.75l2.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Revisão mensal
+    </div>
+    <div class="nav-section">Desempenho</div>
+    <div class="nav-item" onclick="goTo('desempenho')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="10" width="3" height="5" rx="1" fill="currentColor" opacity=".5"/><rect x="6" y="6" width="3" height="9" rx="1" fill="currentColor" opacity=".7"/><rect x="11" y="2" width="3" height="13" rx="1" fill="currentColor"/></svg>
+      Desempenho
+    </div>
+    <div class="nav-item" onclick="goTo('simulados')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Simulados
+    </div>
+    <div class="nav-section">Extra</div>
+    <div class="nav-item" onclick="goTo('leituras')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M8 3C5 3 2.5 4.5 2.5 4.5v9S5 12 8 12s5.5 1.5 5.5 1.5v-9S11 3 8 3z" stroke="currentColor" stroke-width="1.2"/><path d="M8 3v9" stroke="currentColor" stroke-width="1.2"/></svg>
+      Leituras
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn-upload" onclick="goTo('upload')">+ Upload em lote</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- ===== DASHBOARD ===== -->
+<div id="page-dashboard" class="page active">
+  <div class="page-header">
+    <h2>Bom dia! <span style="color:var(--accent)">5 revisões</span> hoje</h2>
+    <p class="mono" style="font-size:12px;">Sábado, 18 de abril de 2026 &nbsp;·&nbsp; <span id="streak-text">5 dias seguidos</span></p>
+  </div>
+
+  <div class="alert alert-danger section-gap">2 folhinhas atrasadas — você não revisou ontem</div>
+
+  <div class="grid4 section-gap">
+    <div class="metric"><div class="metric-label">Revisar hoje</div><div class="metric-value">5</div></div>
+    <div class="metric"><div class="metric-label">Atrasadas</div><div class="metric-value danger">2</div></div>
+    <div class="metric"><div class="metric-label">Consolidadas</div><div class="metric-value good">7</div></div>
+    <div class="metric"><div class="metric-label">Total folhinhas</div><div class="metric-value">24</div></div>
+  </div>
+
+  <div class="grid2 section-gap">
+    <div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Revisões de hoje + atrasadas</span></div>
+        <div class="row"><span class="badge badge-bio">BIO</span><div style="flex:1;min-width:0"><div class="row-name">Ecologia — Dinâmica Pop.</div><div class="row-sub">Frente 2 · 1ª revisão</div></div><span class="tag tag-urg">atrasada</span></div>
+        <div class="row"><span class="badge badge-mat">MAT</span><div style="flex:1;min-width:0"><div class="row-name">Funções do 2º grau</div><div class="row-sub">Frente 1 · 3ª revisão</div></div><span class="tag tag-urg">atrasada</span></div>
+        <div class="row"><span class="badge badge-port">PORT</span><div style="flex:1;min-width:0"><div class="row-name">Interpretação de texto</div><div class="row-sub">Frente 2 · 2ª revisão</div></div><span class="tag tag-info">hoje</span></div>
+        <div class="row"><span class="badge badge-fis">FÍS</span><div style="flex:1;min-width:0"><div class="row-name">Cinemática escalar</div><div class="row-sub">Frente 1 · 1ª revisão</div></div><span class="tag tag-info">hoje</span></div>
+        <div class="row"><span class="badge badge-hist">HIST</span><div style="flex:1;min-width:0"><div class="row-name">Revolução Industrial</div><div class="row-sub">Frente 3 · 2ª revisão</div></div><span class="tag tag-info">hoje</span></div>
+        <div class="actions">
+          <button class="btn btn-primary" onclick="goTo('folhinha-detalhe')">Iniciar revisões</button>
+          <button class="btn btn-ghost" onclick="goTo('upload')">+ Upload em lote</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="card" style="border-color:rgba(255,92,92,0.2)">
+        <div class="card-header"><span class="card-title" style="color:var(--red)">Desempenho fraco</span></div>
+        <div class="row"><div class="imp imp-alto"></div><span class="badge badge-quim">QUÍM</span><div style="flex:1;min-width:0"><div class="row-name">Química Orgânica</div><div class="row-sub">31% de acerto</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
+        <div class="row"><div class="imp imp-alto"></div><span class="badge badge-fis">FÍS</span><div style="flex:1;min-width:0"><div class="row-name">Eletromagnetismo</div><div class="row-sub">38% de acerto</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
+        <div class="row"><div class="imp imp-med"></div><span class="badge badge-mat">MAT</span><div style="flex:1;min-width:0"><div class="row-name">Geometria espacial</div><div class="row-sub">42% de acerto</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
+      </div>
+      <div class="card" style="border-color:rgba(255,154,60,0.2)">
+        <div class="card-header"><span class="card-title" style="color:var(--orange)">Sem revisar há muito tempo</span></div>
+        <div class="row"><span class="badge badge-hist">HIST</span><div style="flex:1;min-width:0"><div class="row-name">Absolutismo europeu</div><div class="row-sub">há 18 dias</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
+        <div class="row"><span class="badge badge-geo">GEO</span><div style="flex:1;min-width:0"><div class="row-name">Geopolítica mundial</div><div class="row-sub">há 14 dias</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
+        <div class="row"><span class="badge badge-quim">QUÍM</span><div style="flex:1;min-width:0"><div class="row-name">Química Geral — ligações</div><div class="row-sub">há 12 dias</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Leituras</span><button class="btn-sm" onclick="goTo('leituras')">Ver todas</button></div>
+      <div style="display:flex;flex-direction:column;gap:.75rem;">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="tag" style="background:rgba(74,222,128,0.1);color:#4ade80;font-size:10px;">PT</span>
+            <span style="font-size:13px;color:var(--text);flex:1;">Dom Casmurro</span>
+            <span style="font-size:12px;color:var(--accent);font-family:'DM Mono',monospace;">68%</span>
+          </div>
+          <div class="prog-bg"><div class="prog-fill" style="width:68%;background:var(--accent)"></div></div>
+          <div style="font-size:10px;color:var(--text3);margin-top:3px;" class="mono">pg 211/310 · 15 pg/dia · 7 dias</div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="tag" style="background:rgba(74,222,128,0.1);color:#4ade80;font-size:10px;">PT</span>
+            <span style="font-size:13px;color:var(--text);flex:1;">Vidas Secas</span>
+            <span style="font-size:12px;color:var(--orange);font-family:'DM Mono',monospace;">22%</span>
+          </div>
+          <div class="prog-bg"><div class="prog-fill" style="width:22%;background:var(--orange)"></div></div>
+          <div style="font-size:10px;color:var(--text3);margin-top:3px;" class="mono">pg 35/160 · atrasada</div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span class="tag" style="background:rgba(92,168,255,0.1);color:#5ca8ff;font-size:10px;">EN</span>
+            <span style="font-size:13px;color:var(--text);flex:1;">The Alchemist</span>
+            <span style="font-size:12px;color:var(--blue);font-family:'DM Mono',monospace;">45%</span>
+          </div>
+          <div class="prog-bg"><div class="prog-fill" style="width:45%;background:var(--blue)"></div></div>
+          <div style="font-size:10px;color:var(--text3);margin-top:3px;" class="mono">pg 89/197 · 10 pg/dia · 11 dias</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Desempenho por matéria</span><button class="btn-sm" onclick="goTo('desempenho')">Ver detalhado</button></div>
+      <div class="perf-row"><span class="badge badge-port" style="min-width:36px;text-align:center">PORT</span><span style="font-size:13px;flex:1">Português</span><div class="bar-bg"><div class="bar-fill" style="width:88%;background:var(--accent)"></div></div><span class="mono" style="font-size:12px;color:var(--accent);min-width:30px;text-align:right">88%</span></div>
+      <div class="perf-row"><span class="badge badge-bio" style="min-width:36px;text-align:center">BIO</span><span style="font-size:13px;flex:1">Biologia</span><div class="bar-bg"><div class="bar-fill" style="width:72%;background:var(--green)"></div></div><span class="mono" style="font-size:12px;color:var(--green);min-width:30px;text-align:right">72%</span></div>
+      <div class="perf-row"><span class="badge badge-hist" style="min-width:36px;text-align:center">HIST</span><span style="font-size:13px;flex:1">História</span><div class="bar-bg"><div class="bar-fill" style="width:63%;background:var(--blue)"></div></div><span class="mono" style="font-size:12px;color:var(--blue);min-width:30px;text-align:right">63%</span></div>
+      <div class="perf-row"><span class="badge badge-mat" style="min-width:36px;text-align:center">MAT</span><span style="font-size:13px;flex:1">Matemática</span><div class="bar-bg"><div class="bar-fill" style="width:55%;background:var(--orange)"></div></div><span class="mono" style="font-size:12px;color:var(--orange);min-width:30px;text-align:right">55%</span></div>
+      <div class="perf-row"><span class="badge badge-fis" style="min-width:36px;text-align:center">FÍS</span><span style="font-size:13px;flex:1">Física</span><div class="bar-bg"><div class="bar-fill" style="width:40%;background:var(--purple)"></div></div><span class="mono" style="font-size:12px;color:var(--purple);min-width:30px;text-align:right">40%</span></div>
+      <div class="perf-row"><span class="badge badge-quim" style="min-width:36px;text-align:center">QUÍM</span><span style="font-size:13px;flex:1">Química</span><div class="bar-bg"><div class="bar-fill" style="width:31%;background:var(--red)"></div></div><span class="mono" style="font-size:12px;color:var(--red);min-width:30px;text-align:right">31%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOLHINHAS ===== -->
+<div id="page-folhinhas" class="page">
+  <div class="page-header">
+    <h2>Folhinhas</h2>
+    <p>Gerencie todas as suas folhinhas por matéria e frente</p>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="goTo('nova-folhinha')">+ Nova folhinha</button>
+    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+      <option>Todas as matérias</option><option>Biologia</option><option>Matemática</option><option>Física</option><option>Química</option><option>História</option><option>Português</option>
+    </select>
+    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+      <option>Todas as frentes</option><option>Frente 1</option><option>Frente 2</option><option>Frente 3</option>
+    </select>
+    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+      <option>Importância: todas</option><option>Muito importante</option><option>Médio</option><option>Pouco importante</option>
+    </select>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">24 folhinhas cadastradas</span></div>
+    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-alto"></div><span class="badge badge-bio">BIO</span><div style="flex:1;min-width:0"><div class="row-name">Ecologia — Dinâmica Pop.</div><div class="row-sub">Frente 2 · Folha 05</div></div><span class="tag tag-urg">atrasada</span><span class="tag tag-warn" style="margin-left:4px;">muito</span></div>
+    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-alto"></div><span class="badge badge-mat">MAT</span><div style="flex:1;min-width:0"><div class="row-name">Funções do 2º grau</div><div class="row-sub">Frente 1 · Folha 03</div></div><span class="tag tag-urg">atrasada</span><span class="tag tag-warn" style="margin-left:4px;">muito</span></div>
+    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-med"></div><span class="badge badge-fis">FÍS</span><div style="flex:1;min-width:0"><div class="row-name">Cinemática escalar</div><div class="row-sub">Frente 1 · Folha 02</div></div><span class="tag tag-info">hoje</span><span class="tag" style="margin-left:4px;background:rgba(255,154,60,0.1);color:var(--orange);">médio</span></div>
+    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-alto"></div><span class="badge badge-quim">QUÍM</span><div style="flex:1;min-width:0"><div class="row-name">Química Orgânica</div><div class="row-sub">Frente 2 · Folha 06</div></div><span class="tag tag-urg" style="margin-left:auto;">31% acerto</span></div>
+    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-baixo"></div><span class="badge badge-hist">HIST</span><div style="flex:1;min-width:0"><div class="row-name">Absolutismo europeu</div><div class="row-sub">Frente 1 · Folha 08</div></div><span class="tag tag-warn">há 18 dias</span></div>
+    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="check-circle"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><polyline points="1.5,4 3,6 6.5,2" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="badge badge-port">PORT</span><div style="flex:1;min-width:0"><div class="row-name">Literatura Brasileira</div><div class="row-sub">Frente 2 · Folha 04</div></div><span class="tag tag-ok">consolidada</span></div>
+  </div>
+</div>
+
+<!-- ===== NOVA FOLHINHA ===== -->
+<div id="page-nova-folhinha" class="page">
+  <div class="back-btn" onclick="goTo('folhinhas')">← Folhinhas</div>
+  <div class="page-header"><h2>Nova folhinha</h2><p>Adicione pelo Google Drive ou registre só o tópico</p></div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'tab-drive','tab-topico')">Google Drive</button>
+    <button class="tab" onclick="switchTab(this,'tab-topico','tab-drive')">Só o tópico</button>
+  </div>
+  <div id="tab-drive">
+    <div class="drop-zone" onclick="simFolhinha()" style="margin-bottom:1.5rem;">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" style="margin:0 auto 10px"><path d="M6 27L13 16L19 27H6Z" fill="#0F9D58"/><path d="M19 27L26 16L32 27H19Z" fill="#4285F4"/><path d="M12 16L18 6L24 16H12Z" fill="#FBBC04"/></svg>
+      <div class="drop-title">Selecionar do Google Drive</div>
+      <div class="drop-hint">Clique para abrir o seletor de arquivos</div>
+    </div>
+    <div id="file-sel-result" style="display:none;margin-bottom:1rem;">
+      <div class="alert alert-ok">BIO_2_Folhinha_Aula_5_Ecologia.pdf selecionado</div>
+    </div>
+  </div>
+  <div id="tab-topico" style="display:none">
+    <div class="field"><label>Nome do tópico</label><input type="text" placeholder="Ex: Revolução Francesa, Funções do 2º grau..."></div>
+  </div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+      <div class="field" style="margin:0"><label>Matéria</label>
+        <select id="nf-materia" onchange="updateFrentes(this)">
+          <option value="">Selecionar...</option>
+          <option value="bio">Biologia</option><option value="mat">Matemática</option><option value="port">Português</option>
+          <option value="fis">Física</option><option value="hist">História</option><option value="quim">Química</option>
+          <option value="geo">Geografia</option><option value="red">Redação</option>
+        </select>
+      </div>
+      <div class="field" style="margin:0"><label>Nº da aula / folha</label><input type="text" placeholder="Ex: Folha 05"></div>
+    </div>
+    <div class="field">
+      <label>Frente</label>
+      <div id="frente-tags" style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="font-size:12px;color:var(--text3);">Selecione a matéria primeiro</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Importância no vestibular</label>
+      <div class="imp-btns">
+        <button class="imp-opt" onclick="selImpNf(this,'baixo')">pouco cai</button>
+        <button class="imp-opt sel-medio" onclick="selImpNf(this,'medio')">médio</button>
+        <button class="imp-opt" onclick="selImpNf(this,'alto')">muito cai</button>
+      </div>
+    </div>
+    <div class="field" style="margin:0"><label>Anotação inicial (opcional)</label><textarea placeholder="Ex: Prof falou que cai muito no ENEM..."></textarea></div>
+  </div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-header"><span class="card-title">Configurações de revisão</span></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Repetição espaçada automática</div><div class="ts">1d → 3d → 1sem → 2sem → 1mês</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Exercícios extras por IA</div><div class="ts">Gerados com base no PDF ou tópico</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Flashcards (NotebookLM)</div><div class="ts">Lembra você de gerar os flashcards</div></div><button class="toggle off" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Notificação push + email</div><div class="ts">Aviso no dia da revisão</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="goTo('folhinha-detalhe')">Salvar folhinha</button>
+    <button class="btn btn-ghost" onclick="goTo('folhinhas')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ===== FOLHINHA DETALHE ===== -->
+<div id="page-folhinha-detalhe" class="page">
+  <div class="back-btn" onclick="goTo('folhinhas')">← Folhinhas</div>
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;gap:1rem;">
+    <div>
+      <h2 style="font-size:22px;font-weight:700;margin-bottom:4px;">Ecologia — Dinâmica Pop.</h2>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span class="badge badge-bio">BIO</span>
+        <span style="font-size:12px;color:var(--text3);" class="mono">Frente 2 · Folha 05 · adicionada 18 abr</span>
+        <div class="imp imp-alto"></div><span style="font-size:11px;color:var(--red);" class="mono">muito cai</span>
+      </div>
+    </div>
+    <span class="tag tag-info" style="white-space:nowrap;">Próxima revisão: amanhã</span>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTabMulti(this,'fd-visao',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Visão geral</button>
+    <button class="tab" onclick="switchTabMulti(this,'fd-pdf',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">PDF</button>
+    <button class="tab" onclick="switchTabMulti(this,'fd-lista',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Lista original</button>
+    <button class="tab" onclick="switchTabMulti(this,'fd-ia',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Exercícios IA</button>
+    <button class="tab" onclick="switchTabMulti(this,'fd-flash',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Flashcards</button>
+    <button class="tab" onclick="switchTabMulti(this,'fd-notas',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Anotações</button>
+  </div>
+  <div id="fd-visao">
+    <div class="grid2" style="margin-bottom:1rem;">
+      <div class="metric"><div class="metric-label">Lista original</div><div class="metric-value" id="fd-lista-val">14 / 20</div><div style="font-size:12px;color:var(--text3);" class="mono">70% de acerto</div></div>
+      <div class="metric"><div class="metric-label">Exercícios IA</div><div class="metric-value" id="fd-ia-val">7 / 10</div><div style="font-size:12px;color:var(--text3);" class="mono">70% · última sessão</div></div>
+    </div>
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="card-header"><span class="card-title">Histórico de revisões</span></div>
+      <div class="row"><span class="mono" style="font-size:12px;color:var(--text3);min-width:120px;">18 abr · 1ª revisão</span><div class="bar-bg" style="flex:1;max-width:120px;"><div class="bar-fill" style="width:70%;background:var(--orange)"></div></div><span class="mono" style="font-size:13px;color:var(--orange);min-width:36px;text-align:right">70%</span><span style="font-size:11px;color:var(--text3);">lista + IA</span></div>
+      <div class="row"><span class="mono" style="font-size:12px;color:var(--text3);min-width:120px;">19 abr · 2ª revisão</span><div class="bar-bg" style="flex:1;max-width:120px;"><div class="bar-fill" style="width:0%"></div></div><span class="mono" style="font-size:13px;color:var(--text3);min-width:36px;text-align:right">—</span><span style="font-size:11px;color:var(--text3);">agendada</span></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Resumo</span></div>
+      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Tópicos</span><span style="font-size:13px;">Dinâmica pop., Relações ecológicas, Sucessão</span></div>
+      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Revisões feitas</span><span style="font-size:13px;">1 de 5</span></div>
+      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Status</span><span class="tag tag-warn">em andamento</span></div>
+      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Flashcards</span><span class="tag tag-urg">pendente</span></div>
+    </div>
+  </div>
+  <div id="fd-pdf" style="display:none">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Visualizar PDF</span></div>
+      <div class="pdf-viewer">
+        <svg width="36" height="42" viewBox="0 0 36 42" fill="none"><rect width="36" height="42" rx="4" fill="rgba(255,92,92,0.1)"/><path d="M8 13h20M8 20h20M8 27h12" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="pdf-name">BIO_2_Folhinha_Aula_5_Ecologia.pdf</div>
+        <div class="pdf-hint">Clique para abrir em tela cheia</div>
+      </div>
+    </div>
+  </div>
+  <div id="fd-lista" style="display:none">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Registrar resultado da lista original</span></div>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:1rem;">Digite quantas você acertou do total de questões da folhinha.</p>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
+        <input type="number" id="fd-ac" placeholder="14" min="0" style="width:70px;text-align:center;font-size:18px;">
+        <span style="font-size:22px;color:var(--text3);">/</span>
+        <input type="number" id="fd-tot" placeholder="20" min="0" style="width:70px;text-align:center;font-size:18px;">
+        <span style="font-size:13px;color:var(--text3);">questões</span>
+        <button class="btn btn-primary" onclick="salvarLista()">Salvar</button>
+      </div>
+      <div id="fd-lista-fb" style="display:none;" class="alert alert-ok"></div>
+      <div class="field"><label>Quais questões errou? (opcional)</label><textarea placeholder="Ex: Errei q.3 — confundi mutualismo com comensalismo..."></textarea></div>
+      <button class="btn btn-ghost">Salvar anotações</button>
+    </div>
+  </div>
+  <div id="fd-ia" style="display:none">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Exercícios gerados por IA</span></div>
+      <div id="fd-ia-loading" style="display:flex;align-items:center;gap:8px;padding:1rem 0;font-size:13px;color:var(--text3);">
+        <span class="mono">Gerando exercícios com base no PDF...</span>
+      </div>
+      <div id="fd-ia-content" style="display:none;">
+        <div class="q-row"><span class="q-num">1.</span><div class="q-body"><div class="q-text">O Princípio de Gause afirma que duas espécies com mesmo nicho em mesmo habitat resultam em?</div><div class="q-meta"><span class="badge badge-bio">BIO</span><span style="font-size:11px;color:var(--text3);">Ecologia · Folha 05</span></div></div><div class="q-btns"><button class="qbtn" id="ia1c" onclick="markQ(1,'c')">✓</button><button class="qbtn" id="ia1e" onclick="markQ(1,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+        <div class="q-row"><span class="q-num">2.</span><div class="q-body"><div class="q-text">Líquens são exemplos de qual tipo de relação ecológica?</div><div class="q-meta"><span class="badge badge-bio">BIO</span></div></div><div class="q-btns"><button class="qbtn" id="ia2c" onclick="markQ(2,'c')">✓</button><button class="qbtn" id="ia2e" onclick="markQ(2,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+        <div class="q-row"><span class="q-num">3.</span><div class="q-body"><div class="q-text">Na curva em S, o que representa a capacidade suporte (K)?</div><div class="q-meta"><span class="badge badge-bio">BIO</span></div></div><div class="q-btns"><button class="qbtn" id="ia3c" onclick="markQ(3,'c')">✓</button><button class="qbtn" id="ia3e" onclick="markQ(3,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+        <div class="q-row"><span class="q-num">4.</span><div class="q-body"><div class="q-text">Qual a diferença entre sucessão primária e secundária?</div><div class="q-meta"><span class="badge badge-bio">BIO</span></div></div><div class="q-btns"><button class="qbtn" id="ia4c" onclick="markQ(4,'c')">✓</button><button class="qbtn" id="ia4e" onclick="markQ(4,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:.5rem;">
+          <span id="ia-score" class="mono" style="font-size:12px;color:var(--text3);">0 / 4 respondidas</span>
+          <button class="btn btn-ghost" style="font-size:12px;">+ Gerar mais</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="fd-flash" style="display:none">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+        <div><div style="font-size:13px;color:var(--text);">Flashcards no NotebookLM</div><div style="font-size:11px;color:var(--text3);">Gerar a partir do PDF da folhinha</div></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span id="fc-status" class="tag tag-warn">Pendente</span><button class="btn-sm" onclick="marcarFC()">Marcar feito</button></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
+        <div style="font-size:13px;color:var(--text);">Acertos nos flashcards</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <input type="number" placeholder="18" min="0" style="width:60px;text-align:center;font-size:13px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;">
+          <span style="font-size:12px;color:var(--text3);">/</span>
+          <input type="number" placeholder="20" min="0" style="width:50px;text-align:center;font-size:13px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;">
+          <button class="btn-sm">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="fd-notas" style="display:none">
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="card-header"><span class="card-title">Anotações gerais</span></div>
+      <textarea class="field" style="margin:0;width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Syne',sans-serif;font-size:13px;padding:10px;min-height:100px;resize:vertical;">Prof falou que cai muito no ENEM. Prestar atenção nas curvas de crescimento e no Princípio de Gause.</textarea>
+      <button class="btn btn-ghost" style="margin-top:8px;">Salvar</button>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Erros registrados</span></div>
+      <div style="padding:10px 0;border-bottom:1px solid var(--border);"><div class="mono" style="font-size:11px;color:var(--text3);margin-bottom:4px;">18 abr · Lista original</div><div style="font-size:13px;color:var(--text);">Confundiu mutualismo com comensalismo na questão 3.</div></div>
+      <div style="padding:10px 0;"><div class="mono" style="font-size:11px;color:var(--text3);margin-bottom:4px;">18 abr · Exercício IA</div><div style="font-size:13px;color:var(--text);">Não lembrou da diferença entre ectoparasita e endoparasita.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DESEMPENHO ===== -->
+<div id="page-desempenho" class="page">
+  <div class="page-header"><h2>Desempenho</h2><p>Por matéria e frente — baseado em listas, exercícios e flashcards</p></div>
+  <div class="grid3 section-gap">
+    <div class="metric"><div class="metric-label">Média geral</div><div class="metric-value">58%</div></div>
+    <div class="metric"><div class="metric-label">Consolidadas</div><div class="metric-value good">7</div></div>
+    <div class="metric"><div class="metric-label">Precisam atenção</div><div class="metric-value danger">4</div></div>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;">
+    <button class="btn-sm" onclick="filtrarDesemp('todas',this)" style="color:var(--accent);border-color:rgba(200,241,53,0.3)">Todas</button>
+    <button class="btn-sm" onclick="filtrarDesemp('atencao',this)">Precisam atenção</button>
+    <button class="btn-sm" onclick="filtrarDesemp('bom',this)">Consolidadas</button>
+  </div>
+  <div id="desemp-lista">
+    <div class="card" style="margin-bottom:.75rem;border-color:rgba(255,92,92,0.2)" data-status="atencao">
+      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
+        <span class="badge badge-quim">QUÍM</span><span style="font-size:14px;font-weight:600;flex:1;">Química</span>
+        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:31%;background:var(--red)"></div></div>
+        <span class="mono" style="font-size:14px;color:var(--red);min-width:36px;text-align:right">31%</span>
+        <span style="font-size:12px;color:var(--text3);">›</span>
+      </div>
+      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Química Geral</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 28%</span><span class="tag tag-urg">fraca</span></div>
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 2 — Química Orgânica</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 35%</span><span class="tag tag-urg">fraca</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:.75rem;border-color:rgba(255,92,92,0.15)" data-status="atencao">
+      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
+        <span class="badge badge-fis">FÍS</span><span style="font-size:14px;font-weight:600;flex:1;">Física</span>
+        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:40%;background:var(--purple)"></div></div>
+        <span class="mono" style="font-size:14px;color:var(--purple);min-width:36px;text-align:right">40%</span>
+        <span style="font-size:12px;color:var(--text3);">›</span>
+      </div>
+      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Mecânica</span><span class="mono" style="font-size:11px;color:var(--text3);">4 folhinhas · 38%</span><span class="tag tag-urg">fraca</span></div>
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 3 — Eletromagnetismo</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 38%</span><span class="tag tag-urg">fraca</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:.75rem;" data-status="medio">
+      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
+        <span class="badge badge-mat">MAT</span><span style="font-size:14px;font-weight:600;flex:1;">Matemática</span>
+        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:55%;background:var(--orange)"></div></div>
+        <span class="mono" style="font-size:14px;color:var(--orange);min-width:36px;text-align:right">55%</span>
+        <span style="font-size:12px;color:var(--text3);">›</span>
+      </div>
+      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Álgebra</span><span class="mono" style="font-size:11px;color:var(--text3);">5 folhinhas · 52%</span><span class="tag tag-warn">média</span></div>
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 2 — Geometria</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 61%</span><span class="tag tag-warn">média</span></div>
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 3 — Estatística</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 70%</span><span class="tag tag-ok">boa</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:.75rem;" data-status="bom">
+      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
+        <span class="badge badge-bio">BIO</span><span style="font-size:14px;font-weight:600;flex:1;">Biologia</span>
+        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:72%;background:var(--green)"></div></div>
+        <span class="mono" style="font-size:14px;color:var(--green);min-width:36px;text-align:right">72%</span>
+        <span style="font-size:12px;color:var(--text3);">›</span>
+      </div>
+      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Citologia e Genética</span><span class="mono" style="font-size:11px;color:var(--text3);">4 folhinhas · 80%</span><span class="tag tag-ok">consolidada</span></div>
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 2 — Ecologia</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 65%</span><span class="tag tag-warn">média</span></div>
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 3 — Evolução e Zoologia</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 75%</span><span class="tag tag-ok">consolidada</span></div>
+      </div>
+    </div>
+    <div class="card" data-status="bom">
+      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
+        <span class="badge badge-port">PORT</span><span style="font-size:14px;font-weight:600;flex:1;">Português</span>
+        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:88%;background:var(--accent)"></div></div>
+        <span class="mono" style="font-size:14px;color:var(--accent);min-width:36px;text-align:right">88%</span>
+        <span style="font-size:12px;color:var(--text3);">›</span>
+      </div>
+      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Gramática</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 91%</span><span class="tag tag-ok">consolidada</span></div>
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 2 — Literatura</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 85%</span><span class="tag tag-ok">consolidada</span></div>
+        <div class="row"><span style="font-size:13px;flex:1;">Frente 3 — Interpretação</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 88%</span><span class="tag tag-ok">consolidada</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REVISAO MENSAL ===== -->
+<div id="page-revisao-mensal" class="page">
+  <div class="page-header"><h2>Revisão mensal — <span style="color:var(--accent)">Abril 2026</span></h2><p>20 questões misturadas de todas as matérias · geradas pela IA</p></div>
+  <div class="alert alert-info section-gap">Essa revisão mistura conteúdos das suas 24 folhinhas — é pra testar se você realmente consolidou, não só memorizar.</div>
+  <div class="grid4 section-gap">
+    <div class="metric"><div class="metric-label">Total questões</div><div class="metric-value">20</div></div>
+    <div class="metric"><div class="metric-label">Respondidas</div><div class="metric-value" id="rm-resp">0</div></div>
+    <div class="metric"><div class="metric-label">Certas</div><div class="metric-value good" id="rm-certas">0</div></div>
+    <div class="metric"><div class="metric-label">Aproveitamento</div><div class="metric-value" id="rm-aprov">0%</div></div>
+  </div>
+  <div style="margin-bottom:1.5rem;"><div class="prog-bg" style="height:6px;"><div class="prog-fill" id="rm-prog" style="width:0%;background:var(--blue)"></div></div></div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-header"><span class="card-title">Questões</span></div>
+    <div class="q-row"><span class="q-num">1.</span><div class="q-body"><div class="q-text">Qual relação ecológica é exemplificada pelo fungo Penicillium inibindo o crescimento de bactérias?</div><div class="q-meta"><span class="badge badge-bio">BIO</span><span style="font-size:11px;color:var(--text3);">Folha 05 · Ecologia</span></div></div><div class="q-btns"><button class="qbtn" id="rm1c" onclick="markRM(1,'c')">✓</button><button class="qbtn" id="rm1e" onclick="markRM(1,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+    <div class="q-row"><span class="q-num">2.</span><div class="q-body"><div class="q-text">Dada f(x) = 2x² − 8x + 6, quais são as raízes?</div><div class="q-meta"><span class="badge badge-mat">MAT</span><span style="font-size:11px;color:var(--text3);">Folha 03 · Funções</span></div></div><div class="q-btns"><button class="qbtn" id="rm2c" onclick="markRM(2,'c')">✓</button><button class="qbtn" id="rm2e" onclick="markRM(2,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+    <div class="q-row"><span class="q-num">3.</span><div class="q-body"><div class="q-text">A Revolução Industrial iniciou-se primeiro em qual país e por qual razão principal?</div><div class="q-meta"><span class="badge badge-hist">HIST</span><span style="font-size:11px;color:var(--text3);">Folha 08 · Rev. Industrial</span></div></div><div class="q-btns"><button class="qbtn" id="rm3c" onclick="markRM(3,'c')">✓</button><button class="qbtn" id="rm3e" onclick="markRM(3,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+    <div class="q-row"><span class="q-num">4.</span><div class="q-body"><div class="q-text">Na cinemática escalar, o que diferencia velocidade média de velocidade instantânea?</div><div class="q-meta"><span class="badge badge-fis">FÍS</span><span style="font-size:11px;color:var(--text3);">Folha 02 · Cinemática</span></div></div><div class="q-btns"><button class="qbtn" id="rm4c" onclick="markRM(4,'c')">✓</button><button class="qbtn" id="rm4e" onclick="markRM(4,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+    <div class="q-row"><span class="q-num">5.</span><div class="q-body"><div class="q-text">O que é isomeria óptica e em que tipos de moléculas ocorre?</div><div class="q-meta"><span class="badge badge-quim">QUÍM</span><span style="font-size:11px;color:var(--text3);">Folha 06 · Quím. Orgânica</span></div></div><div class="q-btns"><button class="qbtn" id="rm5c" onclick="markRM(5,'c')">✓</button><button class="qbtn" id="rm5e" onclick="markRM(5,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:.5rem;">
+      <span class="mono" style="font-size:12px;color:var(--text3);">mostrando 5 de 20</span>
+      <button class="btn btn-primary">Finalizar revisão</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SIMULADOS ===== -->
+<div id="page-simulados" class="page">
+  <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;">
+    <div><h2>Simulados</h2><p>1ª fase (alternativas) e 2ª fase (discursiva)</p></div>
+    <button class="btn btn-primary" onclick="switchTabMulti(document.querySelectorAll('#page-simulados .tab')[2],'sim-novo',['sim-hist','sim-evo','sim-novo'])">+ Novo simulado</button>
+  </div>
+  <div class="grid4 section-gap">
+    <div class="metric"><div class="metric-label">Simulados feitos</div><div class="metric-value">8</div></div>
+    <div class="metric"><div class="metric-label">Média 1ª fase</div><div class="metric-value warn">61%</div></div>
+    <div class="metric"><div class="metric-label">Média 2ª fase</div><div class="metric-value good">72%</div></div>
+    <div class="metric"><div class="metric-label">Pendentes</div><div class="metric-value danger">2</div></div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTabMulti(this,'sim-hist',['sim-hist','sim-evo','sim-novo'])">Histórico</button>
+    <button class="tab" onclick="switchTabMulti(this,'sim-evo',['sim-hist','sim-evo','sim-novo'])">Evolução</button>
+    <button class="tab" onclick="switchTabMulti(this,'sim-novo',['sim-hist','sim-evo','sim-novo'])">+ Novo</button>
+  </div>
+  <div id="sim-hist">
+    <div style="display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;">
+      <button class="btn-sm" onclick="filtrarBanca('todas',this)" style="color:var(--accent);border-color:rgba(200,241,53,0.3)">Todas</button>
+      <button class="btn-sm" onclick="filtrarBanca('fuvest',this)">Fuvest</button>
+      <button class="btn-sm" onclick="filtrarBanca('unicamp',this)">Unicamp</button>
+      <button class="btn-sm" onclick="filtrarBanca('unesp',this)">Unesp</button>
+      <button class="btn-sm" onclick="filtrarBanca('enem',this)">Enem</button>
+    </div>
+    <div class="card">
+      <div class="sim-row" data-banca="fuvest"><div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div><span class="banca-pill banca-fuvest">Fuvest</span><div style="flex:1;min-width:0"><div class="row-name">1ª fase · Semana 4 — Abril</div><div class="row-sub mono">14 abr 2026 · 90 questões</div></div><span class="mono" style="font-size:14px;color:var(--orange);">64%</span></div>
+      <div class="sim-row" data-banca="unicamp"><div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div><span class="banca-pill banca-unicamp">Unicamp</span><div style="flex:1;min-width:0"><div class="row-name">2ª fase · Semana 3 — Abril</div><div class="row-sub mono">07 abr 2026 · 4 disc.</div></div><span class="mono" style="font-size:14px;color:var(--accent);">75%</span></div>
+      <div class="sim-row" data-banca="unesp"><div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div><span class="banca-pill banca-unesp">Unesp</span><div style="flex:1;min-width:0"><div class="row-name">1ª fase · Semana 2 — Abril</div><div class="row-sub mono">01 abr 2026 · 72 questões</div></div><span class="mono" style="font-size:14px;color:var(--orange);">58%</span></div>
+      <div class="sim-row" data-banca="enem"><div style="width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0;"></div><span class="banca-pill banca-enem">Enem</span><div style="flex:1;min-width:0"><div class="row-name">1ª fase · Semana 4 — Março</div><div class="row-sub mono">18 mar 2026 · pendente</div></div><span class="mono" style="font-size:14px;color:var(--text3);">—</span></div>
+    </div>
+  </div>
+  <div id="sim-evo" style="display:none">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Evolução 1ª fase por banca</span></div>
+      <div class="row"><span class="banca-pill banca-fuvest" style="min-width:62px;">Fuvest</span><div style="flex:1;display:flex;gap:4px;align-items:center;"><div class="evo-bar" style="width:52px;background:rgba(167,139,250,0.15);color:#a78bfa;">55%</div><div class="evo-bar" style="width:58px;background:rgba(167,139,250,0.2);color:#a78bfa;">60%</div><div class="evo-bar" style="width:64px;background:rgba(167,139,250,0.3);color:#a78bfa;">64%</div></div><span class="mono" style="font-size:12px;color:var(--accent);">+9pp</span></div>
+      <div class="row"><span class="banca-pill banca-unesp" style="min-width:62px;">Unesp</span><div style="flex:1;display:flex;gap:4px;align-items:center;"><div class="evo-bar" style="width:52px;background:rgba(255,154,60,0.15);color:#ff9a3c;">52%</div><div class="evo-bar" style="width:58px;background:rgba(255,154,60,0.25);color:#ff9a3c;">58%</div></div><span class="mono" style="font-size:12px;color:var(--accent);">+6pp</span></div>
+      <div class="row"><span class="banca-pill banca-unicamp" style="min-width:62px;">Unicamp</span><div style="flex:1;display:flex;gap:4px;align-items:center;"><div class="evo-bar" style="width:52px;background:rgba(45,212,191,0.15);color:#2dd4bf;">68%</div><div class="evo-bar" style="width:58px;background:rgba(45,212,191,0.25);color:#2dd4bf;">75%</div></div><span class="mono" style="font-size:12px;color:var(--accent);">+7pp</span></div>
+    </div>
+  </div>
+  <div id="sim-novo" style="display:none">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Dados do simulado</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;">
+        <div class="field" style="margin:0"><label>Banca</label><select><option>Fuvest</option><option>Unicamp</option><option>Unesp</option><option>Enem</option></select></div>
+        <div class="field" style="margin:0"><label>Fase</label><select id="sim-fase" onchange="updateSimFase()"><option value="">Selecionar...</option><option value="1">1ª fase — alternativas</option><option value="2">2ª fase — discursiva</option></select></div>
+        <div class="field" style="margin:0"><label>Data</label><input type="date"></div>
+      </div>
+      <div id="sim-1f" style="display:none;">
+        <div class="card-header" style="margin-bottom:.5rem;"><span class="card-title">Resultado — 1ª fase</span></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
+          <input type="number" id="sim-ac" placeholder="54" min="0" style="width:70px;text-align:center;font-size:18px;" oninput="calcSimPct()">
+          <span style="font-size:22px;color:var(--text3);">/</span>
+          <input type="number" id="sim-tot" placeholder="90" min="0" style="width:70px;text-align:center;font-size:18px;" oninput="calcSimPct()">
+          <span class="mono" id="sim-pct" style="font-size:16px;color:var(--accent);"></span>
+        </div>
+        <div class="field"><label>Anotações</label><textarea placeholder="Ex: Errei muito em Física e Química Orgânica..."></textarea></div>
+      </div>
+      <div id="sim-2f" style="display:none;">
+        <div class="card-header" style="margin-bottom:.5rem;"><span class="card-title">Notas por questão — 2ª fase</span></div>
+        <div id="sim-qs">
+          <div class="row"><span style="font-size:13px;flex:1;">Questão 1</span><input type="number" placeholder="0" min="0" style="width:60px;text-align:center;font-size:14px;" oninput="calcSimTotal()"><span style="font-size:12px;color:var(--text3);">/</span><input type="number" placeholder="10" min="0" style="width:50px;text-align:center;font-size:14px;" oninput="calcSimTotal()"></div>
+          <div class="row"><span style="font-size:13px;flex:1;">Questão 2</span><input type="number" placeholder="0" min="0" style="width:60px;text-align:center;font-size:14px;" oninput="calcSimTotal()"><span style="font-size:12px;color:var(--text3);">/</span><input type="number" placeholder="10" min="0" style="width:50px;text-align:center;font-size:14px;" oninput="calcSimTotal()"></div>
+          <div class="row"><span style="font-size:13px;flex:1;">Questão 3</span><input type="number" placeholder="0" min="0" style="width:60px;text-align:center;font-size:14px;" oninput="calcSimTotal()"><span style="font-size:12px;color:var(--text3);">/</span><input type="number" placeholder="10" min="0" style="width:50px;text-align:center;font-size:14px;" oninput="calcSimTotal()"></div>
+          <div class="row"><span style="font-size:13px;flex:1;">Questão 4</span><input type="number" placeholder="0" min="0" style="width:60px;text-align:center;font-size:14px;" oninput="calcSimTotal()"><span style="font-size:12px;color:var(--text3);">/</span><input type="number" placeholder="10" min="0" style="width:50px;text-align:center;font-size:14px;" oninput="calcSimTotal()"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.75rem;border-top:1px solid var(--border);margin-top:.5rem;">
+          <span class="mono" style="font-size:13px;color:var(--text3);">Total: <span id="sim-total">—</span></span>
+          <button class="btn-sm" onclick="addSimQ()">+ Questão</button>
+        </div>
+        <div class="field" style="margin-top:1rem;"><label>Anotações</label><textarea placeholder="Ex: Questão 2 foi bem, questão 3 tive dificuldade..."></textarea></div>
+      </div>
+      <div class="actions"><button class="btn btn-primary">Salvar simulado</button><button class="btn btn-ghost" onclick="switchTabMulti(document.querySelectorAll('#page-simulados .tab')[0],'sim-hist',['sim-hist','sim-evo','sim-novo'])">Cancelar</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEITURAS ===== -->
+<div id="page-leituras" class="page">
+  <div class="page-header"><h2>Leituras</h2><p>Obras obrigatórias por banca e leitura em inglês</p></div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTabMulti(this,'leit-andamento',['leit-andamento','leit-obras','leit-novo'])">Em andamento</button>
+    <button class="tab" onclick="switchTabMulti(this,'leit-obras',['leit-andamento','leit-obras','leit-novo'])">Obras por banca</button>
+    <button class="tab" onclick="switchTabMulti(this,'leit-novo',['leit-andamento','leit-obras','leit-novo'])">+ Adicionar</button>
+  </div>
+  <div id="leit-andamento">
+    <div class="book-card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;">
+        <div><div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px;">Dom Casmurro</div><div class="mono" style="font-size:11px;color:var(--text3);">Machado de Assis · Fuvest, Unicamp</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><span class="tag" style="background:rgba(74,222,128,0.1);color:#4ade80;font-size:10px;">PT</span><span class="tag tag-ok">no prazo</span></div>
+      </div>
+      <div class="prog-bg" style="height:6px;margin-bottom:8px;"><div class="prog-fill" id="prog-dc" style="width:68%;background:var(--accent)"></div></div>
+      <div class="book-stats">
+        <div class="bstat"><div class="bl">Progresso</div><div class="bv" id="pct-dc">68%</div></div>
+        <div class="bstat"><div class="bl">Página atual</div><div class="bv" id="pg-dc">211/310</div></div>
+        <div class="bstat"><div class="bl">Meta/dia</div><div class="bv">15 pg</div></div>
+        <div class="bstat"><div class="bl">Faltam</div><div class="bv" id="dias-dc">7 dias</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:12px;color:var(--text3);">Atualizar:</span><input type="number" id="inp-dc" placeholder="211" min="0" max="310" style="width:70px;text-align:center;font-size:14px;"><button class="btn-sm" onclick="atualizarPg('dc',310,15)">Salvar</button></div>
+    </div>
+    <div class="book-card late">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;">
+        <div><div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px;">Vidas Secas</div><div class="mono" style="font-size:11px;color:var(--text3);">Graciliano Ramos · Fuvest</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><span class="tag" style="background:rgba(74,222,128,0.1);color:#4ade80;font-size:10px;">PT</span><span class="tag tag-urg">atrasada</span></div>
+      </div>
+      <div class="prog-bg" style="height:6px;margin-bottom:8px;"><div class="prog-fill" id="prog-vs" style="width:22%;background:var(--orange)"></div></div>
+      <div class="book-stats">
+        <div class="bstat"><div class="bl">Progresso</div><div class="bv" id="pct-vs">22%</div></div>
+        <div class="bstat"><div class="bl">Página atual</div><div class="bv" id="pg-vs">35/160</div></div>
+        <div class="bstat"><div class="bl">Meta/dia</div><div class="bv">12 pg</div></div>
+        <div class="bstat"><div class="bl">Faltam</div><div class="bv" id="dias-vs">11 dias</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:12px;color:var(--text3);">Atualizar:</span><input type="number" id="inp-vs" placeholder="35" min="0" max="160" style="width:70px;text-align:center;font-size:14px;"><button class="btn-sm" onclick="atualizarPg('vs',160,12)">Salvar</button></div>
+    </div>
+    <div class="book-card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;">
+        <div><div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px;">The Alchemist</div><div class="mono" style="font-size:11px;color:var(--text3);">Paulo Coelho · leitura em inglês</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><span class="tag" style="background:rgba(92,168,255,0.1);color:#5ca8ff;font-size:10px;">EN</span><span class="tag tag-info">em dia</span></div>
+      </div>
+      <div class="prog-bg" style="height:6px;margin-bottom:8px;"><div class="prog-fill" id="prog-al" style="width:45%;background:var(--blue)"></div></div>
+      <div class="book-stats">
+        <div class="bstat"><div class="bl">Progresso</div><div class="bv" id="pct-al">45%</div></div>
+        <div class="bstat"><div class="bl">Página atual</div><div class="bv" id="pg-al">89/197</div></div>
+        <div class="bstat"><div class="bl">Meta/dia</div><div class="bv">10 pg</div></div>
+        <div class="bstat"><div class="bl">Faltam</div><div class="bv" id="dias-al">11 dias</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:12px;color:var(--text3);">Atualizar:</span><input type="number" id="inp-al" placeholder="89" min="0" max="197" style="width:70px;text-align:center;font-size:14px;"><button class="btn-sm" onclick="atualizarPg('al',197,10)">Salvar</button></div>
+    </div>
+  </div>
+  <div id="leit-obras" style="display:none">
+    <div class="card">
+      <div class="row" style="cursor:pointer;" onclick="toggleObras('fuvest')"><span class="banca-pill banca-fuvest">Fuvest</span><span style="font-size:13px;font-weight:600;flex:1;margin-left:6px;">Obras obrigatórias</span><span class="mono" style="font-size:11px;color:var(--text3);">8 obras · 2026/2027</span><span id="oc-fuvest" style="font-size:12px;color:var(--text3);">›</span></div>
+      <div id="obras-fuvest" style="display:none;">
+        <div class="obra-row"><span style="font-size:13px;flex:1;">Dom Casmurro — Machado de Assis</span><span class="tag tag-ok">lendo</span></div>
+        <div class="obra-row"><span style="font-size:13px;flex:1;">Vidas Secas — Graciliano Ramos</span><span class="tag tag-urg">atrasada</span></div>
+        <div class="obra-row"><span style="font-size:13px;flex:1;">O Cortiço — Aluísio Azevedo</span><span class="tag tag-warn">pendente</span></div>
+        <div class="obra-row"><span style="font-size:13px;flex:1;">Iracema — José de Alencar</span><span class="tag tag-warn">pendente</span></div>
+      </div>
+      <div class="row" style="cursor:pointer;" onclick="toggleObras('unicamp')"><span class="banca-pill banca-unicamp">Unicamp</span><span style="font-size:13px;font-weight:600;flex:1;margin-left:6px;">Obras obrigatórias</span><span class="mono" style="font-size:11px;color:var(--text3);">6 obras · 2026/2027</span><span id="oc-unicamp" style="font-size:12px;color:var(--text3);">›</span></div>
+      <div id="obras-unicamp" style="display:none;">
+        <div class="obra-row"><span style="font-size:13px;flex:1;">Dom Casmurro — Machado de Assis</span><span class="tag tag-ok">lendo</span></div>
+        <div class="obra-row"><span style="font-size:13px;flex:1;">Memórias Póstumas — Machado de Assis</span><span class="tag tag-warn">pendente</span></div>
+        <div class="obra-row"><span style="font-size:13px;flex:1;">Grande Sertão: Veredas — Guimarães Rosa</span><span class="tag tag-warn">pendente</span></div>
+      </div>
+      <div class="row" style="cursor:pointer;" onclick="toggleObras('unesp')"><span class="banca-pill banca-unesp">Unesp</span><span style="font-size:13px;font-weight:600;flex:1;margin-left:6px;">Obras obrigatórias</span><span class="mono" style="font-size:11px;color:var(--text3);">5 obras · 2026/2027</span><span id="oc-unesp" style="font-size:12px;color:var(--text3);">›</span></div>
+      <div id="obras-unesp" style="display:none;">
+        <div class="obra-row"><span style="font-size:13px;flex:1;">A Hora da Estrela — Clarice Lispector</span><span class="tag tag-warn">pendente</span></div>
+        <div class="obra-row"><span style="font-size:13px;flex:1;">Sagarana — Guimarães Rosa</span><span class="tag tag-warn">pendente</span></div>
+      </div>
+    </div>
+  </div>
+  <div id="leit-novo" style="display:none">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Adicionar livro</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+        <div class="field" style="margin:0"><label>Idioma</label><select><option>Português — obra obrigatória</option><option>Inglês — leitura livre</option></select></div>
+        <div class="field" style="margin:0"><label>Banca (se PT)</label><select><option>Fuvest</option><option>Unicamp</option><option>Unesp</option><option>Nenhuma — livre</option></select></div>
+      </div>
+      <div class="field"><label>Título</label><input type="text" placeholder="Ex: O Cortiço"></div>
+      <div class="field"><label>Autor</label><input type="text" placeholder="Ex: Aluísio Azevedo"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
+        <div class="field" style="margin:0"><label>Total de páginas</label><input type="number" placeholder="280"></div>
+        <div class="field" style="margin:0"><label>Página atual</label><input type="number" placeholder="0"></div>
+        <div class="field" style="margin:0"><label>Meta (pg/dia)</label><input type="number" placeholder="15"></div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" onclick="switchTabMulti(document.querySelectorAll('#page-leituras .tab')[0],'leit-andamento',['leit-andamento','leit-obras','leit-novo'])">Salvar livro</button><button class="btn btn-ghost" onclick="switchTabMulti(document.querySelectorAll('#page-leituras .tab')[0],'leit-andamento',['leit-andamento','leit-obras','leit-novo'])">Cancelar</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UPLOAD ===== -->
+<div id="page-upload" class="page">
+  <div class="back-btn" onclick="goTo('dashboard')">← Dashboard</div>
+  <div class="page-header"><h2>Upload em lote</h2><p>Selecione vários PDFs de uma vez — o site detecta matéria e frente pelo nome do arquivo</p></div>
+  <div class="alert alert-info" style="margin-bottom:1.5rem;">O site lê o nome do arquivo e tenta preencher matéria e frente automaticamente. Corrija o que estiver errado antes de salvar.</div>
+  <div id="upload-drop" class="drop-zone" onclick="simUpload()" style="margin-bottom:1.5rem;">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" style="margin:0 auto 10px"><path d="M6 27L13 16L19 27H6Z" fill="#0F9D58"/><path d="M19 27L26 16L32 27H19Z" fill="#4285F4"/><path d="M12 16L18 6L24 16H12Z" fill="#FBBC04"/></svg>
+    <div class="drop-title">Selecionar PDFs do Google Drive ou computador</div>
+    <div class="drop-hint">Clique para abrir · suporta vários arquivos de uma vez</div>
+  </div>
+  <div id="upload-list" style="display:none;">
+    <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">3 arquivos detectados — revise e corrija</div>
+    <div class="file-item">
+      <div class="file-header"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><rect width="13" height="15" rx="2" fill="rgba(255,92,92,0.1)"/><path d="M2.5 5h8M2.5 8h8M2.5 11h5" stroke="var(--red)" stroke-width="1" stroke-linecap="round"/></svg><span style="font-size:12px;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" class="mono">BIO_2_Folhinha_Aula_5_Ecologia.pdf</span><span class="tag tag-ok">detectado</span><button class="btn-sm" onclick="this.closest('.file-item').remove()">remover</button></div>
+      <div class="file-fields">
+        <div class="field"><label>Matéria</label><select><option>Biologia</option><option>Matemática</option><option>Física</option><option>Química</option></select></div>
+        <div class="field"><label>Frente</label><select><option>Frente 2 — Ecologia</option><option>Frente 1 — Citologia</option><option>Frente 3 — Evolução</option></select></div>
+        <div class="field"><label>Nº aula</label><input type="text" value="Folha 05"></div>
+        <div class="field"><label>Importância</label><div class="imp-btns"><button class="imp-opt" onclick="selImp(this,'baixo')">pouco</button><button class="imp-opt sel-medio" onclick="selImp(this,'medio')">médio</button><button class="imp-opt" onclick="selImp(this,'alto')">muito</button></div></div>
+      </div>
+    </div>
+    <div class="file-item">
+      <div class="file-header"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><rect width="13" height="15" rx="2" fill="rgba(255,92,92,0.1)"/><path d="M2.5 5h8M2.5 8h8M2.5 11h5" stroke="var(--red)" stroke-width="1" stroke-linecap="round"/></svg><span style="font-size:12px;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" class="mono">MAT_1_Folhinha_Aula_3_Funcoes.pdf</span><span class="tag tag-ok">detectado</span><button class="btn-sm" onclick="this.closest('.file-item').remove()">remover</button></div>
+      <div class="file-fields">
+        <div class="field"><label>Matéria</label><select><option>Matemática</option><option>Biologia</option><option>Física</option><option>Química</option></select></div>
+        <div class="field"><label>Frente</label><select><option>Frente 1 — Álgebra</option><option>Frente 2 — Geometria</option><option>Frente 3 — Estatística</option></select></div>
+        <div class="field"><label>Nº aula</label><input type="text" value="Folha 03"></div>
+        <div class="field"><label>Importância</label><div class="imp-btns"><button class="imp-opt" onclick="selImp(this,'baixo')">pouco</button><button class="imp-opt" onclick="selImp(this,'medio')">médio</button><button class="imp-opt sel-alto" onclick="selImp(this,'alto')">muito</button></div></div>
+      </div>
+    </div>
+    <div class="file-item needs-fix">
+      <div class="file-header"><svg width="13" height="15" viewBox="0 0 13 15" fill="none"><rect width="13" height="15" rx="2" fill="rgba(255,92,92,0.1)"/><path d="M2.5 5h8M2.5 8h8M2.5 11h5" stroke="var(--red)" stroke-width="1" stroke-linecap="round"/></svg><span style="font-size:12px;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" class="mono">aula_quimica_sem_nome.pdf</span><span class="tag tag-warn">preencha manualmente</span><button class="btn-sm" onclick="this.closest('.file-item').remove()">remover</button></div>
+      <div class="file-fields">
+        <div class="field"><label>Matéria</label><select><option value="">Selecionar...</option><option>Biologia</option><option>Matemática</option><option selected>Química</option></select></div>
+        <div class="field"><label>Frente</label><select><option>Frente 2 — Química Orgânica</option><option>Frente 1 — Química Geral</option><option>Frente 3 — Físico-Química</option></select></div>
+        <div class="field"><label>Nº aula</label><input type="text" placeholder="Ex: Folha 07"></div>
+        <div class="field"><label>Importância</label><div class="imp-btns"><button class="imp-opt" onclick="selImp(this,'baixo')">pouco</button><button class="imp-opt sel-medio" onclick="selImp(this,'medio')">médio</button><button class="imp-opt" onclick="selImp(this,'alto')">muito</button></div></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="goTo('dashboard')">Salvar todas as folhinhas</button>
+      <button class="btn btn-ghost" onclick="goTo('dashboard')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+const frentesMap = {
+  bio:['Frente 1 — Citologia e Genética','Frente 2 — Ecologia','Frente 3 — Evolução e Zoologia'],
+  mat:['Frente 1 — Álgebra','Frente 2 — Geometria','Frente 3 — Estatística e Probabilidade'],
+  port:['Frente 1 — Gramática','Frente 2 — Literatura','Frente 3 — Interpretação de Texto'],
+  fis:['Frente 1 — Mecânica','Frente 2 — Termodinâmica','Frente 3 — Eletromagnetismo'],
+  hist:['Frente 1 — História Geral','Frente 2 — História do Brasil','Frente 3 — História Contemporânea'],
+  quim:['Frente 1 — Química Geral','Frente 2 — Química Orgânica','Frente 3 — Físico-Química'],
+  geo:['Frente 1 — Geografia Física','Frente 2 — Geografia Humana','Frente 3 — Geopolítica'],
+  red:['Frente 1 — Argumentação','Frente 2 — Estrutura e repertório']
+};
+
+function goTo(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navMap = { dashboard:'dashboard', folhinhas:'folhinhas', 'nova-folhinha':'folhinhas', 'folhinha-detalhe':'folhinhas', desempenho:'desempenho', simulados:'simulados', leituras:'leituras', 'revisao-mensal':'revisao-mensal', upload:'upload' };
+  document.querySelectorAll('.nav-item').forEach(n => { if(n.getAttribute('onclick') && n.getAttribute('onclick').includes(navMap[pageId])) n.classList.add('active'); });
+  window.scrollTo(0,0);
+  if(pageId === 'folhinha-detalhe') { setTimeout(() => { document.getElementById('fd-ia-loading').style.display = 'none'; document.getElementById('fd-ia-content').style.display = 'block'; }, 1500); }
+}
+
+function switchTab(btn, showId, hideId) {
+  document.getElementById(showId).style.display = 'block';
+  document.getElementById(hideId).style.display = 'none';
+  btn.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function switchTabMulti(btn, showId, allIds) {
+  allIds.forEach(id => { const el = document.getElementById(id); if(el) el.style.display = 'none'; });
+  const el = document.getElementById(showId); if(el) el.style.display = 'block';
+  if(btn && btn.closest) { const tabs = btn.closest('.tabs'); if(tabs) { tabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); btn.classList.add('active'); } }
+}
+
+function updateFrentes(sel) {
+  const val = sel.value;
+  const box = document.getElementById('frente-tags');
+  if(!val) { box.innerHTML = '<span style="font-size:12px;color:var(--text3);">Selecione a matéria primeiro</span>'; return; }
+  box.innerHTML = (frentesMap[val]||[]).map(f => `<button class="imp-opt" onclick="selFrente(this)" style="font-size:12px;">${f}</button>`).join('');
+}
+
+function selFrente(el) { el.closest('#frente-tags').querySelectorAll('button').forEach(b => b.classList.remove('sel-medio')); el.classList.add('sel-medio'); }
+
+function selImpNf(btn, nivel) { btn.closest('.imp-btns').querySelectorAll('button').forEach(b => { b.className='imp-opt'; }); btn.classList.add('sel-'+nivel); }
+function selImp(btn, nivel) { btn.closest('.imp-btns').querySelectorAll('button').forEach(b => { b.className='imp-opt'; }); btn.classList.add('sel-'+nivel); }
+
+function simFolhinha() { document.getElementById('file-sel-result').style.display = 'block'; }
+function simUpload() { document.getElementById('upload-drop').style.display = 'none'; document.getElementById('upload-list').style.display = 'block'; }
+
+let iaResps = {};
+function markQ(n, tipo) {
+  iaResps[n] = tipo;
+  ['c','e'].forEach(t => document.getElementById('ia'+n+t).className = 'qbtn');
+  document.getElementById('ia'+n+(tipo==='c'?'c':'e')).className = 'qbtn '+(tipo==='c'?'certo':'errado');
+  const total = Object.keys(iaResps).length;
+  const certas = Object.values(iaResps).filter(v=>v==='c').length;
+  document.getElementById('ia-score').textContent = total+' / 4 respondidas · '+certas+' certas';
+  document.getElementById('fd-ia-val').textContent = certas+' / '+total;
+}
+
+let rmResps = {};
+function markRM(n, tipo) {
+  rmResps[n] = tipo;
+  ['c','e'].forEach(t => document.getElementById('rm'+n+t).className = 'qbtn');
+  document.getElementById('rm'+n+(tipo==='c'?'c':'e')).className = 'qbtn '+(tipo==='c'?'certo':'errado');
+  const total = Object.keys(rmResps).length;
+  const certas = Object.values(rmResps).filter(v=>v==='c').length;
+  document.getElementById('rm-resp').textContent = total;
+  document.getElementById('rm-certas').textContent = certas;
+  document.getElementById('rm-aprov').textContent = Math.round((certas/20)*100)+'%';
+  document.getElementById('rm-prog').style.width = Math.round((total/20)*100)+'%';
+}
+
+function salvarLista() {
+  const a = parseInt(document.getElementById('fd-ac').value);
+  const t = parseInt(document.getElementById('fd-tot').value);
+  if(a>=0 && t>0) {
+    const pct = Math.round((a/t)*100);
+    document.getElementById('fd-lista-val').textContent = a+' / '+t;
+    const fb = document.getElementById('fd-lista-fb');
+    fb.style.display = 'block'; fb.textContent = 'Salvo! '+a+'/'+t+' — '+pct+'% de acerto.';
+  }
+}
+
+function marcarFC() { document.getElementById('fc-status').className = 'tag tag-ok'; document.getElementById('fc-status').textContent = 'Feito'; }
+
+function toggleDesemp(header) {
+  const frentes = header.nextElementSibling;
+  frentes.style.display = frentes.style.display === 'block' ? 'none' : 'block';
+}
+
+function filtrarDesemp(tipo, btn) {
+  document.querySelectorAll('#desemp-lista .card').forEach(c => {
+    const s = c.dataset.status;
+    c.style.display = (tipo==='todas'||(tipo==='atencao'&&s==='atencao')||(tipo==='bom'&&s==='bom')) ? '' : 'none';
+  });
+}
+
+function filtrarBanca(banca, btn) {
+  document.querySelectorAll('.sim-row').forEach(r => {
+    r.style.display = (banca==='todas'||r.dataset.banca===banca) ? '' : 'none';
+  });
+}
+
+function updateSimFase() {
+  const v = document.getElementById('sim-fase').value;
+  document.getElementById('sim-1f').style.display = v==='1'?'block':'none';
+  document.getElementById('sim-2f').style.display = v==='2'?'block':'none';
+}
+
+function calcSimPct() {
+  const a = parseFloat(document.getElementById('sim-ac').value);
+  const t = parseFloat(document.getElementById('sim-tot').value);
+  if(a>=0&&t>0) document.getElementById('sim-pct').textContent = Math.round((a/t)*100)+'%';
+}
+
+let simQCount = 4;
+function addSimQ() {
+  simQCount++;
+  const div = document.createElement('div');
+  div.className = 'row';
+  div.innerHTML = `<span style="font-size:13px;flex:1;">Questão ${simQCount}</span><input type="number" placeholder="0" min="0" style="width:60px;text-align:center;font-size:14px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;" oninput="calcSimTotal()"><span style="font-size:12px;color:var(--text3);">/</span><input type="number" placeholder="10" min="0" style="width:50px;text-align:center;font-size:14px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;" oninput="calcSimTotal()">`;
+  document.getElementById('sim-qs').appendChild(div);
+}
+
+function calcSimTotal() {
+  let soma=0,max=0;
+  document.querySelectorAll('#sim-qs .row').forEach(r => {
+    const ins = r.querySelectorAll('input');
+    if(ins[0]&&ins[0].value) soma+=parseFloat(ins[0].value)||0;
+    if(ins[1]&&ins[1].value) max+=parseFloat(ins[1].value)||0;
+  });
+  document.getElementById('sim-total').textContent = soma.toFixed(1)+(max>0?' / '+max.toFixed(0):'');
+}
+
+function atualizarPg(id, total, meta) {
+  const inp = document.getElementById('inp-'+id);
+  const pg = parseInt(inp.value);
+  if(!pg||pg<0||pg>total) return;
+  const pct = Math.round((pg/total)*100);
+  const dias = Math.ceil((total-pg)/meta);
+  document.getElementById('prog-'+id).style.width = pct+'%';
+  document.getElementById('pct-'+id).textContent = pct+'%';
+  document.getElementById('pg-'+id).textContent = pg+'/'+total;
+  document.getElementById('dias-'+id).textContent = dias+' dias';
+  inp.value='';
+}
+
+function toggleObras(b) {
+  const el = document.getElementById('obras-'+b);
+  const ch = document.getElementById('oc-'+b);
+  const open = el.style.display==='block';
+  el.style.display = open?'none':'block';
+  ch.textContent = open?'›':'˅';
+}
+</script>
+</body>
+</html>
