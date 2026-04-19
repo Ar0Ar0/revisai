@@ -1729,9 +1729,11 @@ function openEssayModal(id=null) {
 function closeEssayModal() { document.getElementById('essay-modal').classList.remove('open'); }
 
 function renderScoreInputs(existing={}) {
+  const el = document.getElementById('r-scores-inputs');
+  if (!el) return;
   const banca = document.getElementById('ef-banca')?.value || 'unesp';
   const cfg = BANCAS[banca];
-  document.getElementById('r-scores-inputs').innerHTML = cfg.criterios.map(c => {
+  el.innerHTML = cfg.criterios.map(c => {
     const val = existing[c.key]||0;
     const pct = val/c.max*100;
     return `<div class="score-input-card"><label>${c.name} (0–${c.max})</label>
@@ -1932,7 +1934,6 @@ function renderAlerts() {
 
 // ─── INIT ─────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-  renderScoreInputs();
   // Aguarda supabase carregar antes de inicializar auth
   function tryInit() {
     if (window.supabase) {
