@@ -423,7 +423,94 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <div class="card">
       <div class="card-header"><span class="card-title">Leituras</span><button class="btn-sm" onclick="goTo('leituras')">Ver todas</button></div>
       <div id="dash-leituras"><div style="font-size:13px;color:var(--text3);">Carregando...</div></div>
-      <div class="actions">
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Desempenho por matéria</span><button class="btn-sm" onclick="goTo('desempenho');renderDesempenhoPage()">Ver detalhado</button></div>
+      <div id="dash-desemp"><div style="font-size:13px;color:var(--text3);">Carregando...</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FOLHINHAS ===== -->
+<div id="page-folhinhas" class="page">
+  <div class="page-header">
+    <h2>Folhinhas</h2>
+    <p>Gerencie todas as suas folhinhas por matéria e frente</p>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="goTo('nova-folhinha')">+ Nova folhinha</button>
+    <select id="f-mat" onchange="renderFolhinhasList()" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+      <option value="">Todas as matérias</option><option>Biologia</option><option>Matemática</option><option>Física</option><option>Química</option><option>História</option><option>Português</option><option>Geografia</option><option>Redação</option>
+    </select>
+    <select id="f-frente" onchange="renderFolhinhasList()" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+      <option value="">Todas as frentes</option><option>Frente 1</option><option>Frente 2</option><option>Frente 3</option>
+    </select>
+    <select id="f-imp" onchange="renderFolhinhasList()" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+      <option value="">Importância: todas</option><option value="alto">Muito importante</option><option value="medio">Médio</option><option value="baixo">Pouco importante</option>
+    </select>
+  </div>
+  <div class="card">
+    <div class="card-header" id="folhinhas-header"><span class="card-title">Folhinhas</span></div>
+    <div id="folhinhas-lista"><div style="font-size:13px;color:var(--text3);padding:1rem;">Carregando...</div></div>
+  </div>
+</div>
+
+<!-- ===== NOVA FOLHINHA ===== -->
+<div id="page-nova-folhinha" class="page">
+  <div class="back-btn" onclick="goTo('folhinhas')">← Folhinhas</div>
+  <div class="page-header"><h2>Nova folhinha</h2><p>Adicione pelo seu computador ou registre só o tópico</p></div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'tab-drive','tab-topico')">Arquivo PDF</button>
+    <button class="tab" onclick="switchTab(this,'tab-topico','tab-drive')">Só o tópico</button>
+  </div>
+  <div id="tab-drive">
+    <input type="file" id="file-input-folhinha" accept=".pdf" style="display:none" onchange="handleFolhinhaFile(this)">
+    <div class="drop-zone" onclick="document.getElementById('file-input-folhinha').click()" style="margin-bottom:1.5rem;">
+      <div class="drop-title">Selecionar PDF do computador</div>
+      <div class="drop-hint">Clique para escolher o arquivo .pdf da folhinha</div>
+    </div>
+    <div id="file-sel-result" style="display:none;" class="alert alert-ok"></div>
+  </div>
+  <div id="tab-topico" style="display:none">
+    <div class="field"><label>Nome do tópico</label><input type="text" id="nf-topico-nome" placeholder="Ex: Revolução Francesa, Funções do 2º grau..."></div>
+  </div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+      <div class="field" style="margin:0"><label>Matéria</label>
+        <select id="nf-materia" onchange="updateFrentes(this)">
+          <option value="">Selecionar...</option>
+          <option value="bio">Biologia</option><option value="mat">Matemática</option><option value="port">Português</option>
+          <option value="fis">Física</option><option value="hist">História</option><option value="quim">Química</option>
+          <option value="geo">Geografia</option><option value="red">Redação</option>
+        </select>
+      </div>
+      <div class="field" style="margin:0"><label>Nº da aula / folha</label><input type="text" id="nf-numero" placeholder="Ex: Folha 05"></div>
+    </div>
+    <div class="field">
+      <label>Frente</label>
+      <div id="frente-tags" style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="font-size:12px;color:var(--text3);">Selecione a matéria primeiro</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>Importância no vestibular</label>
+      <div class="imp-btns">
+        <button class="imp-opt" onclick="selImpNf(this,'baixo')">pouco cai</button>
+        <button class="imp-opt sel-medio" onclick="selImpNf(this,'medio')">médio</button>
+        <button class="imp-opt" onclick="selImpNf(this,'alto')">muito cai</button>
+      </div>
+    </div>
+    <div class="field" style="margin:0"><label>Anotação inicial (opcional)</label><textarea id="nf-anotacao" placeholder="Ex: Prof falou que cai muito no ENEM..."></textarea></div>
+  </div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-header"><span class="card-title">Configurações de revisão</span></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Repetição espaçada automática</div><div class="ts">1d → 3d → 1sem → 2sem → 1mês</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Exercícios extras por IA</div><div class="ts">Gerados com base no PDF ou tópico</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Flashcards (NotebookLM)</div><div class="ts">Lembra você de gerar os flashcards</div></div><button class="toggle off" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Notificação push + email</div><div class="ts">Aviso no dia da revisão</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+  </div>
+  <div class="actions">
     <button class="btn btn-primary" onclick="salvarNovaFolhinha()">Salvar folhinha</button>
     <button class="btn btn-ghost" onclick="goTo('folhinhas')">Cancelar</button>
   </div>
@@ -787,6 +874,64 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     </div>
   </div>
 </div>
+
+<!-- ===== REDAÇÕES ===== -->
+<div id="page-redacoes" class="page" style="display:none;">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;">
+    <div class="page-header" style="margin:0"><h2>Redações</h2><p>Acompanhe seu desempenho por banca e competência</p></div>
+    <button class="btn btn-primary" onclick="openEssayModal()">+ Nova redação</button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTabMulti(this,'red-dash',['red-dash','red-lista','red-charts','red-alerts'])">Dashboard</button>
+    <button class="tab" onclick="switchTabMulti(this,'red-lista',['red-dash','red-lista','red-charts','red-alerts']);renderEssayList()">Todas</button>
+    <button class="tab" onclick="switchTabMulti(this,'red-charts',['red-dash','red-lista','red-charts','red-alerts']);renderCharts()">Gráficos</button>
+    <button class="tab" onclick="switchTabMulti(this,'red-alerts',['red-dash','red-lista','red-charts','red-alerts']);renderAlerts()">Alertas</button>
+  </div>
+  <div id="red-dash"><div class="stats-grid-r" id="r-stats"></div><div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">Últimas redações</div><div id="r-recent"></div></div>
+  <div id="red-lista" style="display:none"><div id="r-lista-full"></div></div>
+  <div id="red-charts" style="display:none">
+    <div class="charts-grid-r">
+      <div class="chart-card-r full"><div class="chart-title-r">Evolução da nota ao longo do tempo</div><canvas id="chart-evolution" height="80"></canvas></div>
+      <div class="chart-card-r"><div class="chart-title-r">Média por competência</div><canvas id="chart-comp" height="160"></canvas></div>
+      <div class="chart-card-r"><div class="chart-title-r">Distribuição por banca</div><canvas id="chart-banca" height="160"></canvas></div>
+    </div>
+  </div>
+  <div id="red-alerts" style="display:none"><div id="r-alerts-list"></div></div>
+</div>
+
+<!-- ===== DETALHE REDAÇÃO ===== -->
+<div id="page-redacao-detalhe" class="page" style="display:none;">
+  <div class="back-btn" onclick="goTo('redacoes')">← Redações</div>
+  <div id="r-detail-content"></div>
+</div>
+
+<!-- MODAL REDAÇÃO -->
+<div class="modal-overlay-r" id="essay-modal">
+<div class="modal-r">
+  <div class="modal-header-r">
+    <h3 id="essay-modal-title">Nova redação</h3>
+    <button class="modal-close" onclick="closeEssayModal()">×</button>
+  </div>
+  <div class="form-grid-r">
+    <div class="full field"><label>Título / tema</label><input type="text" id="ef-title" placeholder="Ex: Desigualdade no Brasil..."></div>
+    <div class="field"><label>Data</label><input type="date" id="ef-date"></div>
+    <div class="field"><label>Banca</label>
+      <select id="ef-banca" onchange="renderScoreInputs()">
+        <option value="unesp">UNESP</option><option value="unicamp">Unicamp</option>
+        <option value="fuvest">Fuvest</option><option value="enem">ENEM</option>
+      </select>
+    </div>
+  </div>
+  <div class="section-title-r">Notas por critério</div>
+  <div class="scores-grid-r" id="r-scores-inputs"></div>
+  <div class="field" style="margin-top:.5rem"><label>Observações</label><textarea id="ef-obs" placeholder="O que preciso melhorar, erros recorrentes..."></textarea></div>
+  <div class="modal-footer-r">
+    <button class="btn btn-ghost" onclick="closeEssayModal()">Cancelar</button>
+    <button class="btn btn-primary" onclick="saveEssay()">Salvar redação</button>
+  </div>
+</div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
@@ -1120,15 +1265,17 @@ let currentFolhinha = null;
 async function salvarNovaFolhinha() {
   if (!currentUser) { alert('Faça login primeiro!'); return; }
   
-  const materia = document.getElementById('nf-materia').value;
-  const nomeInput = document.querySelector('#tab-drive #file-sel-result') && document.getElementById('file-sel-result').style.display !== 'none'
-    ? 'Folhinha ' + materia
-    : document.querySelector('#tab-topico input')?.value;
+  const materia = document.getElementById('nf-materia')?.value || '';
+  const numero = document.getElementById('nf-numero')?.value || '';
+  const anotacao = document.getElementById('nf-anotacao')?.value || '';
+  const topicoNome = document.getElementById('nf-topico-nome')?.value || '';
+  const fileResult = document.getElementById('file-sel-result');
+  const nomeInput = (fileResult && fileResult.style.display !== 'none')
+    ? (window._pendingFolhinhaFile?.name?.replace('.pdf','') || 'Folhinha')
+    : (topicoNome || 'Folhinha');
   
   const frente = document.querySelector('#frente-tags .sel-medio')?.textContent || '';
-  const numero = document.querySelector('#page-nova-folhinha input[placeholder="Ex: Folha 05"]')?.value || '';
-  const anotacao = document.querySelector('#page-nova-folhinha textarea')?.value || '';
-  const imp = document.querySelector('#page-nova-folhinha .sel-alto') ? 'alto' : document.querySelector('#page-nova-folhinha .sel-medio') ? 'medio' : 'baixo';
+  const imp = document.querySelector('#page-nova-folhinha .imp-btns .sel-alto') ? 'alto' : document.querySelector('#page-nova-folhinha .imp-btns .sel-medio') ? 'medio' : 'baixo';
   
   const hoje = new Date();
   const proxima = new Date(hoje); proxima.setDate(proxima.getDate() + 1);
