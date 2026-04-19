@@ -390,10 +390,10 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
   <div class="alert alert-danger section-gap">2 folhinhas atrasadas — você não revisou ontem</div>
 
   <div class="grid4 section-gap">
-    <div class="metric"><div class="metric-label">Revisar hoje</div><div class="metric-value">5</div></div>
-    <div class="metric"><div class="metric-label">Atrasadas</div><div class="metric-value danger">2</div></div>
-    <div class="metric"><div class="metric-label">Consolidadas</div><div class="metric-value good">7</div></div>
-    <div class="metric"><div class="metric-label">Total folhinhas</div><div class="metric-value">24</div></div>
+    <div class="metric"><div class="metric-label">Revisar hoje</div><div class="metric-value" id="dash-revisar">—</div></div>
+    <div class="metric"><div class="metric-label">Atrasadas</div><div class="metric-value danger" id="dash-atrasadas">—</div></div>
+    <div class="metric"><div class="metric-label">Consolidadas</div><div class="metric-value good" id="dash-consolidadas">—</div></div>
+    <div class="metric"><div class="metric-label">Total folhinhas</div><div class="metric-value" id="dash-total">—</div></div>
   </div>
 
   <div class="grid2 section-gap">
@@ -1016,7 +1016,7 @@ async function initAuth() {
   if (user) {
     document.getElementById('google-login-btn').style.display = 'none';
     document.getElementById('user-info-sidebar').style.display = 'block';
-    document.getElementById('user-email-display').textContent = user.email;
+    const emailEl = document.getElementById('user-email-display'); if(emailEl) emailEl.textContent = user.email;
     await loadAll();
   } else {
     document.getElementById('google-login-btn').style.display = 'flex';
@@ -1113,10 +1113,14 @@ function renderDashboard() {
   const consolidadas = folhinhas.filter(f => f.status === 'consolidada');
 
   // Métricas
-  document.getElementById('dash-revisar').textContent = revisoesPendentes.length;
-  document.getElementById('dash-atrasadas').textContent = atrasadas.length;
-  document.getElementById('dash-consolidadas').textContent = consolidadas.length;
-  document.getElementById('dash-total').textContent = folhinhas.length;
+  const elR = document.getElementById('dash-revisar');
+  const elA = document.getElementById('dash-atrasadas');
+  const elC = document.getElementById('dash-consolidadas');
+  const elT = document.getElementById('dash-total');
+  if (elR) elR.textContent = revisoesPendentes.length;
+  if (elA) elA.textContent = atrasadas.length;
+  if (elC) elC.textContent = consolidadas.length;
+  if (elT) elT.textContent = folhinhas.length;
 
   // Lista de revisões
   const lista = document.getElementById('dash-revisoes-lista');
