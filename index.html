@@ -262,6 +262,63 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 .evo-bar { height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: 'DM Mono', monospace; }
 
 .section-gap { margin-bottom: 1.5rem; }
+
+/* ===== REDAÇÕES (integrado) ===== */
+.stats-grid-r { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 1.5rem; }
+.stat-card-r { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+.stat-label-r { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.stat-value-r { font-size: 26px; font-weight: 700; color: var(--text); }
+.badge-unesp { background: rgba(60,179,113,0.12); color: #3cb371; }
+.badge-unicamp { background: rgba(231,76,60,0.12); color: #e74c3c; }
+.badge-fuvest { background: rgba(93,173,226,0.12); color: #5dade2; }
+.badge-enem { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.essay-card-r { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; cursor: pointer; transition: border-color .15s; margin-bottom: .75rem; }
+.essay-card-r:hover { border-color: var(--accent); }
+.essay-total-r { font-size: 22px; font-weight: 700; text-align: right; }
+.essay-total-r small { font-size: 11px; color: var(--text3); font-weight: 400; display: block; }
+.score-pill-r { font-size: 11px; padding: 2px 8px; border-radius: 6px; background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
+.score-pill-r strong { color: var(--text); }
+.nota-alta { color: var(--accent); }
+.nota-media { color: var(--orange); }
+.nota-baixa { color: var(--red); }
+.detail-scores-r { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 12px; margin-bottom: 1.5rem; }
+.detail-score-card-r { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; }
+.detail-score-card-r .comp { font-size: 12px; color: var(--text3); margin-bottom: 6px; }
+.detail-score-card-r .val { font-size: 22px; font-weight: 700; margin-bottom: 2px; }
+.detail-score-card-r .pct { font-size: 11px; color: var(--text3); margin-bottom: 6px; font-family: "DM Mono",monospace; }
+.detail-score-card-r .bar { height: 4px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.detail-score-card-r .bar-fill { height: 100%; border-radius: 4px; }
+.alert-item-r { display: flex; align-items: flex-start; gap: 12px; padding: 1rem 1.25rem; border-radius: var(--radius-sm); border: 1px solid; margin-bottom: .75rem; }
+.alert-item-r.success { background: rgba(200,241,53,0.06); border-color: rgba(200,241,53,0.2); }
+.alert-item-r.warning { background: rgba(255,154,60,0.06); border-color: rgba(255,154,60,0.2); }
+.alert-item-r.danger { background: rgba(255,92,92,0.06); border-color: rgba(255,92,92,0.2); }
+.alert-item-r strong { display: block; margin-bottom: 3px; font-size: 13px; }
+.alert-item-r span { font-size: 12px; color: var(--text2); }
+.scores-grid-r { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 12px; margin: 1rem 0; }
+.score-input-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .85rem; }
+.score-input-card label { font-size: 11px; color: var(--text3); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing:.05em; }
+.score-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.score-bar-bg { flex: 1; height: 4px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.score-bar-live { height: 100%; border-radius: 4px; background: var(--accent); transition: width .2s; }
+.charts-grid-r { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.chart-card-r { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+.chart-card-r.full { grid-column: 1/-1; }
+.chart-title-r { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing:.06em; margin-bottom: 1rem; }
+.empty-state-r { text-align: center; padding: 3rem 1rem; color: var(--text3); }
+.empty-state-r .ei { font-size: 32px; margin-bottom: 12px; }
+.empty-state-r .et { font-size: 15px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.empty-state-r .es { font-size: 13px; }
+.modal-overlay-r { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; align-items: center; justify-content: center; }
+.modal-overlay-r.open { display: flex; }
+.modal-r { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.5rem; width: 600px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+.modal-header-r { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.modal-header-r h3 { font-size: 16px; font-weight: 600; }
+.modal-close { background: none; border: none; font-size: 20px; color: var(--text3); cursor: pointer; }
+.modal-footer-r { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.form-grid-r { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-grid-r .full { grid-column: 1/-1; }
+.section-title-r { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing:.08em; margin: 1rem 0 .5rem; }
+
 </style>
 </head>
 <body>
@@ -297,6 +354,10 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <div class="nav-item" onclick="goTo('leituras')">
       <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><path d="M8 3C5 3 2.5 4.5 2.5 4.5v9S5 12 8 12s5.5 1.5 5.5 1.5v-9S11 3 8 3z" stroke="currentColor" stroke-width="1.2"/><path d="M8 3v9" stroke="currentColor" stroke-width="1.2"/></svg>
       Leituras
+    </div>
+    <div class="nav-item" onclick="goTo('redacoes')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M4 6h8M4 9h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Redações
     </div>
   </nav>
  <div class="sidebar-footer">
@@ -339,11 +400,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <div>
       <div class="card">
         <div class="card-header"><span class="card-title">Revisões de hoje + atrasadas</span></div>
-        <div class="row"><span class="badge badge-bio">BIO</span><div style="flex:1;min-width:0"><div class="row-name">Ecologia — Dinâmica Pop.</div><div class="row-sub">Frente 2 · 1ª revisão</div></div><span class="tag tag-urg">atrasada</span></div>
-        <div class="row"><span class="badge badge-mat">MAT</span><div style="flex:1;min-width:0"><div class="row-name">Funções do 2º grau</div><div class="row-sub">Frente 1 · 3ª revisão</div></div><span class="tag tag-urg">atrasada</span></div>
-        <div class="row"><span class="badge badge-port">PORT</span><div style="flex:1;min-width:0"><div class="row-name">Interpretação de texto</div><div class="row-sub">Frente 2 · 2ª revisão</div></div><span class="tag tag-info">hoje</span></div>
-        <div class="row"><span class="badge badge-fis">FÍS</span><div style="flex:1;min-width:0"><div class="row-name">Cinemática escalar</div><div class="row-sub">Frente 1 · 1ª revisão</div></div><span class="tag tag-info">hoje</span></div>
-        <div class="row"><span class="badge badge-hist">HIST</span><div style="flex:1;min-width:0"><div class="row-name">Revolução Industrial</div><div class="row-sub">Frente 3 · 2ª revisão</div></div><span class="tag tag-info">hoje</span></div>
+        <div id="dash-revisoes-lista"><div style="font-size:13px;color:var(--text3);padding:1rem 0;">Carregando...</div></div>
         <div class="actions">
           <button class="btn btn-primary" onclick="goTo('folhinha-detalhe')">Iniciar revisões</button>
           <button class="btn btn-ghost" onclick="goTo('upload')">+ Upload em lote</button>
@@ -353,15 +410,11 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <div style="display:flex;flex-direction:column;gap:1rem;">
       <div class="card" style="border-color:rgba(255,92,92,0.2)">
         <div class="card-header"><span class="card-title" style="color:var(--red)">Desempenho fraco</span></div>
-        <div class="row"><div class="imp imp-alto"></div><span class="badge badge-quim">QUÍM</span><div style="flex:1;min-width:0"><div class="row-name">Química Orgânica</div><div class="row-sub">31% de acerto</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
-        <div class="row"><div class="imp imp-alto"></div><span class="badge badge-fis">FÍS</span><div style="flex:1;min-width:0"><div class="row-name">Eletromagnetismo</div><div class="row-sub">38% de acerto</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
-        <div class="row"><div class="imp imp-med"></div><span class="badge badge-mat">MAT</span><div style="flex:1;min-width:0"><div class="row-name">Geometria espacial</div><div class="row-sub">42% de acerto</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
+        <div id="dash-urg-fraco"><div style="font-size:13px;color:var(--text3);padding:.5rem 0;">Carregando...</div></div>
       </div>
       <div class="card" style="border-color:rgba(255,154,60,0.2)">
         <div class="card-header"><span class="card-title" style="color:var(--orange)">Sem revisar há muito tempo</span></div>
-        <div class="row"><span class="badge badge-hist">HIST</span><div style="flex:1;min-width:0"><div class="row-name">Absolutismo europeu</div><div class="row-sub">há 18 dias</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
-        <div class="row"><span class="badge badge-geo">GEO</span><div style="flex:1;min-width:0"><div class="row-name">Geopolítica mundial</div><div class="row-sub">há 14 dias</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
-        <div class="row"><span class="badge badge-quim">QUÍM</span><div style="flex:1;min-width:0"><div class="row-name">Química Geral — ligações</div><div class="row-sub">há 12 dias</div></div><button class="btn-sm" onclick="goTo('folhinha-detalhe')">Revisar</button></div>
+        <div id="dash-urg-atrasada"><div style="font-size:13px;color:var(--text3);padding:.5rem 0;">Carregando...</div></div>
       </div>
     </div>
   </div>
@@ -369,7 +422,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
   <div class="grid2">
     <div class="card">
       <div class="card-header"><span class="card-title">Leituras</span><button class="btn-sm" onclick="goTo('leituras')">Ver todas</button></div>
-      <div style="display:flex;flex-direction:column;gap:.75rem;">
+      <div id="dash-leituras" style="display:flex;flex-direction:column;gap:.75rem;">
         <div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
             <span class="tag" style="background:rgba(74,222,128,0.1);color:#4ade80;font-size:10px;">PT</span>
@@ -400,8 +453,8 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
       </div>
     </div>
     <div class="card">
-      <div class="card-header"><span class="card-title">Desempenho por matéria</span><button class="btn-sm" onclick="goTo('desempenho')">Ver detalhado</button></div>
-      <div class="perf-row"><span class="badge badge-port" style="min-width:36px;text-align:center">PORT</span><span style="font-size:13px;flex:1">Português</span><div class="bar-bg"><div class="bar-fill" style="width:88%;background:var(--accent)"></div></div><span class="mono" style="font-size:12px;color:var(--accent);min-width:30px;text-align:right">88%</span></div>
+      <div class="card-header"><span class="card-title">Desempenho por matéria</span><button class="btn-sm" onclick="goTo('desempenho');renderDesempenhoPage()">Ver detalhado</button></div>
+      <div id="dash-desemp"><span class="badge badge-port" style="min-width:36px;text-align:center">PORT</span><span style="font-size:13px;flex:1">Português</span><div class="bar-bg"><div class="bar-fill" style="width:88%;background:var(--accent)"></div></div><span class="mono" style="font-size:12px;color:var(--accent);min-width:30px;text-align:right">88%</span></div>
       <div class="perf-row"><span class="badge badge-bio" style="min-width:36px;text-align:center">BIO</span><span style="font-size:13px;flex:1">Biologia</span><div class="bar-bg"><div class="bar-fill" style="width:72%;background:var(--green)"></div></div><span class="mono" style="font-size:12px;color:var(--green);min-width:30px;text-align:right">72%</span></div>
       <div class="perf-row"><span class="badge badge-hist" style="min-width:36px;text-align:center">HIST</span><span style="font-size:13px;flex:1">História</span><div class="bar-bg"><div class="bar-fill" style="width:63%;background:var(--blue)"></div></div><span class="mono" style="font-size:12px;color:var(--blue);min-width:30px;text-align:right">63%</span></div>
       <div class="perf-row"><span class="badge badge-mat" style="min-width:36px;text-align:center">MAT</span><span style="font-size:13px;flex:1">Matemática</span><div class="bar-bg"><div class="bar-fill" style="width:55%;background:var(--orange)"></div></div><span class="mono" style="font-size:12px;color:var(--orange);min-width:30px;text-align:right">55%</span></div>
@@ -429,15 +482,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
       <option>Importância: todas</option><option>Muito importante</option><option>Médio</option><option>Pouco importante</option>
     </select>
   </div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">24 folhinhas cadastradas</span></div>
-    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-alto"></div><span class="badge badge-bio">BIO</span><div style="flex:1;min-width:0"><div class="row-name">Ecologia — Dinâmica Pop.</div><div class="row-sub">Frente 2 · Folha 05</div></div><span class="tag tag-urg">atrasada</span><span class="tag tag-warn" style="margin-left:4px;">muito</span></div>
-    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-alto"></div><span class="badge badge-mat">MAT</span><div style="flex:1;min-width:0"><div class="row-name">Funções do 2º grau</div><div class="row-sub">Frente 1 · Folha 03</div></div><span class="tag tag-urg">atrasada</span><span class="tag tag-warn" style="margin-left:4px;">muito</span></div>
-    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-med"></div><span class="badge badge-fis">FÍS</span><div style="flex:1;min-width:0"><div class="row-name">Cinemática escalar</div><div class="row-sub">Frente 1 · Folha 02</div></div><span class="tag tag-info">hoje</span><span class="tag" style="margin-left:4px;background:rgba(255,154,60,0.1);color:var(--orange);">médio</span></div>
-    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-alto"></div><span class="badge badge-quim">QUÍM</span><div style="flex:1;min-width:0"><div class="row-name">Química Orgânica</div><div class="row-sub">Frente 2 · Folha 06</div></div><span class="tag tag-urg" style="margin-left:auto;">31% acerto</span></div>
-    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="imp imp-baixo"></div><span class="badge badge-hist">HIST</span><div style="flex:1;min-width:0"><div class="row-name">Absolutismo europeu</div><div class="row-sub">Frente 1 · Folha 08</div></div><span class="tag tag-warn">há 18 dias</span></div>
-    <div class="row" style="cursor:pointer" onclick="goTo('folhinha-detalhe')"><div class="check-circle"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><polyline points="1.5,4 3,6 6.5,2" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="badge badge-port">PORT</span><div style="flex:1;min-width:0"><div class="row-name">Literatura Brasileira</div><div class="row-sub">Frente 2 · Folha 04</div></div><span class="tag tag-ok">consolidada</span></div>
-  </div>
+  <div class="card"><div class="card-header" id="folhinhas-header"><span class="card-title">Folhinhas</span></div><div id="folhinhas-lista"><div style="font-size:13px;color:var(--text3);padding:1rem;">Carregando...</div></div></div>
 </div>
 
 <!-- ===== NOVA FOLHINHA ===== -->
@@ -497,7 +542,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Notificação push + email</div><div class="ts">Aviso no dia da revisão</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
   </div>
   <div class="actions">
-    <button class="btn btn-primary" onclick="goTo('folhinha-detalhe')">Salvar folhinha</button>
+    <button class="btn btn-primary" onclick="salvarNovaFolhinha()">Salvar folhinha</button>
     <button class="btn btn-ghost" onclick="goTo('folhinhas')">Cancelar</button>
   </div>
 </div>
@@ -794,7 +839,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
         </div>
         <div class="field" style="margin-top:1rem;"><label>Anotações</label><textarea placeholder="Ex: Questão 2 foi bem, questão 3 tive dificuldade..."></textarea></div>
       </div>
-      <div class="actions"><button class="btn btn-primary">Salvar simulado</button><button class="btn btn-ghost" onclick="switchTabMulti(document.querySelectorAll('#page-simulados .tab')[0],'sim-hist',['sim-hist','sim-evo','sim-novo'])">Cancelar</button></div>
+      <div class="actions"><button class="btn btn-primary" onclick="salvarSimulado()">Salvar simulado</button><button class="btn btn-ghost" onclick="switchTabMulti(document.querySelectorAll('#page-simulados .tab')[0],'sim-hist',['sim-hist','sim-evo','sim-novo'])">Cancelar</button></div>
     </div>
   </div>
 </div>
@@ -803,7 +848,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 <div id="page-leituras" class="page">
   <div class="page-header"><h2>Leituras</h2><p>Obras obrigatórias por banca e leitura em inglês</p></div>
   <div class="tabs">
-    <button class="tab active" onclick="switchTabMulti(this,'leit-andamento',['leit-andamento','leit-obras','leit-novo'])">Em andamento</button>
+    <button class="tab active" onclick="switchTabMulti(this,'leit-andamento',['leit-andamento','leit-obras','leit-novo']);renderLeituras()">Em andamento</button>
     <button class="tab" onclick="switchTabMulti(this,'leit-obras',['leit-andamento','leit-obras','leit-novo'])">Obras por banca</button>
     <button class="tab" onclick="switchTabMulti(this,'leit-novo',['leit-andamento','leit-obras','leit-novo'])">+ Adicionar</button>
   </div>
@@ -887,7 +932,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
         <div class="field" style="margin:0"><label>Página atual</label><input type="number" placeholder="0"></div>
         <div class="field" style="margin:0"><label>Meta (pg/dia)</label><input type="number" placeholder="15"></div>
       </div>
-      <div class="actions"><button class="btn btn-primary" onclick="switchTabMulti(document.querySelectorAll('#page-leituras .tab')[0],'leit-andamento',['leit-andamento','leit-obras','leit-novo'])">Salvar livro</button><button class="btn btn-ghost" onclick="switchTabMulti(document.querySelectorAll('#page-leituras .tab')[0],'leit-andamento',['leit-andamento','leit-obras','leit-novo'])">Cancelar</button></div>
+      <div class="actions"><button class="btn btn-primary" onclick="salvarLivro()">Salvar livro</button><button class="btn btn-ghost" onclick="switchTabMulti(document.querySelectorAll('#page-leituras .tab')[0],'leit-andamento',['leit-andamento','leit-obras','leit-novo'])">Cancelar</button></div>
     </div>
   </div>
 </div>
@@ -937,27 +982,80 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     </div>
   </div>
 </div>
-
-</main>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-// ========== SUPABASE CONFIG ==========
-const SUPABASE_URL = 'https://qvvxjuapunkxrjrzgoak.supabase.co'; 
-const SUPABASE_KEY = 'sb_publishable_vjIssqyg-pf4oaEWHTT17w_QN2rFpah';                 
+// ============================================================
+// CONFIG — substitua pelos seus valores do Supabase
+// ============================================================
+const SUPABASE_URL = 'https://qvvxjuapunkxrjrzgoak.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_vjIssqyg-pf4oaEWHTT17w_QN2rFpah';
+// ============================================================
 
-// Carregar Supabase de forma tradicional (sem import)
-const script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-script.onload = function() {
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  window.supabaseClient = supabase;
-  console.log('✅ Supabase conectado!');
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let currentUser = null;
+
+// ─── AUTH ─────────────────────────────────────────────────
+async function initAuth() {
+  const { data: { user } } = await sb.auth.getUser();
+  currentUser = user;
+  if (user) {
+    document.getElementById('google-login-btn').style.display = 'none';
+    document.getElementById('user-info-sidebar').style.display = 'block';
+    document.getElementById('user-email-display').textContent = user.email;
+    await loadAll();
+  } else {
+    document.getElementById('google-login-btn').style.display = 'flex';
+    document.getElementById('user-info-sidebar').style.display = 'none';
+  }
+}
+
+async function signInWithGoogle() {
+  await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
+}
+
+async function handleLogout() {
+  await sb.auth.signOut();
+  currentUser = null;
+  document.getElementById('google-login-btn').style.display = 'flex';
+  document.getElementById('user-info-sidebar').style.display = 'none';
+}
+
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN') { currentUser = session.user; loadAll(); initAuth(); }
+  if (event === 'SIGNED_OUT') { currentUser = null; }
+});
+
+// ─── CACHE LOCAL ──────────────────────────────────────────
+let DB = {
+  folhinhas: [],
+  revisoes: [],
+  simulados: [],
+  leituras: [],
+  essays: []
 };
-document.head.appendChild(script);
-// =====================================
 
+async function loadAll() {
+  if (!currentUser) return;
+  const uid = currentUser.id;
+  const [f, r, s, l, e] = await Promise.all([
+    sb.from('folhinhas').select('*').eq('user_id', uid).order('criado_em', { ascending: false }),
+    sb.from('revisoes').select('*').eq('user_id', uid).order('data_revisao', { ascending: false }),
+    sb.from('simulados').select('*').eq('user_id', uid).order('data_simulado', { ascending: false }),
+    sb.from('leituras').select('*').eq('user_id', uid),
+    sb.from('redacoes').select('*').eq('user_id', uid).order('date', { ascending: false })
+  ]);
+  DB.folhinhas = f.data || [];
+  DB.revisoes  = r.data || [];
+  DB.simulados = s.data || [];
+  DB.leituras  = l.data || [];
+  DB.essays    = e.data || [];
+  renderDashboard();
+  renderFolhinhasList();
+  renderEssayDashboard();
+}
 
+// ─── NAVEGAÇÃO ────────────────────────────────────────────
 const frentesMap = {
   bio:['Frente 1 — Citologia e Genética','Frente 2 — Ecologia','Frente 3 — Evolução e Zoologia'],
   mat:['Frente 1 — Álgebra','Frente 2 — Geometria','Frente 3 — Estatística e Probabilidade'],
@@ -971,12 +1069,12 @@ const frentesMap = {
 
 function goTo(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + pageId).classList.add('active');
+  const page = document.getElementById('page-' + pageId);
+  if (page) page.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const navMap = { dashboard:'dashboard', folhinhas:'folhinhas', 'nova-folhinha':'folhinhas', 'folhinha-detalhe':'folhinhas', desempenho:'desempenho', simulados:'simulados', leituras:'leituras', 'revisao-mensal':'revisao-mensal', upload:'upload' };
-  document.querySelectorAll('.nav-item').forEach(n => { if(n.getAttribute('onclick') && n.getAttribute('onclick').includes(navMap[pageId])) n.classList.add('active'); });
+  const navMap = { dashboard:'dashboard', folhinhas:'folhinhas', 'nova-folhinha':'folhinhas', 'folhinha-detalhe':'folhinhas', desempenho:'desempenho', simulados:'simulados', leituras:'leituras', 'revisao-mensal':'revisao-mensal', upload:'upload', redacoes:'redacoes', 'redacao-detalhe':'redacoes' };
+  document.querySelectorAll('.nav-item').forEach(n => { if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+navMap[pageId]+"'")) n.classList.add('active'); });
   window.scrollTo(0,0);
-  if(pageId === 'folhinha-detalhe') { setTimeout(() => { document.getElementById('fd-ia-loading').style.display = 'none'; document.getElementById('fd-ia-content').style.display = 'block'; }, 1500); }
 }
 
 function switchTab(btn, showId, hideId) {
@@ -992,180 +1090,816 @@ function switchTabMulti(btn, showId, allIds) {
   if(btn && btn.closest) { const tabs = btn.closest('.tabs'); if(tabs) { tabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); btn.classList.add('active'); } }
 }
 
-function updateFrentes(sel) {
-  const val = sel.value;
-  const box = document.getElementById('frente-tags');
-  if(!val) { box.innerHTML = '<span style="font-size:12px;color:var(--text3);">Selecione a matéria primeiro</span>'; return; }
-  box.innerHTML = (frentesMap[val]||[]).map(f => `<button class="imp-opt" onclick="selFrente(this)" style="font-size:12px;">${f}</button>`).join('');
+// ─── DASHBOARD ────────────────────────────────────────────
+function renderDashboard() {
+  const hoje = new Date().toISOString().split('T')[0];
+  const folhinhas = DB.folhinhas;
+  
+  // Calcular revisões de hoje baseado em repetição espaçada
+  const revisoesPendentes = folhinhas.filter(f => f.proxima_revisao <= hoje);
+  const atrasadas = folhinhas.filter(f => f.proxima_revisao < hoje);
+  const consolidadas = folhinhas.filter(f => f.status === 'consolidada');
+
+  // Métricas
+  document.getElementById('dash-revisar').textContent = revisoesPendentes.length;
+  document.getElementById('dash-atrasadas').textContent = atrasadas.length;
+  document.getElementById('dash-consolidadas').textContent = consolidadas.length;
+  document.getElementById('dash-total').textContent = folhinhas.length;
+
+  // Lista de revisões
+  const lista = document.getElementById('dash-revisoes-lista');
+  if (revisoesPendentes.length === 0) {
+    lista.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:1rem 0;">Nenhuma revisão pendente hoje!</div>';
+  } else {
+    lista.innerHTML = revisoesPendentes.slice(0,5).map(f => {
+      const atrasada = f.proxima_revisao < hoje;
+      return '<div class="row"><span class="badge badge-' + (f.materia||'bio').toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').substring(0,4) + '">' + (f.materia||'—').substring(0,4).toUpperCase() + '</span><div style="flex:1;min-width:0"><div class="row-name">' + (f.nome||'—') + '</div><div class="row-sub">' + (f.frente||'') + ' · ' + (f.numero_revisao||1) + 'ª revisão</div></div><span class="tag ' + (atrasada?'tag-urg':'tag-info') + '">' + (atrasada?'atrasada':'hoje') + '</span></div>';
+    }).join('');
+  }
+
+  // Desempenho por matéria
+  renderDesempenhoPorMateria();
+  
+  // Leituras no dashboard
+  renderLeiturasResumoDash();
+  
+  // Urgências
+  renderUrgencias();
 }
 
-function selFrente(el) { el.closest('#frente-tags').querySelectorAll('button').forEach(b => b.classList.remove('sel-medio')); el.classList.add('sel-medio'); }
+function renderUrgencias() {
+  // Desempenho fraco: folhinhas com acertos < 50%
+  const revisoesPorFolhinha = {};
+  DB.revisoes.forEach(r => {
+    if (!revisoesPorFolhinha[r.folhinha_id]) revisoesPorFolhinha[r.folhinha_id] = [];
+    revisoesPorFolhinha[r.folhinha_id].push(r);
+  });
 
-function selImpNf(btn, nivel) { btn.closest('.imp-btns').querySelectorAll('button').forEach(b => { b.className='imp-opt'; }); btn.classList.add('sel-'+nivel); }
-function selImp(btn, nivel) { btn.closest('.imp-btns').querySelectorAll('button').forEach(b => { b.className='imp-opt'; }); btn.classList.add('sel-'+nivel); }
+  const fracas = DB.folhinhas.filter(f => {
+    const revs = revisoesPorFolhinha[f.id] || [];
+    if (revs.length === 0) return false;
+    const ultima = revs[0];
+    const total = (ultima.total_lista||0) + (ultima.total_ia||0);
+    const acertos = (ultima.acertos_lista||0) + (ultima.acertos_ia||0);
+    return total > 0 && (acertos/total) < 0.5;
+  }).slice(0,3);
 
-function simFolhinha() { document.getElementById('file-sel-result').style.display = 'block'; }
-function simUpload() { document.getElementById('upload-drop').style.display = 'none'; document.getElementById('upload-list').style.display = 'block'; }
+  const urgFraco = document.getElementById('dash-urg-fraco');
+  if (urgFraco) {
+    urgFraco.innerHTML = fracas.length === 0
+      ? '<div style="font-size:13px;color:var(--text3);padding:.5rem 0;">Nenhuma folhinha com desempenho crítico.</div>'
+      : fracas.map(f => {
+          const revs = revisoesPorFolhinha[f.id] || [];
+          const ultima = revs[0] || {};
+          const total = (ultima.total_lista||0)+(ultima.total_ia||0);
+          const acertos = (ultima.acertos_lista||0)+(ultima.acertos_ia||0);
+          const pct = total > 0 ? Math.round(acertos/total*100) : 0;
+          return '<div class="row"><div class="imp imp-alto"></div><span class="badge badge-' + matBadge(f.materia) + '">' + matLabel(f.materia) + '</span><div style="flex:1;min-width:0"><div class="row-name">' + f.nome + '</div><div class="row-sub">' + pct + '% de acerto</div></div><button class="btn-sm" onclick="abrirFolhinha(' + "'" + f.id + "'" + ')">Revisar</button></div>';
+        }).join('');
+  }
 
-let iaResps = {};
-function markQ(n, tipo) {
-  iaResps[n] = tipo;
-  ['c','e'].forEach(t => document.getElementById('ia'+n+t).className = 'qbtn');
-  document.getElementById('ia'+n+(tipo==='c'?'c':'e')).className = 'qbtn '+(tipo==='c'?'certo':'errado');
-  const total = Object.keys(iaResps).length;
-  const certas = Object.values(iaResps).filter(v=>v==='c').length;
-  document.getElementById('ia-score').textContent = total+' / 4 respondidas · '+certas+' certas';
-  document.getElementById('fd-ia-val').textContent = certas+' / '+total;
-}
+  // Sem revisar há muito tempo
+  const hoje = new Date();
+  const semRevisar = DB.folhinhas.filter(f => {
+    if (!f.ultima_revisao) return false;
+    const diff = Math.floor((hoje - new Date(f.ultima_revisao)) / 86400000);
+    return diff > 10;
+  }).sort((a,b) => new Date(a.ultima_revisao) - new Date(b.ultima_revisao)).slice(0,3);
 
-let rmResps = {};
-function markRM(n, tipo) {
-  rmResps[n] = tipo;
-  ['c','e'].forEach(t => document.getElementById('rm'+n+t).className = 'qbtn');
-  document.getElementById('rm'+n+(tipo==='c'?'c':'e')).className = 'qbtn '+(tipo==='c'?'certo':'errado');
-  const total = Object.keys(rmResps).length;
-  const certas = Object.values(rmResps).filter(v=>v==='c').length;
-  document.getElementById('rm-resp').textContent = total;
-  document.getElementById('rm-certas').textContent = certas;
-  document.getElementById('rm-aprov').textContent = Math.round((certas/20)*100)+'%';
-  document.getElementById('rm-prog').style.width = Math.round((total/20)*100)+'%';
-}
-
-function salvarLista() {
-  const a = parseInt(document.getElementById('fd-ac').value);
-  const t = parseInt(document.getElementById('fd-tot').value);
-  if(a>=0 && t>0) {
-    const pct = Math.round((a/t)*100);
-    document.getElementById('fd-lista-val').textContent = a+' / '+t;
-    const fb = document.getElementById('fd-lista-fb');
-    fb.style.display = 'block'; fb.textContent = 'Salvo! '+a+'/'+t+' — '+pct+'% de acerto.';
+  const urgAtrasada = document.getElementById('dash-urg-atrasada');
+  if (urgAtrasada) {
+    urgAtrasada.innerHTML = semRevisar.length === 0
+      ? '<div style="font-size:13px;color:var(--text3);padding:.5rem 0;">Nenhuma folhinha muito desatualizada.</div>'
+      : semRevisar.map(f => {
+          const diff = Math.floor((hoje - new Date(f.ultima_revisao)) / 86400000);
+          return '<div class="row"><span class="badge badge-' + matBadge(f.materia) + '">' + matLabel(f.materia) + '</span><div style="flex:1;min-width:0"><div class="row-name">' + f.nome + '</div><div class="row-sub">há ' + diff + ' dias</div></div><button class="btn-sm" onclick="abrirFolhinha(' + "'" + f.id + "'" + ')">Revisar</button></div>';
+        }).join('');
   }
 }
 
-function marcarFC() { document.getElementById('fc-status').className = 'tag tag-ok'; document.getElementById('fc-status').textContent = 'Feito'; }
+function matBadge(mat) {
+  const m = (mat||'').toLowerCase();
+  if (m.includes('bio')) return 'bio';
+  if (m.includes('mat')) return 'mat';
+  if (m.includes('port') || m.includes('redac')) return 'port';
+  if (m.includes('fis') || m.includes('fís')) return 'fis';
+  if (m.includes('hist')) return 'hist';
+  if (m.includes('quim') || m.includes('quím')) return 'quim';
+  if (m.includes('geo')) return 'geo';
+  return 'bio';
+}
+function matLabel(mat) { return (mat||'—').substring(0,4).toUpperCase(); }
 
-function toggleDesemp(header) {
-  const frentes = header.nextElementSibling;
-  frentes.style.display = frentes.style.display === 'block' ? 'none' : 'block';
+// ─── FOLHINHAS ────────────────────────────────────────────
+function renderFolhinhasList() {
+  const lista = document.getElementById('folhinhas-lista');
+  if (!lista) return;
+  if (DB.folhinhas.length === 0) {
+    lista.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:2rem;text-align:center;">Nenhuma folhinha cadastrada ainda. Clique em "+ Nova folhinha" para começar.</div>';
+    return;
+  }
+  lista.innerHTML = DB.folhinhas.map(f => {
+    const hoje = new Date().toISOString().split('T')[0];
+    const atrasada = f.proxima_revisao && f.proxima_revisao < hoje;
+    const hoje_tag = f.proxima_revisao === hoje;
+    const consol = f.status === 'consolidada';
+    const impColor = f.importancia === 'alto' ? 'imp-alto' : f.importancia === 'medio' ? 'imp-med' : 'imp-baixo';
+    return '<div class="row" style="cursor:pointer" onclick="abrirFolhinha(' + "'" + f.id + "'" + ')">' +
+      '<div class="imp ' + impColor + '"></div>' +
+      '<span class="badge badge-' + matBadge(f.materia) + '">' + matLabel(f.materia) + '</span>' +
+      '<div style="flex:1;min-width:0"><div class="row-name">' + f.nome + '</div><div class="row-sub">' + (f.frente||'') + ' · ' + (f.numero_aula||'') + '</div></div>' +
+      (consol ? '<div class="check-circle"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><polyline points="1.5,4 3,6 6.5,2" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' : '') +
+      (atrasada ? '<span class="tag tag-urg">atrasada</span>' : hoje_tag ? '<span class="tag tag-info">hoje</span>' : '') +
+      '</div>';
+  }).join('');
 }
 
-function filtrarDesemp(tipo, btn) {
-  document.querySelectorAll('#desemp-lista .card').forEach(c => {
-    const s = c.dataset.status;
-    c.style.display = (tipo==='todas'||(tipo==='atencao'&&s==='atencao')||(tipo==='bom'&&s==='bom')) ? '' : 'none';
-  });
+function abrirFolhinha(id) {
+  const f = DB.folhinhas.find(x => x.id === id);
+  if (!f) return;
+  currentFolhinha = f;
+  
+  // Preencher header
+  document.querySelector('#page-folhinha-detalhe h2').textContent = f.nome;
+  
+  // Preencher visão geral
+  const revs = DB.revisoes.filter(r => r.folhinha_id === id);
+  const ultimaRev = revs[0];
+  if (ultimaRev) {
+    const totLista = ultimaRev.total_lista || 0;
+    const acLista = ultimaRev.acertos_lista || 0;
+    document.getElementById('fd-lista-val').textContent = acLista + ' / ' + totLista;
+    const totIA = ultimaRev.total_ia || 0;
+    const acIA = ultimaRev.acertos_ia || 0;
+    document.getElementById('fd-ia-val').textContent = acIA + ' / ' + totIA;
+  }
+  
+  // Histórico
+  const histEl = document.getElementById('fd-hist');
+  if (histEl) {
+    histEl.innerHTML = revs.length === 0
+      ? '<div style="font-size:13px;color:var(--text3);">Nenhuma revisão feita ainda.</div>'
+      : revs.map((r,i) => {
+          const total = (r.total_lista||0)+(r.total_ia||0);
+          const acertos = (r.acertos_lista||0)+(r.acertos_ia||0);
+          const pct = total > 0 ? Math.round(acertos/total*100) : 0;
+          const color = pct >= 70 ? 'var(--accent)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
+          return '<div class="row"><span class="mono" style="font-size:12px;color:var(--text3);min-width:130px;">' + (r.data_revisao||'') + ' · ' + (i+1) + 'ª revisão</span>' +
+            '<div class="bar-bg" style="flex:1;max-width:120px;"><div class="bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
+            '<span class="mono" style="font-size:13px;color:' + color + ';min-width:36px;text-align:right">' + pct + '%</span></div>';
+        }).join('');
+  }
+  
+  goTo('folhinha-detalhe');
 }
 
-function filtrarBanca(banca, btn) {
-  document.querySelectorAll('.sim-row').forEach(r => {
-    r.style.display = (banca==='todas'||r.dataset.banca===banca) ? '' : 'none';
-  });
+let currentFolhinha = null;
+
+// ─── SALVAR FOLHINHA ──────────────────────────────────────
+async function salvarNovaFolhinha() {
+  if (!currentUser) { alert('Faça login primeiro!'); return; }
+  
+  const materia = document.getElementById('nf-materia').value;
+  const nomeInput = document.querySelector('#tab-drive #file-sel-result') && document.getElementById('file-sel-result').style.display !== 'none'
+    ? 'Folhinha ' + materia
+    : document.querySelector('#tab-topico input')?.value;
+  
+  const frente = document.querySelector('#frente-tags .sel-medio')?.textContent || '';
+  const numero = document.querySelector('#page-nova-folhinha input[placeholder="Ex: Folha 05"]')?.value || '';
+  const anotacao = document.querySelector('#page-nova-folhinha textarea')?.value || '';
+  const imp = document.querySelector('#page-nova-folhinha .sel-alto') ? 'alto' : document.querySelector('#page-nova-folhinha .sel-medio') ? 'medio' : 'baixo';
+  
+  const hoje = new Date();
+  const proxima = new Date(hoje); proxima.setDate(proxima.getDate() + 1);
+  
+  const { data, error } = await sb.from('folhinhas').insert({
+    user_id: currentUser.id,
+    nome: nomeInput || ('Folha ' + numero),
+    materia,
+    frente,
+    numero_aula: numero,
+    importancia: imp,
+    anotacao,
+    proxima_revisao: proxima.toISOString().split('T')[0],
+    numero_revisao: 1,
+    status: 'em_andamento',
+    criado_em: hoje.toISOString()
+  }).select();
+  
+  if (error) { alert('Erro ao salvar: ' + error.message); return; }
+  DB.folhinhas.unshift(data[0]);
+  renderFolhinhasList();
+  renderDashboard();
+  goTo('folhinhas');
+  alert('Folhinha salva!');
 }
 
-function updateSimFase() {
-  const v = document.getElementById('sim-fase').value;
-  document.getElementById('sim-1f').style.display = v==='1'?'block':'none';
-  document.getElementById('sim-2f').style.display = v==='2'?'block':'none';
+// ─── SALVAR RESULTADO DE LISTA ────────────────────────────
+async function salvarLista() {
+  const a = parseInt(document.getElementById('fd-ac').value);
+  const t = parseInt(document.getElementById('fd-tot').value);
+  if (isNaN(a) || isNaN(t) || t <= 0) return;
+  
+  const pct = Math.round((a/t)*100);
+  document.getElementById('fd-lista-val').textContent = a + ' / ' + t;
+  const fb = document.getElementById('fd-lista-fb');
+  fb.style.display = 'block';
+  fb.textContent = 'Salvo! ' + a + '/' + t + ' — ' + pct + '% de acerto.';
+  
+  if (!currentUser || !currentFolhinha) return;
+  
+  // Verificar se já existe revisão hoje
+  const hoje = new Date().toISOString().split('T')[0];
+  const revHoje = DB.revisoes.find(r => r.folhinha_id === currentFolhinha.id && r.data_revisao === hoje);
+  
+  if (revHoje) {
+    await sb.from('revisoes').update({ acertos_lista: a, total_lista: t }).eq('id', revHoje.id);
+    revHoje.acertos_lista = a; revHoje.total_lista = t;
+  } else {
+    const proxima = calcProximaRevisao(currentFolhinha.numero_revisao || 1);
+    const { data } = await sb.from('revisoes').insert({
+      user_id: currentUser.id,
+      folhinha_id: currentFolhinha.id,
+      numero_revisao: currentFolhinha.numero_revisao || 1,
+      data_revisao: hoje,
+      acertos_lista: a, total_lista: t
+    }).select();
+    if (data) DB.revisoes.unshift(data[0]);
+    
+    // Atualizar próxima revisão e número
+    const novoNum = (currentFolhinha.numero_revisao || 1) + 1;
+    const novoStatus = novoNum > 5 && pct >= 70 ? 'consolidada' : 'em_andamento';
+    await sb.from('folhinhas').update({
+      proxima_revisao: proxima,
+      numero_revisao: novoNum,
+      ultima_revisao: hoje,
+      status: novoStatus
+    }).eq('id', currentFolhinha.id);
+    currentFolhinha.proxima_revisao = proxima;
+    currentFolhinha.numero_revisao = novoNum;
+    currentFolhinha.status = novoStatus;
+  }
 }
 
-function calcSimPct() {
-  const a = parseFloat(document.getElementById('sim-ac').value);
-  const t = parseFloat(document.getElementById('sim-tot').value);
-  if(a>=0&&t>0) document.getElementById('sim-pct').textContent = Math.round((a/t)*100)+'%';
+function calcProximaRevisao(numRevisao) {
+  const intervalos = [1, 3, 7, 14, 30];
+  const dias = intervalos[Math.min(numRevisao - 1, intervalos.length - 1)];
+  const d = new Date(); d.setDate(d.getDate() + dias);
+  return d.toISOString().split('T')[0];
 }
 
-let simQCount = 4;
-function addSimQ() {
-  simQCount++;
-  const div = document.createElement('div');
-  div.className = 'row';
-  div.innerHTML = `<span style="font-size:13px;flex:1;">Questão ${simQCount}</span><input type="number" placeholder="0" min="0" style="width:60px;text-align:center;font-size:14px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;" oninput="calcSimTotal()"><span style="font-size:12px;color:var(--text3);">/</span><input type="number" placeholder="10" min="0" style="width:50px;text-align:center;font-size:14px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;" oninput="calcSimTotal()">`;
-  document.getElementById('sim-qs').appendChild(div);
+// ─── SALVAR SIMULADO ──────────────────────────────────────
+async function salvarSimulado() {
+  if (!currentUser) { alert('Faça login primeiro!'); return; }
+  const fase = document.getElementById('sim-fase').value;
+  const banca = document.querySelector('#page-simulados select').value;
+  const data = document.querySelectorAll('#sim-novo input[type=date]')[0]?.value;
+  
+  let acertos = null, total = null, notas_json = null, anotacao = '';
+  if (fase === '1') {
+    acertos = parseInt(document.getElementById('sim-ac').value) || 0;
+    total = parseInt(document.getElementById('sim-tot').value) || 0;
+    anotacao = document.querySelector('#sim-1f textarea')?.value || '';
+  } else {
+    const rows = document.querySelectorAll('#sim-qs .row');
+    const notas = {};
+    rows.forEach((r,i) => {
+      const ins = r.querySelectorAll('input');
+      notas['q'+(i+1)] = { acerto: parseFloat(ins[0]?.value)||0, total: parseFloat(ins[1]?.value)||0 };
+    });
+    notas_json = JSON.stringify(notas);
+    anotacao = document.querySelector('#sim-2f textarea')?.value || '';
+  }
+  
+  const { data: saved, error } = await sb.from('simulados').insert({
+    user_id: currentUser.id, banca, fase, data_simulado: data,
+    acertos, total, notas_json, anotacao
+  }).select();
+  
+  if (error) { alert('Erro: ' + error.message); return; }
+  DB.simulados.unshift(saved[0]);
+  renderSimuladosLista();
+  switchTabMulti(document.querySelectorAll('#page-simulados .tab')[0], 'sim-hist', ['sim-hist','sim-evo','sim-novo']);
+  alert('Simulado salvo!');
 }
 
-function calcSimTotal() {
-  let soma=0,max=0;
-  document.querySelectorAll('#sim-qs .row').forEach(r => {
-    const ins = r.querySelectorAll('input');
-    if(ins[0]&&ins[0].value) soma+=parseFloat(ins[0].value)||0;
-    if(ins[1]&&ins[1].value) max+=parseFloat(ins[1].value)||0;
-  });
-  document.getElementById('sim-total').textContent = soma.toFixed(1)+(max>0?' / '+max.toFixed(0):'');
+function renderSimuladosLista() {
+  const el = document.querySelector('#sim-hist .card');
+  if (!el) return;
+  if (DB.simulados.length === 0) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:1rem;">Nenhum simulado cadastrado ainda.</div>';
+    return;
+  }
+  el.innerHTML = DB.simulados.map(s => {
+    const pct = s.acertos && s.total ? Math.round(s.acertos/s.total*100) : null;
+    const color = pct ? (pct>=70?'var(--accent)':pct>=50?'var(--orange)':'var(--red)') : 'var(--text3)';
+    return '<div class="sim-row" data-banca="' + s.banca + '"><div style="width:8px;height:8px;border-radius:50%;background:' + (pct?'var(--accent)':'var(--text3)') + ';flex-shrink:0;"></div>' +
+      '<span class="banca-pill banca-' + s.banca + '">' + (s.banca||'').charAt(0).toUpperCase()+(s.banca||'').slice(1) + '</span>' +
+      '<div style="flex:1;min-width:0"><div class="row-name">' + (s.fase==='1'?'1ª fase':'2ª fase') + ' · ' + formatarData(s.data_simulado) + '</div>' +
+      '<div class="row-sub mono">' + s.data_simulado + (s.total?' · '+s.total+' questões':'') + '</div></div>' +
+      '<span class="mono" style="font-size:14px;color:' + color + ';">' + (pct!==null?pct+'%':'—') + '</span></div>';
+  }).join('');
 }
 
-function atualizarPg(id, total, meta) {
+// ─── LEITURAS ─────────────────────────────────────────────
+async function salvarLivro() {
+  if (!currentUser) { alert('Faça login primeiro!'); return; }
+  const titulo = document.querySelector('#leit-novo input[placeholder="Ex: O Cortiço"]')?.value;
+  const autor  = document.querySelector('#leit-novo input[placeholder="Ex: Aluísio Azevedo"]')?.value;
+  const inputs = document.querySelectorAll('#leit-novo input[type=number]');
+  const total  = parseInt(inputs[0]?.value) || 0;
+  const atual  = parseInt(inputs[1]?.value) || 0;
+  const meta   = parseInt(inputs[2]?.value) || 10;
+  const idioma = document.querySelector('#leit-novo select')?.value?.includes('ngl') ? 'en' : 'pt';
+  const banca  = document.querySelectorAll('#leit-novo select')[1]?.value || '';
+  
+  if (!titulo) { alert('Coloque o título!'); return; }
+  
+  const { data, error } = await sb.from('leituras').insert({
+    user_id: currentUser.id, titulo, autor, idioma, banca,
+    total_paginas: total, pagina_atual: atual, meta_diaria: meta
+  }).select();
+  
+  if (error) { alert('Erro: ' + error.message); return; }
+  DB.leituras.push(data[0]);
+  renderLeituras();
+  switchTabMulti(document.querySelectorAll('#page-leituras .tab')[0], 'leit-andamento', ['leit-andamento','leit-obras','leit-novo']);
+  alert('Livro salvo!');
+}
+
+async function atualizarPgDB(id, total, meta) {
   const inp = document.getElementById('inp-'+id);
-  const pg = parseInt(inp.value);
-  if(!pg||pg<0||pg>total) return;
+  const pg = parseInt(inp?.value);
+  if (!pg || pg < 0 || pg > total) return;
   const pct = Math.round((pg/total)*100);
   const dias = Math.ceil((total-pg)/meta);
-  document.getElementById('prog-'+id).style.width = pct+'%';
-  document.getElementById('pct-'+id).textContent = pct+'%';
-  document.getElementById('pg-'+id).textContent = pg+'/'+total;
-  document.getElementById('dias-'+id).textContent = dias+' dias';
-  inp.value='';
+  
+  // Update UI
+  const el = (id.startsWith('db-')) ? id : 'dc';
+  document.getElementById('prog-'+id) && (document.getElementById('prog-'+id).style.width = pct+'%');
+  document.getElementById('pct-'+id) && (document.getElementById('pct-'+id).textContent = pct+'%');
+  document.getElementById('pg-'+id) && (document.getElementById('pg-'+id).textContent = pg+'/'+total);
+  document.getElementById('dias-'+id) && (document.getElementById('dias-'+id).textContent = dias+' dias');
+  inp.value = '';
+  
+  // Find livro in DB by element id mapping
+  // For static demo elements, find by position; for real, use data-id
+  const el2 = document.getElementById('inp-'+id);
+  const livroId = el2?.dataset?.livroId;
+  if (livroId && currentUser) {
+    await sb.from('leituras').update({ pagina_atual: pg }).eq('id', livroId).eq('user_id', currentUser.id);
+    const l = DB.leituras.find(x => x.id === livroId);
+    if (l) l.pagina_atual = pg;
+  }
 }
 
-function toggleObras(b) {
-  const el = document.getElementById('obras-'+b);
-  const ch = document.getElementById('oc-'+b);
-  const open = el.style.display==='block';
-  el.style.display = open?'none':'block';
-  ch.textContent = open?'›':'˅';
-}
-// ========== AUTENTICAÇÃO GOOGLE ==========
-let currentUser = null;
+function atualizarPg(id, total, meta) { atualizarPgDB(id, total, meta); }
 
-// Verificar se já está logado ao carregar a página
-async function checkUser() {
-  if (!window.supabaseClient) {
-    setTimeout(checkUser, 500);
+function renderLeituras() {
+  const el = document.getElementById('leit-andamento');
+  if (!el) return;
+  if (DB.leituras.length === 0) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:2rem;text-align:center;">Nenhum livro cadastrado ainda. Clique em "+ Adicionar".</div>';
+    return;
+  }
+  el.innerHTML = DB.leituras.map((l, i) => {
+    const pct = l.total_paginas ? Math.round(l.pagina_atual/l.total_paginas*100) : 0;
+    const restante = (l.total_paginas||0) - (l.pagina_atual||0);
+    const dias = l.meta_diaria ? Math.ceil(restante/l.meta_diaria) : 0;
+    const barColor = l.idioma === 'en' ? 'var(--blue)' : 'var(--accent)';
+    const uid = 'lv-'+i;
+    return '<div class="book-card">' +
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;">' +
+        '<div><div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px;">' + l.titulo + '</div>' +
+        '<div class="mono" style="font-size:11px;color:var(--text3);">' + (l.autor||'') + (l.banca?' · '+l.banca:'') + '</div></div>' +
+        '<span class="tag" style="background:rgba(' + (l.idioma==='en'?'92,168,255':'74,222,128') + ',0.1);color:' + (l.idioma==='en'?'#5ca8ff':'#4ade80') + ';font-size:10px;">' + l.idioma.toUpperCase() + '</span>' +
+      '</div>' +
+      '<div class="prog-bg" style="height:6px;margin-bottom:8px;"><div class="prog-fill" style="width:' + pct + '%;background:' + barColor + '"></div></div>' +
+      '<div class="book-stats">' +
+        '<div class="bstat"><div class="bl">Progresso</div><div class="bv">' + pct + '%</div></div>' +
+        '<div class="bstat"><div class="bl">Página atual</div><div class="bv">' + (l.pagina_atual||0) + '/' + (l.total_paginas||0) + '</div></div>' +
+        '<div class="bstat"><div class="bl">Meta/dia</div><div class="bv">' + (l.meta_diaria||0) + ' pg</div></div>' +
+        '<div class="bstat"><div class="bl">Faltam</div><div class="bv">' + dias + ' dias</div></div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:12px;color:var(--text3);">Atualizar:</span>' +
+        '<input type="number" id="inp-lv-' + i + '" data-livro-id="' + l.id + '" placeholder="' + (l.pagina_atual||0) + '" min="0" max="' + (l.total_paginas||9999) + '" style="width:70px;text-align:center;font-size:14px;">' +
+        '<button class="btn-sm" onclick="atualizarPgLivro(' + "'" + l.id + "'" + ',' + (l.total_paginas||0) + ',' + (l.meta_diaria||10) + ',' + i + ')">Salvar</button>' +
+      '</div></div>';
+  }).join('');
+}
+
+async function atualizarPgLivro(livroId, total, meta, idx) {
+  const inp = document.getElementById('inp-lv-'+idx);
+  const pg = parseInt(inp?.value);
+  if (!pg || pg < 0) return;
+  const l = DB.leituras.find(x => x.id === livroId);
+  if (!l) return;
+  l.pagina_atual = pg;
+  if (currentUser) await sb.from('leituras').update({ pagina_atual: pg }).eq('id', livroId);
+  renderLeituras();
+}
+
+function renderLeiturasResumoDash() {
+  const el = document.getElementById('dash-leituras');
+  if (!el) return;
+  if (DB.leituras.length === 0) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--text3);">Nenhum livro cadastrado. <span style="color:var(--accent);cursor:pointer;" onclick="goTo('leituras')">Adicionar →</span></div>';
+    return;
+  }
+  el.innerHTML = DB.leituras.slice(0,3).map(l => {
+    const pct = l.total_paginas ? Math.round(l.pagina_atual/l.total_paginas*100) : 0;
+    const restante = (l.total_paginas||0)-(l.pagina_atual||0);
+    const dias = l.meta_diaria ? Math.ceil(restante/l.meta_diaria) : 0;
+    const barColor = l.idioma==='en'?'var(--blue)':'var(--accent)';
+    const pctColor = l.idioma==='en'?'var(--blue)':pct>=70?'var(--accent)':'var(--orange)';
+    return '<div style="margin-bottom:.75rem;">' +
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">' +
+        '<span class="tag" style="background:rgba(' + (l.idioma==='en'?'92,168,255':'74,222,128') + ',0.1);color:' + (l.idioma==='en'?'#5ca8ff':'#4ade80') + ';font-size:10px;">' + l.idioma.toUpperCase() + '</span>' +
+        '<span style="font-size:13px;color:var(--text);flex:1;">' + l.titulo + '</span>' +
+        '<span style="font-size:12px;color:' + pctColor + ';font-family:'DM Mono',monospace;">' + pct + '%</span>' +
+      '</div>' +
+      '<div class="prog-bg"><div class="prog-fill" style="width:' + pct + '%;background:' + barColor + '"></div></div>' +
+      '<div style="font-size:10px;color:var(--text3);margin-top:3px;" class="mono">pg ' + (l.pagina_atual||0) + '/' + (l.total_paginas||0) + ' · ' + (l.meta_diaria||0) + ' pg/dia · ' + dias + ' dias</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderDesempenhoPorMateria() {
+  const el = document.getElementById('dash-desemp');
+  if (!el) return;
+  if (DB.revisoes.length === 0) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--text3);">Nenhuma revisão feita ainda.</div>';
     return;
   }
   
-  const { data: { user } } = await window.supabaseClient.auth.getUser();
-  currentUser = user;
-  
-  if (user) {
-    document.getElementById('google-login-btn').style.display = 'none';
-    document.getElementById('user-info-sidebar').style.display = 'block';
-    document.getElementById('user-email-display').textContent = user.email;
-    console.log('✅ Usuário logado:', user.email);
-  } else {
-    document.getElementById('google-login-btn').style.display = 'flex';
-    document.getElementById('user-info-sidebar').style.display = 'none';
-  }
-}
-
-// Login com Google
-async function signInWithGoogle() {
-  const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: window.location.origin
-    }
+  const porMateria = {};
+  DB.revisoes.forEach(r => {
+    const f = DB.folhinhas.find(x => x.id === r.folhinha_id);
+    if (!f) return;
+    const mat = f.materia || 'Outro';
+    if (!porMateria[mat]) porMateria[mat] = { acertos: 0, total: 0 };
+    porMateria[mat].acertos += (r.acertos_lista||0)+(r.acertos_ia||0);
+    porMateria[mat].total   += (r.total_lista||0)+(r.total_ia||0);
   });
   
-  if (error) {
-    alert('Erro ao fazer login: ' + error.message);
-  }
+  const colors = { Biologia:'var(--green)', Matemática:'var(--blue)', Português:'var(--accent)', Física:'var(--purple)', História:'#fbbf24', Química:'var(--red)', Geografia:'#2dd4bf' };
+  
+  el.innerHTML = Object.entries(porMateria).sort((a,b)=>(b[1].total?b[1].acertos/b[1].total:0)-(a[1].total?a[1].acertos/a[1].total:0)).map(([mat,v]) => {
+    const pct = v.total ? Math.round(v.acertos/v.total*100) : 0;
+    const color = colors[mat] || 'var(--accent)';
+    return '<div class="perf-row"><span class="badge badge-' + matBadge(mat) + '" style="min-width:36px;text-align:center">' + matLabel(mat) + '</span><span style="font-size:13px;flex:1">' + mat + '</span><div class="bar-bg"><div class="bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div><span class="mono" style="font-size:12px;color:' + color + ';min-width:30px;text-align:right">' + pct + '%</span></div>';
+  }).join('');
 }
 
-// Logout
-async function handleLogout() {
-  await window.supabaseClient.auth.signOut();
-  currentUser = null;
-  document.getElementById('google-login-btn').style.display = 'flex';
-  document.getElementById('user-info-sidebar').style.display = 'none';
-  console.log('👋 Usuário deslogado');
+// ─── DESEMPENHO ────────────────────────────────────────────
+function renderDesempenhoPage() {
+  const el = document.getElementById('desemp-lista');
+  if (!el) return;
+  const porMateria = {};
+  DB.revisoes.forEach(r => {
+    const f = DB.folhinhas.find(x => x.id === r.folhinha_id);
+    if (!f) return;
+    const mat = f.materia || 'Outro';
+    const frente = f.frente || 'Sem frente';
+    if (!porMateria[mat]) porMateria[mat] = {};
+    if (!porMateria[mat][frente]) porMateria[mat][frente] = { acertos: 0, total: 0 };
+    porMateria[mat][frente].acertos += (r.acertos_lista||0)+(r.acertos_ia||0);
+    porMateria[mat][frente].total   += (r.total_lista||0)+(r.total_ia||0);
+  });
+  
+  el.innerHTML = Object.entries(porMateria).map(([mat, frentes]) => {
+    const totAc = Object.values(frentes).reduce((a,v)=>a+(v.acertos||0),0);
+    const totTot = Object.values(frentes).reduce((a,v)=>a+(v.total||0),0);
+    const pct = totTot ? Math.round(totAc/totTot*100) : 0;
+    const color = pct>=70?'var(--accent)':pct>=50?'var(--orange)':'var(--red)';
+    const status = pct>=70?'bom':pct>=50?'medio':'atencao';
+    return '<div class="card" style="margin-bottom:.75rem" data-status="' + status + '">' +
+      '<div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">' +
+        '<span class="badge badge-' + matBadge(mat) + '">' + matLabel(mat) + '</span>' +
+        '<span style="font-size:14px;font-weight:600;flex:1;">' + mat + '</span>' +
+        '<div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
+        '<span class="mono" style="font-size:14px;color:' + color + ';min-width:36px;text-align:right">' + pct + '%</span>' +
+        '<span style="font-size:12px;color:var(--text3);">›</span>' +
+      '</div>' +
+      '<div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">' +
+        Object.entries(frentes).map(([fr, v]) => {
+          const p = v.total ? Math.round(v.acertos/v.total*100) : 0;
+          const tagClass = p>=70?'tag-ok':p>=50?'tag-warn':'tag-urg';
+          const tagLabel = p>=70?'boa':p>=50?'média':'fraca';
+          return '<div class="row"><span style="font-size:13px;flex:1;">' + fr + '</span><span class="mono" style="font-size:11px;color:var(--text3);">' + v.total + ' revisões · ' + p + '%</span><span class="tag ' + tagClass + '">' + tagLabel + '</span></div>';
+        }).join('') +
+      '</div></div>';
+  }).join('') || '<div style="font-size:13px;color:var(--text3);padding:2rem;text-align:center;">Nenhum dado ainda. Faça revisões para ver o desempenho.</div>';
 }
 
-// Chamar verificação quando o Supabase carregar
-const originalOnload = script.onload;
-script.onload = function() {
-  if (originalOnload) originalOnload();
-  setTimeout(checkUser, 1000);
+// ─── REVISÃO MENSAL ────────────────────────────────────────
+let rmResps = {};
+function markRM(n, tipo) {
+  rmResps[n] = tipo;
+  ['c','e'].forEach(t => { const el = document.getElementById('rm'+n+t); if(el) el.className='qbtn'; });
+  const el = document.getElementById('rm'+n+(tipo==='c'?'c':'e'));
+  if(el) el.className='qbtn '+(tipo==='c'?'certo':'errado');
+  const total = Object.keys(rmResps).length;
+  const certas = Object.values(rmResps).filter(v=>v==='c').length;
+  document.getElementById('rm-resp') && (document.getElementById('rm-resp').textContent = total);
+  document.getElementById('rm-certas') && (document.getElementById('rm-certas').textContent = certas);
+  document.getElementById('rm-aprov') && (document.getElementById('rm-aprov').textContent = Math.round((certas/20)*100)+'%');
+  document.getElementById('rm-prog') && (document.getElementById('rm-prog').style.width = Math.round((total/20)*100)+'%');
+}
+
+// ─── UI HELPERS ───────────────────────────────────────────
+function toggleDesemp(header) {
+  const frentes = header.nextElementSibling;
+  frentes.style.display = frentes.style.display==='block'?'none':'block';
+}
+function filtrarDesemp(tipo, btn) {
+  document.querySelectorAll('#desemp-lista .card').forEach(c => {
+    const s = c.dataset.status;
+    c.style.display=(tipo==='todas'||(tipo==='atencao'&&s==='atencao')||(tipo==='bom'&&s==='bom'))?'':'none';
+  });
+}
+function filtrarBanca(banca, btn) {
+  document.querySelectorAll('.sim-row').forEach(r => {
+    r.style.display=(banca==='todas'||r.dataset.banca===banca)?'':'none';
+  });
+}
+function updateSimFase() {
+  const v = document.getElementById('sim-fase').value;
+  document.getElementById('sim-1f').style.display=v==='1'?'block':'none';
+  document.getElementById('sim-2f').style.display=v==='2'?'block':'none';
+}
+function calcSimPct() {
+  const a=parseFloat(document.getElementById('sim-ac').value);
+  const t=parseFloat(document.getElementById('sim-tot').value);
+  if(a>=0&&t>0) document.getElementById('sim-pct').textContent=Math.round((a/t)*100)+'%';
+}
+let simQCount=4;
+function addSimQ() {
+  simQCount++;
+  const div=document.createElement('div'); div.className='row';
+  div.innerHTML='<span style="font-size:13px;flex:1;">Questão '+simQCount+'</span><input type="number" placeholder="0" min="0" style="width:60px;text-align:center;font-size:14px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;" oninput="calcSimTotal()"><span style="font-size:12px;color:var(--text3);">/</span><input type="number" placeholder="10" min="0" style="width:50px;text-align:center;font-size:14px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;" oninput="calcSimTotal()">';
+  document.getElementById('sim-qs').appendChild(div);
+}
+function calcSimTotal() {
+  let soma=0,max=0;
+  document.querySelectorAll('#sim-qs .row').forEach(r=>{
+    const ins=r.querySelectorAll('input');
+    if(ins[0]&&ins[0].value) soma+=parseFloat(ins[0].value)||0;
+    if(ins[1]&&ins[1].value) max+=parseFloat(ins[1].value)||0;
+  });
+  document.getElementById('sim-total').textContent=soma.toFixed(1)+(max>0?' / '+max.toFixed(0):'');
+}
+function toggleObras(b) {
+  const el=document.getElementById('obras-'+b); const ch=document.getElementById('oc-'+b);
+  const open=el.style.display==='block'; el.style.display=open?'none':'block'; ch.textContent=open?'›':'˅';
+}
+function updateFrentes(sel) {
+  const val=sel.value; const box=document.getElementById('frente-tags');
+  if(!val){box.innerHTML='<span style="font-size:12px;color:var(--text3);">Selecione a matéria primeiro</span>';return;}
+  box.innerHTML=(frentesMap[val]||[]).map(f=>'<button class="imp-opt" onclick="selFrente(this)" style="font-size:12px;">'+f+'</button>').join('');
+}
+function selFrente(el){el.closest('#frente-tags').querySelectorAll('button').forEach(b=>b.classList.remove('sel-medio'));el.classList.add('sel-medio');}
+function selImpNf(btn,nivel){btn.closest('.imp-btns').querySelectorAll('button').forEach(b=>{b.className='imp-opt';});btn.classList.add('sel-'+nivel);}
+function selImp(btn,nivel){btn.closest('.imp-btns').querySelectorAll('button').forEach(b=>{b.className='imp-opt';});btn.classList.add('sel-'+nivel);}
+function simFolhinha(){document.getElementById('file-sel-result').style.display='block';}
+function simUpload(){document.getElementById('upload-drop').style.display='none';document.getElementById('upload-list').style.display='block';}
+function marcarFC(){document.getElementById('fc-status').className='tag tag-ok';document.getElementById('fc-status').textContent='Feito';}
+
+let iaResps={};
+function markQ(n,tipo){
+  iaResps[n]=tipo;
+  ['c','e'].forEach(t=>document.getElementById('ia'+n+t).className='qbtn');
+  document.getElementById('ia'+n+(tipo==='c'?'c':'e')).className='qbtn '+(tipo==='c'?'certo':'errado');
+  const total=Object.keys(iaResps).length; const certas=Object.values(iaResps).filter(v=>v==='c').length;
+  document.getElementById('ia-score').textContent=total+' / 4 respondidas · '+certas+' certas';
+  document.getElementById('fd-ia-val').textContent=certas+' / '+total;
+}
+
+function formatarData(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  return day+'/'+m+'/'+y;
+}
+
+// ─── REDAÇÕES ─────────────────────────────────────────────
+const BANCAS = {
+  unesp: { name:'UNESP', criterios:[{key:'A',name:'Tema',max:3},{key:'B',name:'Gênero / Coerência',max:4},{key:'C',name:'Modalidade',max:4},{key:'D',name:'Coesão',max:3}], total:14, formula:(s)=>Object.values(s).reduce((a,b)=>a+b,0) },
+  unicamp: { name:'Unicamp', criterios:[{key:'Pt',name:'Proposta Temática',max:2},{key:'G',name:'Gênero',max:3},{key:'Lt',name:'Leitura dos textos',max:3},{key:'CeC',name:'Convenções e Coesão',max:4}], total:12, formula:(s)=>Object.values(s).reduce((a,b)=>a+b,0) },
+  fuvest: { name:'Fuvest', criterios:[{key:'1',name:'Tema e autoria',max:4,peso:3},{key:'2',name:'Modalidade textual',max:4,peso:2},{key:'3',name:'Recursos linguísticos',max:4,peso:3},{key:'4',name:'Correção gramatical',max:4,peso:2}], total:40, formula:(s)=>{const p=[3,2,3,2];return Object.values(s).reduce((acc,v,i)=>acc+v*p[i],0);} },
+  enem: { name:'ENEM', criterios:[{key:'C1',name:'Domínio da norma culta',max:200},{key:'C2',name:'Compreensão da proposta',max:200},{key:'C3',name:'Seleção e organização',max:200},{key:'C4',name:'Mecanismos linguísticos',max:200},{key:'C5',name:'Proposta de intervenção',max:200}], total:1000, formula:(s)=>Object.values(s).reduce((a,b)=>a+b,0) }
 };
+
+let editingEssayId = null;
+
+function essayColor(pct) { return pct>=70?'var(--accent)':pct>=45?'var(--orange)':'var(--red)'; }
+function essayClass(pct) { return pct>=70?'nota-alta':pct>=45?'nota-media':'nota-baixa'; }
+
+function openEssayModal(id=null) {
+  editingEssayId = id;
+  document.getElementById('essay-modal-title').textContent = id ? 'Editar redação' : 'Nova redação';
+  if (id) {
+    const e = DB.essays.find(x=>x.id===id);
+    if (e) {
+      document.getElementById('ef-title').value = e.title||'';
+      document.getElementById('ef-date').value = e.date||'';
+      document.getElementById('ef-banca').value = e.banca||'unesp';
+      document.getElementById('ef-obs').value = e.obs||'';
+      renderScoreInputs(e.scores||{});
+    }
+  } else {
+    document.getElementById('ef-title').value='';
+    document.getElementById('ef-date').value=new Date().toISOString().split('T')[0];
+    document.getElementById('ef-obs').value='';
+    renderScoreInputs();
+  }
+  document.getElementById('essay-modal').classList.add('open');
+}
+function closeEssayModal() { document.getElementById('essay-modal').classList.remove('open'); }
+
+function renderScoreInputs(existing={}) {
+  const banca = document.getElementById('ef-banca')?.value || 'unesp';
+  const cfg = BANCAS[banca];
+  document.getElementById('r-scores-inputs').innerHTML = cfg.criterios.map(c => {
+    const val = existing[c.key]||0;
+    const pct = val/c.max*100;
+    return '<div class="score-input-card"><label>'+c.name+' (0–'+c.max+')</label>'+
+      '<div class="score-bar-wrap">'+
+        '<input type="number" id="sc-'+c.key+'" min="0" max="'+c.max+'" value="'+val+'" style="width:70px;text-align:center;font-size:14px;" oninput="updateBar(''+c.key+'','+c.max+')">'+
+        '<div class="score-bar-bg"><div class="score-bar-live" id="bar-'+c.key+'" style="width:'+pct+'%"></div></div>'+
+      '</div></div>';
+  }).join('');
+}
+
+function updateBar(key, max) {
+  const val = parseFloat(document.getElementById('sc-'+key)?.value)||0;
+  const el = document.getElementById('bar-'+key);
+  if(el) el.style.width = Math.min(100,val/max*100)+'%';
+}
+
+async function saveEssay() {
+  if (!currentUser) { alert('Faça login primeiro!'); return; }
+  const banca = document.getElementById('ef-banca').value;
+  const cfg = BANCAS[banca];
+  const scores = {};
+  cfg.criterios.forEach(c => { scores[c.key] = parseFloat(document.getElementById('sc-'+c.key)?.value)||0; });
+  const total = cfg.formula(scores);
+  
+  const payload = {
+    user_id: currentUser.id,
+    title: document.getElementById('ef-title').value,
+    date: document.getElementById('ef-date').value,
+    banca, scores: JSON.stringify(scores), total,
+    obs: document.getElementById('ef-obs').value
+  };
+  
+  let saved;
+  if (editingEssayId) {
+    const { data } = await sb.from('redacoes').update(payload).eq('id', editingEssayId).select();
+    saved = data?.[0];
+    const idx = DB.essays.findIndex(x=>x.id===editingEssayId);
+    if(idx>=0) DB.essays[idx] = {...saved, scores};
+  } else {
+    const { data } = await sb.from('redacoes').insert(payload).select();
+    saved = data?.[0];
+    if(saved) DB.essays.unshift({...saved, scores});
+  }
+  
+  closeEssayModal();
+  renderEssayDashboard();
+  renderEssayList();
+}
+
+function getEssayScores(e) {
+  if (typeof e.scores === 'string') { try { return JSON.parse(e.scores); } catch { return {}; } }
+  return e.scores||{};
+}
+
+async function deleteEssay(id) {
+  if (!confirm('Deletar esta redação?')) return;
+  await sb.from('redacoes').delete().eq('id', id);
+  DB.essays = DB.essays.filter(e=>e.id!==id);
+  renderEssayDashboard(); renderEssayList();
+}
+
+function renderEssayDashboard() {
+  const grid = document.getElementById('r-stats');
+  const recent = document.getElementById('r-recent');
+  if (!grid) return;
+  const essays = DB.essays;
+  if (essays.length===0) {
+    grid.innerHTML=''; 
+    recent.innerHTML='<div class="empty-state-r"><div class="ei">📝</div><div class="et">Nenhuma redação ainda</div><div class="es">Clique em "+ Nova redação" para começar.</div></div>';
+    return;
+  }
+  const avgs = essays.map(e=>{const cfg=BANCAS[e.banca];return e.total/cfg.total*100;});
+  const avg = avgs.reduce((a,b)=>a+b,0)/avgs.length;
+  const last = essays[0]; const lastCfg=BANCAS[last.banca];
+  const lastPct=last.total/lastCfg.total*100;
+  const best=essays.reduce((a,b)=>(a.total/BANCAS[a.banca].total)>=(b.total/BANCAS[b.banca].total)?a:b);
+  grid.innerHTML=
+    '<div class="stat-card-r"><div class="stat-label-r">Total de redações</div><div class="stat-value-r">'+essays.length+'</div></div>'+
+    '<div class="stat-card-r"><div class="stat-label-r">Média geral</div><div class="stat-value-r '+essayClass(avg)+'">'+avg.toFixed(0)+'%</div></div>'+
+    '<div class="stat-card-r"><div class="stat-label-r">Última redação</div><div class="stat-value-r '+essayClass(lastPct)+'">'+last.total+'<small style="font-size:11px;color:var(--text3);font-weight:400">/ '+lastCfg.total+'pts</small></div></div>'+
+    '<div class="stat-card-r"><div class="stat-label-r">Melhor resultado</div><div class="stat-value-r nota-alta">'+(best.total/BANCAS[best.banca].total*100).toFixed(0)+'%</div></div>';
+  recent.innerHTML = renderEssayCards(essays.slice(0,4));
+}
+
+function renderEssayList() {
+  const el = document.getElementById('r-lista-full');
+  if(!el) return;
+  el.innerHTML = DB.essays.length ? renderEssayCards(DB.essays) : '<div class="empty-state-r"><div class="ei">📝</div><div class="et">Nenhuma redação ainda</div></div>';
+}
+
+function renderEssayCards(list) {
+  return '<div style="display:flex;flex-direction:column;gap:.75rem;">' + list.map(e=>{
+    const cfg=BANCAS[e.banca]; const scores=getEssayScores(e);
+    const pct=e.total/cfg.total*100;
+    const pills=cfg.criterios.map(c=>'<span class="score-pill-r">'+c.key+': <strong>'+(scores[c.key]||0)+'</strong>/'+c.max+'</span>').join('');
+    return '<div class="essay-card-r" onclick="showEssayDetail(''+e.id+'')">'+
+      '<div>'+
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">'+
+          '<span class="badge badge-'+e.banca+'">'+cfg.name+'</span>'+
+          '<span style="font-size:14px;font-weight:600;">'+(e.title||'')+'</span>'+
+          '<span style="font-size:12px;color:var(--text3);">'+formatarData(e.date)+'</span>'+
+        '</div>'+
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">'+pills+'</div>'+
+        (e.obs?'<div style="font-size:12px;color:var(--text3);font-style:italic">"'+e.obs.slice(0,100)+(e.obs.length>100?'…':'')+'"</div>':'')+
+        '<div style="display:flex;gap:6px;margin-top:8px;" onclick="event.stopPropagation()">'+
+          '<button class="btn btn-ghost" style="font-size:12px;padding:4px 12px;" onclick="openEssayModal(''+e.id+'')">Editar</button>'+
+          '<button class="btn btn-ghost" style="font-size:12px;padding:4px 12px;color:var(--red);border-color:rgba(255,92,92,0.3);" onclick="deleteEssay(''+e.id+'')">Deletar</button>'+
+        '</div>'+
+      '</div>'+
+      '<div><div class="essay-total-r '+essayClass(pct)+'">'+e.total+'<small>/ '+cfg.total+' pts</small></div><div style="font-size:11px;color:var(--text3);text-align:right;margin-top:4px;">'+pct.toFixed(0)+'%</div></div>'+
+    '</div>';
+  }).join('') + '</div>';
+}
+
+function showEssayDetail(id) {
+  const e = DB.essays.find(x=>x.id===id);
+  if(!e) return;
+  const cfg=BANCAS[e.banca]; const scores=getEssayScores(e);
+  const pct=e.total/cfg.total*100;
+  const scoreCards=cfg.criterios.map(c=>{
+    const v=scores[c.key]||0; const p=v/c.max*100;
+    return '<div class="detail-score-card-r"><div class="comp">'+c.name+'</div><div class="val '+essayClass(p)+'">'+v+' <span style="font-size:14px;color:var(--text3);">/ '+c.max+'</span></div><div class="pct">'+p.toFixed(0)+'%</div><div class="bar"><div class="bar-fill" style="width:'+p+'%;background:'+essayColor(p)+'"></div></div></div>';
+  }).join('');
+  document.getElementById('r-detail-content').innerHTML=
+    '<div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">'+
+      '<span class="back-btn" onclick="goTo('redacoes')" style="cursor:pointer;">← Redações</span>'+
+      '<span class="badge badge-'+e.banca+'">'+cfg.name+'</span>'+
+      '<span style="color:var(--text3);font-size:13px;">'+formatarData(e.date)+'</span>'+
+    '</div>'+
+    '<div style="margin-bottom:1.5rem;"><h2 style="font-size:22px;font-weight:700;margin-bottom:4px;">'+(e.title||'')+'</h2>'+
+      '<p style="font-size:13px;color:var(--text3);">Nota final: <span class="'+essayClass(pct)+'" style="font-weight:700">'+e.total+' / '+cfg.total+' pts</span> · '+pct.toFixed(0)+'%</p>'+
+    '</div>'+
+    '<div class="detail-scores-r">'+scoreCards+'</div>'+
+    (e.obs?'<div class="card"><div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Minhas anotações</div><p style="font-size:14px;line-height:1.7;">'+e.obs.replace(/
+/g,'<br>')+'</p></div>':'');
+  goTo('redacao-detalhe');
+}
+
+let rCharts = {};
+function renderCharts() {
+  Object.values(rCharts).forEach(c=>c.destroy()); rCharts={};
+  const essays = DB.essays;
+  if(essays.length===0) return;
+  const sorted=[...essays].sort((a,b)=>a.date.localeCompare(b.date));
+  const evLabels=sorted.map(e=>formatarData(e.date)+' · '+BANCAS[e.banca].name);
+  const evData=sorted.map(e=>+(e.total/BANCAS[e.banca].total*100).toFixed(1));
+  rCharts.evo=new Chart(document.getElementById('chart-evolution'),{type:'line',data:{labels:evLabels,datasets:[{label:'Aproveitamento (%)',data:evData,borderColor:'#c8f135',backgroundColor:'rgba(200,241,53,.08)',tension:.35,fill:true,pointBackgroundColor:evData.map(v=>v>=70?'#4ade80':v>=45?'#ff9a3c':'#ff5c5c'),pointRadius:5}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'#161618',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,titleColor:'#f0f0f0',bodyColor:'#888'}},scales:{y:{max:100,min:0,grid:{color:'rgba(255,255,255,0.05)'},ticks:{callback:v=>v+'%',color:'#555'}},x:{ticks:{color:'#555',maxRotation:30},grid:{color:'rgba(255,255,255,0.05)'}}}}});
+  const compData={};
+  essays.forEach(e=>{const cfg=BANCAS[e.banca];const sc=getEssayScores(e);cfg.criterios.forEach(c=>{const label='['+cfg.name+'] '+c.name;if(!compData[label])compData[label]=[];compData[label].push((sc[c.key]||0)/c.max*100);});});
+  const cLabels=Object.keys(compData);
+  const cAvgs=cLabels.map(k=>+(compData[k].reduce((a,b)=>a+b,0)/compData[k].length).toFixed(1));
+  rCharts.comp=new Chart(document.getElementById('chart-comp'),{type:'bar',data:{labels:cLabels.map(l=>l.length>22?l.slice(0,22)+'…':l),datasets:[{data:cAvgs,backgroundColor:cAvgs.map(v=>v>=70?'rgba(200,241,53,.6)':v>=45?'rgba(255,154,60,.6)':'rgba(255,92,92,.6)'),borderRadius:4}]},options:{responsive:true,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{max:100,grid:{color:'rgba(255,255,255,0.05)'},ticks:{callback:v=>v+'%',color:'#555'}},y:{ticks:{color:'#555',font:{size:11}},grid:{display:false}}}}});
+  const bCount={};essays.forEach(e=>bCount[e.banca]=(bCount[e.banca]||0)+1);
+  const bLabels=Object.keys(bCount).map(b=>BANCAS[b].name);
+  const bColors=Object.keys(bCount).map(b=>({unesp:'rgba(60,179,113,.7)',unicamp:'rgba(231,76,60,.7)',fuvest:'rgba(93,173,226,.7)',enem:'rgba(251,191,36,.7)'}[b]));
+  rCharts.banca=new Chart(document.getElementById('chart-banca'),{type:'doughnut',data:{labels:bLabels,datasets:[{data:Object.values(bCount),backgroundColor:bColors,borderWidth:0}]},options:{responsive:true,cutout:'65%',plugins:{legend:{labels:{color:'#888',font:{size:12}}}}}});
+}
+
+function renderAlerts() {
+  const el = document.getElementById('r-alerts-list');
+  if(!el) return;
+  const essays=DB.essays;
+  if(essays.length===0){el.innerHTML='<div class="empty-state-r"><div class="ei">🔔</div><div class="et">Sem alertas ainda</div><div class="es">Adicione redações para receber insights.</div></div>';return;}
+  const alerts=[];
+  const compStats={};
+  essays.forEach(e=>{const cfg=BANCAS[e.banca];const sc=getEssayScores(e);cfg.criterios.forEach(c=>{const key=e.banca+'__'+c.key;if(!compStats[key])compStats[key]={name:c.name,banca:cfg.name,vals:[],max:c.max};compStats[key].vals.push(sc[c.key]||0);});});
+  Object.values(compStats).forEach(cs=>{const avg=cs.vals.reduce((a,b)=>a+b,0)/cs.vals.length;const pct=avg/cs.max*100;if(pct<40)alerts.push({type:'danger',title:'Competência crítica: '+cs.name+' ('+cs.banca+')',text:'Média de '+pct.toFixed(0)+'% — atenção urgente.'});else if(pct<60)alerts.push({type:'warning',title:'Melhoria necessária: '+cs.name+' ('+cs.banca+')',text:'Média de '+pct.toFixed(0)+'% — há espaço para crescer.'});});
+  const avgs=essays.map(e=>e.total/BANCAS[e.banca].total*100);
+  const media=avgs.reduce((a,b)=>a+b,0)/avgs.length;
+  if(media>=75)alerts.push({type:'success',title:'Excelente aproveitamento!',text:'Média geral de '+media.toFixed(0)+'% — no caminho certo!'});
+  else if(media>=55)alerts.push({type:'warning',title:'Desempenho razoável',text:'Média geral de '+media.toFixed(0)+'%. Foque nos critérios mais fracos.'});
+  else alerts.push({type:'danger',title:'Precisa de mais prática',text:'Média geral de '+media.toFixed(0)+'%. Aumente a frequência de redações.'});
+  el.innerHTML=alerts.map(a=>'<div class="alert-item-r '+a.type+'"><div class="alert-text"><strong>'+a.title+'</strong><span>'+a.text+'</span></div></div>').join('');
+}
+
+// ─── INIT ─────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  renderScoreInputs();
+  initAuth();
+});
 </script>
 </body>
 </html>
