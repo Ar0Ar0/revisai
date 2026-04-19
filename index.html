@@ -992,11 +992,25 @@ const SUPABASE_URL = 'https://qvvxjuapunkxrjrzgoak.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_vjIssqyg-pf4oaEWHTT17w_QN2rFpah';
 // ============================================================
 
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// sb e currentUser são declarados globalmente mas inicializados depois
+let sb = null;
 let currentUser = null;
 
 // ─── AUTH ─────────────────────────────────────────────────
 async function initAuth() {
+  if (!sb) {
+    if (!window.supabase) {
+      console.error('Supabase ainda não carregou. Tentando novamente...');
+      setTimeout(initAuth, 500);
+      return;
+    }
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // Listener de auth state
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') { currentUser = session.user; loadAll(); initAuth(); }
+      if (event === 'SIGNED_OUT') { currentUser = null; }
+    });
+  }
   const { data: { user } } = await sb.auth.getUser();
   currentUser = user;
   if (user) {
@@ -1011,20 +1025,18 @@ async function initAuth() {
 }
 
 async function signInWithGoogle() {
+  if (!sb) await initAuth();
   await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
 }
 
 async function handleLogout() {
+  if (!sb) return;
   await sb.auth.signOut();
   currentUser = null;
   document.getElementById('google-login-btn').style.display = 'flex';
   document.getElementById('user-info-sidebar').style.display = 'none';
 }
 
-sb.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_IN') { currentUser = session.user; loadAll(); initAuth(); }
-  if (event === 'SIGNED_OUT') { currentUser = null; }
-});
 
 // ─── CACHE LOCAL ──────────────────────────────────────────
 let DB = {
@@ -1898,7 +1910,15 @@ function renderAlerts() {
 // ─── INIT ─────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   renderScoreInputs();
-  initAuth();
+  // Aguarda supabase carregar antes de inicializar auth
+  function tryInit() {
+    if (window.supabase) {
+      initAuth();
+    } else {
+      setTimeout(tryInit, 100);
+    }
+  }
+  tryInit();
 });
 </script>
 </body>
