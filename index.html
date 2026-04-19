@@ -427,7 +427,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
             <span class="tag" style="background:rgba(74,222,128,0.1);color:#4ade80;font-size:10px;">PT</span>
             <span style="font-size:13px;color:var(--text);flex:1;">Dom Casmurro</span>
-            <span style="font-size:12px;color:var(--accent);font-family:'DM Mono',monospace;">68%</span>
+            <span style="font-size:12px;color:var(--accent);font-family:var(--font-mono);">68%</span>
           </div>
           <div class="prog-bg"><div class="prog-fill" style="width:68%;background:var(--accent)"></div></div>
           <div style="font-size:10px;color:var(--text3);margin-top:3px;" class="mono">pg 211/310 · 15 pg/dia · 7 dias</div>
@@ -436,7 +436,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
             <span class="tag" style="background:rgba(74,222,128,0.1);color:#4ade80;font-size:10px;">PT</span>
             <span style="font-size:13px;color:var(--text);flex:1;">Vidas Secas</span>
-            <span style="font-size:12px;color:var(--orange);font-family:'DM Mono',monospace;">22%</span>
+            <span style="font-size:12px;color:var(--orange);font-family:var(--font-mono);">22%</span>
           </div>
           <div class="prog-bg"><div class="prog-fill" style="width:22%;background:var(--orange)"></div></div>
           <div style="font-size:10px;color:var(--text3);margin-top:3px;" class="mono">pg 35/160 · atrasada</div>
@@ -445,7 +445,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
             <span class="tag" style="background:rgba(92,168,255,0.1);color:#5ca8ff;font-size:10px;">EN</span>
             <span style="font-size:13px;color:var(--text);flex:1;">The Alchemist</span>
-            <span style="font-size:12px;color:var(--blue);font-family:'DM Mono',monospace;">45%</span>
+            <span style="font-size:12px;color:var(--blue);font-family:var(--font-mono);">45%</span>
           </div>
           <div class="prog-bg"><div class="prog-fill" style="width:45%;background:var(--blue)"></div></div>
           <div style="font-size:10px;color:var(--text3);margin-top:3px;" class="mono">pg 89/197 · 10 pg/dia · 11 dias</div>
@@ -472,13 +472,13 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
   </div>
   <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;">
     <button class="btn btn-primary" onclick="goTo('nova-folhinha')">+ Nova folhinha</button>
-    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:var(--font-sans);font-size:13px;">
       <option>Todas as matérias</option><option>Biologia</option><option>Matemática</option><option>Física</option><option>Química</option><option>História</option><option>Português</option>
     </select>
-    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:var(--font-sans);font-size:13px;">
       <option>Todas as frentes</option><option>Frente 1</option><option>Frente 2</option><option>Frente 3</option>
     </select>
-    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:'Syne',sans-serif;font-size:13px;">
+    <select style="background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:8px 12px;font-family:var(--font-sans);font-size:13px;">
       <option>Importância: todas</option><option>Muito importante</option><option>Médio</option><option>Pouco importante</option>
     </select>
   </div>
@@ -651,7 +651,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
   <div id="fd-notas" style="display:none">
     <div class="card" style="margin-bottom:1rem;">
       <div class="card-header"><span class="card-title">Anotações gerais</span></div>
-      <textarea class="field" style="margin:0;width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Syne',sans-serif;font-size:13px;padding:10px;min-height:100px;resize:vertical;">Prof falou que cai muito no ENEM. Prestar atenção nas curvas de crescimento e no Princípio de Gause.</textarea>
+      <textarea class="field" style="margin:0;width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-sans);font-size:13px;padding:10px;min-height:100px;resize:vertical;">Prof falou que cai muito no ENEM. Prestar atenção nas curvas de crescimento e no Princípio de Gause.</textarea>
       <button class="btn btn-ghost" style="margin-top:8px;">Salvar</button>
     </div>
     <div class="card">
@@ -1515,7 +1515,7 @@ function renderLeiturasResumoDash() {
   const el = document.getElementById('dash-leituras');
   if (!el) return;
   if (DB.leituras.length === 0) {
-    el.innerHTML = '<div style="font-size:13px;color:var(--text3);">Nenhum livro cadastrado. <span style="color:var(--accent);cursor:pointer;" onclick="goTo('leituras')">Adicionar →</span></div>';
+    el.innerHTML = "<div style='font-size:13px;color:var(--text3);'>Nenhum livro cadastrado. <span style='color:var(--accent);cursor:pointer;' onclick='goTo(\"leituras\")'>Adicionar &rarr;</span></div>";
     return;
   }
   el.innerHTML = DB.leituras.slice(0,3).map(l => {
@@ -1528,7 +1528,7 @@ function renderLeiturasResumoDash() {
       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">' +
         '<span class="tag" style="background:rgba(' + (l.idioma==='en'?'92,168,255':'74,222,128') + ',0.1);color:' + (l.idioma==='en'?'#5ca8ff':'#4ade80') + ';font-size:10px;">' + l.idioma.toUpperCase() + '</span>' +
         '<span style="font-size:13px;color:var(--text);flex:1;">' + l.titulo + '</span>' +
-        '<span style="font-size:12px;color:' + pctColor + ';font-family:'DM Mono',monospace;">' + pct + '%</span>' +
+        '<span style="font-size:12px;color:' + pctColor + ';font-family:var(--font-mono);">' + pct + '%</span>' +
       '</div>' +
       '<div class="prog-bg"><div class="prog-fill" style="width:' + pct + '%;background:' + barColor + '"></div></div>' +
       '<div style="font-size:10px;color:var(--text3);margin-top:3px;" class="mono">pg ' + (l.pagina_atual||0) + '/' + (l.total_paginas||0) + ' · ' + (l.meta_diaria||0) + ' pg/dia · ' + dias + ' dias</div>' +
@@ -1734,11 +1734,11 @@ function renderScoreInputs(existing={}) {
   document.getElementById('r-scores-inputs').innerHTML = cfg.criterios.map(c => {
     const val = existing[c.key]||0;
     const pct = val/c.max*100;
-    return '<div class="score-input-card"><label>'+c.name+' (0–'+c.max+')</label>'+
-      '<div class="score-bar-wrap">'+
-        '<input type="number" id="sc-'+c.key+'" min="0" max="'+c.max+'" value="'+val+'" style="width:70px;text-align:center;font-size:14px;" oninput="updateBar(''+c.key+'','+c.max+')">'+
-        '<div class="score-bar-bg"><div class="score-bar-live" id="bar-'+c.key+'" style="width:'+pct+'%"></div></div>'+
-      '</div></div>';
+    return `<div class="score-input-card"><label>${c.name} (0–${c.max})</label>
+      <div class="score-bar-wrap">
+        <input type="number" id="sc-${c.key}" min="0" max="${c.max}" value="${val}" style="width:70px;text-align:center;font-size:14px;" oninput="updateBar('${c.key}',${c.max})">
+        <div class="score-bar-bg"><div class="score-bar-live" id="bar-${c.key}" style="width:${pct}%"></div></div>
+      </div></div>`;
   }).join('');
 }
 
@@ -1823,52 +1823,75 @@ function renderEssayList() {
 }
 
 function renderEssayCards(list) {
-  return '<div style="display:flex;flex-direction:column;gap:.75rem;">' + list.map(e=>{
-    const cfg=BANCAS[e.banca]; const scores=getEssayScores(e);
-    const pct=e.total/cfg.total*100;
-    const pills=cfg.criterios.map(c=>'<span class="score-pill-r">'+c.key+': <strong>'+(scores[c.key]||0)+'</strong>/'+c.max+'</span>').join('');
-    return '<div class="essay-card-r" onclick="showEssayDetail(''+e.id+'')">'+
-      '<div>'+
-        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">'+
-          '<span class="badge badge-'+e.banca+'">'+cfg.name+'</span>'+
-          '<span style="font-size:14px;font-weight:600;">'+(e.title||'')+'</span>'+
-          '<span style="font-size:12px;color:var(--text3);">'+formatarData(e.date)+'</span>'+
-        '</div>'+
-        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">'+pills+'</div>'+
-        (e.obs?'<div style="font-size:12px;color:var(--text3);font-style:italic">"'+e.obs.slice(0,100)+(e.obs.length>100?'…':'')+'"</div>':'')+
-        '<div style="display:flex;gap:6px;margin-top:8px;" onclick="event.stopPropagation()">'+
-          '<button class="btn btn-ghost" style="font-size:12px;padding:4px 12px;" onclick="openEssayModal(''+e.id+'')">Editar</button>'+
-          '<button class="btn btn-ghost" style="font-size:12px;padding:4px 12px;color:var(--red);border-color:rgba(255,92,92,0.3);" onclick="deleteEssay(''+e.id+'')">Deletar</button>'+
-        '</div>'+
-      '</div>'+
-      '<div><div class="essay-total-r '+essayClass(pct)+'">'+e.total+'<small>/ '+cfg.total+' pts</small></div><div style="font-size:11px;color:var(--text3);text-align:right;margin-top:4px;">'+pct.toFixed(0)+'%</div></div>'+
-    '</div>';
+  return '<div style="display:flex;flex-direction:column;gap:.75rem;">' + list.map(e => {
+    const cfg = BANCAS[e.banca];
+    const scores = getEssayScores(e);
+    const pct = e.total / cfg.total * 100;
+    const pills = cfg.criterios.map(c =>
+      `<span class="score-pill-r">${c.key}: <strong>${scores[c.key]||0}</strong>/${c.max}</span>`
+    ).join('');
+    const obsHtml = e.obs ? `<div style="font-size:12px;color:var(--text3);font-style:italic">"${e.obs.slice(0,100)}${e.obs.length>100?'...':''}"</div>` : '';
+    return `<div class="essay-card-r" onclick="showEssayDetail('${e.id}')">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <span class="badge badge-${e.banca}">${cfg.name}</span>
+          <span style="font-size:14px;font-weight:600;">${e.title||''}</span>
+          <span style="font-size:12px;color:var(--text3);">${formatarData(e.date)}</span>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">${pills}</div>
+        ${obsHtml}
+        <div style="display:flex;gap:6px;margin-top:8px;" onclick="event.stopPropagation()">
+          <button class="btn btn-ghost" style="font-size:12px;padding:4px 12px;" onclick="openEssayModal('${e.id}')">Editar</button>
+          <button class="btn btn-ghost" style="font-size:12px;padding:4px 12px;color:var(--red);border-color:rgba(255,92,92,0.3);" onclick="deleteEssay('${e.id}')">Deletar</button>
+        </div>
+      </div>
+      <div>
+        <div class="essay-total-r ${essayClass(pct)}">${e.total}<small>/ ${cfg.total} pts</small></div>
+        <div style="font-size:11px;color:var(--text3);text-align:right;margin-top:4px;">${pct.toFixed(0)}%</div>
+      </div>
+    </div>`;
   }).join('') + '</div>';
 }
+
 
 function showEssayDetail(id) {
   const e = DB.essays.find(x=>x.id===id);
   if(!e) return;
-  const cfg=BANCAS[e.banca]; const scores=getEssayScores(e);
-  const pct=e.total/cfg.total*100;
-  const scoreCards=cfg.criterios.map(c=>{
-    const v=scores[c.key]||0; const p=v/c.max*100;
-    return '<div class="detail-score-card-r"><div class="comp">'+c.name+'</div><div class="val '+essayClass(p)+'">'+v+' <span style="font-size:14px;color:var(--text3);">/ '+c.max+'</span></div><div class="pct">'+p.toFixed(0)+'%</div><div class="bar"><div class="bar-fill" style="width:'+p+'%;background:'+essayColor(p)+'"></div></div></div>';
+  const cfg = BANCAS[e.banca];
+  const scores = getEssayScores(e);
+  const pct = e.total / cfg.total * 100;
+
+  const scoreCards = cfg.criterios.map(c => {
+    const v = scores[c.key]||0;
+    const p = v / c.max * 100;
+    return `<div class="detail-score-card-r">
+      <div class="comp">${c.name}</div>
+      <div class="val ${essayClass(p)}">${v} <span style="font-size:14px;color:var(--text3);">/ ${c.max}</span></div>
+      <div class="pct">${p.toFixed(0)}%</div>
+      <div class="bar"><div class="bar-fill" style="width:${p}%;background:${essayColor(p)}"></div></div>
+    </div>`;
   }).join('');
-  document.getElementById('r-detail-content').innerHTML=
-    '<div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">'+
-      '<span class="back-btn" onclick="goTo('redacoes')" style="cursor:pointer;">← Redações</span>'+
-      '<span class="badge badge-'+e.banca+'">'+cfg.name+'</span>'+
-      '<span style="color:var(--text3);font-size:13px;">'+formatarData(e.date)+'</span>'+
-    '</div>'+
-    '<div style="margin-bottom:1.5rem;"><h2 style="font-size:22px;font-weight:700;margin-bottom:4px;">'+(e.title||'')+'</h2>'+
-      '<p style="font-size:13px;color:var(--text3);">Nota final: <span class="'+essayClass(pct)+'" style="font-weight:700">'+e.total+' / '+cfg.total+' pts</span> · '+pct.toFixed(0)+'%</p>'+
-    '</div>'+
-    '<div class="detail-scores-r">'+scoreCards+'</div>'+
-    (e.obs?'<div class="card"><div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Minhas anotações</div><p style="font-size:14px;line-height:1.7;">'+e.obs.replace(/
-/g,'<br>')+'</p></div>':'');
+
+  const obsSection = e.obs
+    ? `<div class="card"><div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Minhas anotações</div><p style="font-size:14px;line-height:1.7;">${e.obs.replace(/\n/g,'<br>')}</p></div>`
+    : '';
+
+  document.getElementById('r-detail-content').innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+      <span class="back-btn" onclick="goTo('redacoes')" style="cursor:pointer;">← Redações</span>
+      <span class="badge badge-${e.banca}">${cfg.name}</span>
+      <span style="color:var(--text3);font-size:13px;">${formatarData(e.date)}</span>
+    </div>
+    <div style="margin-bottom:1.5rem;">
+      <h2 style="font-size:22px;font-weight:700;margin-bottom:4px;">${e.title||''}</h2>
+      <p style="font-size:13px;color:var(--text3);">Nota final: <span class="${essayClass(pct)}" style="font-weight:700">${e.total} / ${cfg.total} pts</span> · ${pct.toFixed(0)}%</p>
+    </div>
+    <div class="detail-scores-r">${scoreCards}</div>
+    ${obsSection}
+  `;
   goTo('redacao-detalhe');
 }
+
 
 let rCharts = {};
 function renderCharts() {
