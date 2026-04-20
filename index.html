@@ -402,7 +402,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
         <div class="card-header"><span class="card-title">Revisões de hoje + atrasadas</span></div>
         <div id="dash-revisoes-lista"><div style="font-size:13px;color:var(--text3);padding:1rem 0;">Carregando...</div></div>
         <div class="actions">
-          <button class="btn btn-primary" onclick="goTo('folhinha-detalhe')">Iniciar revisões</button>
+          <button class="btn btn-primary" onclick="iniciarRevisoes()">Iniciar revisões</button>
           <button class="btn btn-ghost" onclick="goTo('upload')">+ Upload em lote</button>
         </div>
       </div>
@@ -713,28 +713,29 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 
 <!-- ===== REVISAO MENSAL ===== -->
 <div id="page-revisao-mensal" class="page">
-  <div class="page-header"><h2>Revisão mensal — <span style="color:var(--accent)">Abril 2026</span></h2><p>20 questões misturadas de todas as matérias · geradas pela IA</p></div>
-  <div class="alert alert-info section-gap">Essa revisão mistura conteúdos das suas 24 folhinhas — é pra testar se você realmente consolidou, não só memorizar.</div>
+  <div class="page-header"><h2>Revisão mensal — <span style="color:var(--accent)" id="rm-mes">este mês</span></h2><p id="rm-sub">Questões misturadas de todas as matérias · geradas pela IA</p></div>
+  <div class="alert alert-info section-gap">Essa revisão mistura conteúdos de todas as suas folhinhas — é pra testar se você realmente consolidou, não só memorizar.</div>
   <div class="grid4 section-gap">
-    <div class="metric"><div class="metric-label">Total questões</div><div class="metric-value">20</div></div>
+    <div class="metric"><div class="metric-label">Total questões</div><div class="metric-value" id="rm-total-q">—</div></div>
     <div class="metric"><div class="metric-label">Respondidas</div><div class="metric-value" id="rm-resp">0</div></div>
     <div class="metric"><div class="metric-label">Certas</div><div class="metric-value good" id="rm-certas">0</div></div>
     <div class="metric"><div class="metric-label">Aproveitamento</div><div class="metric-value" id="rm-aprov">0%</div></div>
   </div>
   <div style="margin-bottom:1.5rem;"><div class="prog-bg" style="height:6px;"><div class="prog-fill" id="rm-prog" style="width:0%;background:var(--blue)"></div></div></div>
-  <div class="card" style="margin-bottom:1rem;">
-    <div class="card-header"><span class="card-title">Questões</span></div>
-    <div class="q-row"><span class="q-num">1.</span><div class="q-body"><div class="q-text">Qual relação ecológica é exemplificada pelo fungo Penicillium inibindo o crescimento de bactérias?</div><div class="q-meta"><span class="badge badge-bio">BIO</span><span style="font-size:11px;color:var(--text3);">Folha 05 · Ecologia</span></div></div><div class="q-btns"><button class="qbtn" id="rm1c" onclick="markRM(1,'c')">✓</button><button class="qbtn" id="rm1e" onclick="markRM(1,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-    <div class="q-row"><span class="q-num">2.</span><div class="q-body"><div class="q-text">Dada f(x) = 2x² − 8x + 6, quais são as raízes?</div><div class="q-meta"><span class="badge badge-mat">MAT</span><span style="font-size:11px;color:var(--text3);">Folha 03 · Funções</span></div></div><div class="q-btns"><button class="qbtn" id="rm2c" onclick="markRM(2,'c')">✓</button><button class="qbtn" id="rm2e" onclick="markRM(2,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-    <div class="q-row"><span class="q-num">3.</span><div class="q-body"><div class="q-text">A Revolução Industrial iniciou-se primeiro em qual país e por qual razão principal?</div><div class="q-meta"><span class="badge badge-hist">HIST</span><span style="font-size:11px;color:var(--text3);">Folha 08 · Rev. Industrial</span></div></div><div class="q-btns"><button class="qbtn" id="rm3c" onclick="markRM(3,'c')">✓</button><button class="qbtn" id="rm3e" onclick="markRM(3,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-    <div class="q-row"><span class="q-num">4.</span><div class="q-body"><div class="q-text">Na cinemática escalar, o que diferencia velocidade média de velocidade instantânea?</div><div class="q-meta"><span class="badge badge-fis">FÍS</span><span style="font-size:11px;color:var(--text3);">Folha 02 · Cinemática</span></div></div><div class="q-btns"><button class="qbtn" id="rm4c" onclick="markRM(4,'c')">✓</button><button class="qbtn" id="rm4e" onclick="markRM(4,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-    <div class="q-row"><span class="q-num">5.</span><div class="q-body"><div class="q-text">O que é isomeria óptica e em que tipos de moléculas ocorre?</div><div class="q-meta"><span class="badge badge-quim">QUÍM</span><span style="font-size:11px;color:var(--text3);">Folha 06 · Quím. Orgânica</span></div></div><div class="q-btns"><button class="qbtn" id="rm5c" onclick="markRM(5,'c')">✓</button><button class="qbtn" id="rm5e" onclick="markRM(5,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:.5rem;">
-      <span class="mono" style="font-size:12px;color:var(--text3);">mostrando 5 de 20</span>
-      <button class="btn btn-primary">Finalizar revisão</button>
+  <div id="rm-questoes-container">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Questões</span></div>
+      <div id="rm-questoes-lista"><div style="font-size:13px;color:var(--text3);padding:1rem;">Clique em "Gerar revisão" para criar questões baseadas nas suas folhinhas.</div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:.5rem;">
+        <span class="mono" style="font-size:12px;color:var(--text3);" id="rm-contador">0 questões geradas</span>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost" onclick="gerarRevisaoMensal()">Gerar revisão com IA</button>
+          <button class="btn btn-primary" onclick="finalizarRevisaoMensal()">Finalizar revisão</button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</div></div>
 
 <!-- ===== SIMULADOS ===== -->
 <div id="page-simulados" class="page">
@@ -876,7 +877,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 </div>
 
 <!-- ===== REDAÇÕES ===== -->
-<div id="page-redacoes" class="page" style="display:none;">
+<div id="page-redacoes" class="page">
   <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;">
     <div class="page-header" style="margin:0"><h2>Redações</h2><p>Acompanhe seu desempenho por banca e competência</p></div>
     <button class="btn btn-primary" onclick="openEssayModal()">+ Nova redação</button>
@@ -900,7 +901,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 </div>
 
 <!-- ===== DETALHE REDAÇÃO ===== -->
-<div id="page-redacao-detalhe" class="page" style="display:none;">
+<div id="page-redacao-detalhe" class="page">
   <div class="back-btn" onclick="goTo('redacoes')">← Redações</div>
   <div id="r-detail-content"></div>
 </div>
@@ -1637,6 +1638,8 @@ function renderDesempenhoPage() {
 
 // ─── REVISÃO MENSAL ────────────────────────────────────────
 let rmResps = {};
+let rmTotalQuestoes = 0;
+
 function markRM(n, tipo) {
   rmResps[n] = tipo;
   ['c','e'].forEach(t => { const el = document.getElementById('rm'+n+t); if(el) el.className='qbtn'; });
@@ -1644,10 +1647,134 @@ function markRM(n, tipo) {
   if(el) el.className='qbtn '+(tipo==='c'?'certo':'errado');
   const total = Object.keys(rmResps).length;
   const certas = Object.values(rmResps).filter(v=>v==='c').length;
+  const totalQ = rmTotalQuestoes || 10;
   document.getElementById('rm-resp') && (document.getElementById('rm-resp').textContent = total);
   document.getElementById('rm-certas') && (document.getElementById('rm-certas').textContent = certas);
-  document.getElementById('rm-aprov') && (document.getElementById('rm-aprov').textContent = Math.round((certas/20)*100)+'%');
-  document.getElementById('rm-prog') && (document.getElementById('rm-prog').style.width = Math.round((total/20)*100)+'%');
+  document.getElementById('rm-aprov') && (document.getElementById('rm-aprov').textContent = Math.round((certas/totalQ)*100)+'%');
+  document.getElementById('rm-prog') && (document.getElementById('rm-prog').style.width = Math.round((total/totalQ)*100)+'%');
+}
+
+async function gerarRevisaoMensal() {
+  if (!currentUser) { alert('Faça login primeiro!'); return; }
+  if (DB.folhinhas.length === 0) { alert('Você não tem folhinhas cadastradas ainda!'); return; }
+  
+  const btn = document.querySelector('#rm-questoes-container button.btn-ghost');
+  if(btn) { btn.textContent = 'Gerando...'; btn.disabled = true; }
+  
+  // Pick random folhinhas (up to 10)
+  const shuffled = [...DB.folhinhas].sort(() => Math.random() - 0.5).slice(0, 10);
+  const topicos = shuffled.map(f => f.nome + (f.materia ? ' (' + f.materia + ')' : '')).join(', ');
+  const qtd = Math.min(shuffled.length * 2, 10);
+  
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 2000,
+        messages: [{
+          role: 'user',
+          content: 'Gere exatamente ' + qtd + ' questões dissertativas curtas de revisão sobre estes tópicos de vestibular: ' + topicos + '. Responda APENAS com JSON válido, sem texto antes ou depois, no formato: {"questoes":[{"num":1,"texto":"pergunta aqui","materia":"materia","topico":"topico"}]}'
+        }]
+      })
+    });
+    
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '';
+    let parsed;
+    try {
+      const clean = text.replace(/```json|```/g,'').trim();
+      parsed = JSON.parse(clean);
+    } catch(e) {
+      // Fallback: create questions from folhinhas names
+      parsed = { questoes: shuffled.slice(0,5).map((f,i) => ({
+        num: i+1,
+        texto: 'Explique os principais conceitos de: ' + f.nome,
+        materia: f.materia || 'Geral',
+        topico: f.nome
+      }))};
+    }
+    
+    const questoes = parsed.questoes || [];
+    rmTotalQuestoes = questoes.length;
+    rmResps = {};
+    
+    const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const now = new Date();
+    const mesEl = document.getElementById('rm-mes');
+    if(mesEl) mesEl.textContent = meses[now.getMonth()] + ' ' + now.getFullYear();
+    const subEl = document.getElementById('rm-sub');
+    if(subEl) subEl.textContent = questoes.length + ' questões misturadas de todas as suas matérias';
+    const totalQEl = document.getElementById('rm-total-q');
+    if(totalQEl) totalQEl.textContent = questoes.length;
+    const contEl = document.getElementById('rm-contador');
+    if(contEl) contEl.textContent = questoes.length + ' questões geradas';
+    
+    // Reset progress
+    ['rm-resp','rm-certas'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent='0'; });
+    document.getElementById('rm-aprov') && (document.getElementById('rm-aprov').textContent = '0%');
+    document.getElementById('rm-prog') && (document.getElementById('rm-prog').style.width = '0%');
+    
+    const lista = document.getElementById('rm-questoes-lista');
+    if(lista) {
+      lista.innerHTML = questoes.map((q,i) => {
+        const n = i+1;
+        const bc = 'badge-' + matBadge(q.materia);
+        const mat = (q.materia||'').substring(0,4).toUpperCase();
+        const top = q.topico||'';
+        return `<div class="q-row">
+          <span class="q-num">${n}.</span>
+          <div class="q-body">
+            <div class="q-text">${q.texto}</div>
+            <div class="q-meta"><span class="badge ${bc}">${mat}</span>
+            <span style="font-size:11px;color:var(--text3);">${top}</span></div>
+          </div>
+          <div class="q-btns">
+            <button class="qbtn" id="rm${n}c" onclick="markRM(${n},'c')">✓</button>
+            <button class="qbtn" id="rm${n}e" onclick="markRM(${n},'e')">✗</button>
+          </div>
+          <input class="nota-input" placeholder="anotação...">
+        </div>`;
+      }).join('');
+    }
+  } catch(err) {
+    console.error('Erro ao gerar revisão:', err);
+    alert('Erro ao gerar questões. Verifique sua conexão e tente novamente.');
+  }
+  
+  if(btn) { btn.textContent = 'Gerar revisão com IA'; btn.disabled = false; }
+}
+
+async function finalizarRevisaoMensal() {
+  const total = Object.keys(rmResps).length;
+  if (total === 0) { alert('Responda pelo menos uma questão antes de finalizar.'); return; }
+  const certas = Object.values(rmResps).filter(v => v === 'c').length;
+  const pct = Math.round(certas / rmTotalQuestoes * 100);
+  alert('Revisão finalizada! Você acertou ' + certas + ' de ' + rmTotalQuestoes + ' questões (' + pct + '%).');
+}
+
+function iniciarRevisoes() {
+  const hoje = new Date().toISOString().split('T')[0];
+  const pendentes = DB.folhinhas.filter(f => f.proxima_revisao <= hoje);
+  if (pendentes.length === 0) { alert('Nenhuma revisão pendente hoje!'); return; }
+  abrirFolhinha(pendentes[0].id);
+}
+
+// ─── DELETAR FOLHINHA ──────────────────────────────────────
+async function deletarFolhinha(id, event) {
+  event.stopPropagation();
+  if (!confirm('Deletar esta folhinha? Isso apagará todas as revisões associadas.')) return;
+  if (!currentUser) return;
+  
+  await sb.from('revisoes').delete().eq('folhinha_id', id);
+  await sb.from('folhinhas').delete().eq('id', id).eq('user_id', currentUser.id);
+  
+  DB.folhinhas = DB.folhinhas.filter(f => f.id !== id);
+  DB.revisoes = DB.revisoes.filter(r => r.folhinha_id !== id);
+  
+  renderFolhinhasList();
+  renderDashboard();
 }
 
 // ─── UI HELPERS ───────────────────────────────────────────
