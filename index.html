@@ -521,14 +521,15 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
   <div class="back-btn" onclick="goTo('folhinhas')">← Folhinhas</div>
   <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;gap:1rem;">
     <div>
-      <h2 style="font-size:22px;font-weight:700;margin-bottom:4px;">Ecologia — Dinâmica Pop.</h2>
+      <h2 id="fd-nome" style="font-size:22px;font-weight:700;margin-bottom:4px;">—</h2>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span class="badge badge-bio">BIO</span>
-        <span style="font-size:12px;color:var(--text3);" class="mono">Frente 2 · Folha 05 · adicionada 18 abr</span>
-        <div class="imp imp-alto"></div><span style="font-size:11px;color:var(--red);" class="mono">muito cai</span>
+        <span class="badge" id="fd-badge">—</span>
+        <span style="font-size:12px;color:var(--text3);" class="mono" id="fd-meta">—</span>
+        <span id="fd-imp-dot" class="imp"></span>
+        <span id="fd-imp-label" style="font-size:11px;" class="mono"></span>
       </div>
     </div>
-    <span class="tag tag-info" style="white-space:nowrap;">Próxima revisão: amanhã</span>
+    <span class="tag tag-info" id="fd-proxima" style="white-space:nowrap;">—</span>
   </div>
   <div class="tabs">
     <button class="tab active" onclick="switchTabMulti(this,'fd-visao',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Visão geral</button>
@@ -538,68 +539,64 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <button class="tab" onclick="switchTabMulti(this,'fd-flash',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Flashcards</button>
     <button class="tab" onclick="switchTabMulti(this,'fd-notas',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Anotações</button>
   </div>
+
   <div id="fd-visao">
     <div class="grid2" style="margin-bottom:1rem;">
-      <div class="metric"><div class="metric-label">Lista original</div><div class="metric-value" id="fd-lista-val">14 / 20</div><div style="font-size:12px;color:var(--text3);" class="mono">70% de acerto</div></div>
-      <div class="metric"><div class="metric-label">Exercícios IA</div><div class="metric-value" id="fd-ia-val">7 / 10</div><div style="font-size:12px;color:var(--text3);" class="mono">70% · última sessão</div></div>
+      <div class="metric"><div class="metric-label">Lista original</div><div class="metric-value" id="fd-lista-val">—</div></div>
+      <div class="metric"><div class="metric-label">Exercícios IA</div><div class="metric-value" id="fd-ia-val">—</div></div>
     </div>
     <div class="card" style="margin-bottom:1rem;">
       <div class="card-header"><span class="card-title">Histórico de revisões</span></div>
-      <div class="row"><span class="mono" style="font-size:12px;color:var(--text3);min-width:120px;">18 abr · 1ª revisão</span><div class="bar-bg" style="flex:1;max-width:120px;"><div class="bar-fill" style="width:70%;background:var(--orange)"></div></div><span class="mono" style="font-size:13px;color:var(--orange);min-width:36px;text-align:right">70%</span><span style="font-size:11px;color:var(--text3);">lista + IA</span></div>
-      <div class="row"><span class="mono" style="font-size:12px;color:var(--text3);min-width:120px;">19 abr · 2ª revisão</span><div class="bar-bg" style="flex:1;max-width:120px;"><div class="bar-fill" style="width:0%"></div></div><span class="mono" style="font-size:13px;color:var(--text3);min-width:36px;text-align:right">—</span><span style="font-size:11px;color:var(--text3);">agendada</span></div>
+      <div id="fd-hist"><div style="font-size:13px;color:var(--text3);">Nenhuma revisão feita ainda.</div></div>
     </div>
     <div class="card">
       <div class="card-header"><span class="card-title">Resumo</span></div>
-      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Tópicos</span><span style="font-size:13px;">Dinâmica pop., Relações ecológicas, Sucessão</span></div>
-      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Revisões feitas</span><span style="font-size:13px;">1 de 5</span></div>
-      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Status</span><span class="tag tag-warn">em andamento</span></div>
-      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Flashcards</span><span class="tag tag-urg">pendente</span></div>
+      <div id="fd-resumo"></div>
     </div>
   </div>
+
   <div id="fd-pdf" style="display:none">
     <div class="card">
       <div class="card-header"><span class="card-title">Visualizar PDF</span></div>
-      <div class="pdf-viewer">
-        <svg width="36" height="42" viewBox="0 0 36 42" fill="none"><rect width="36" height="42" rx="4" fill="rgba(255,92,92,0.1)"/><path d="M8 13h20M8 20h20M8 27h12" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <div class="pdf-name">BIO_2_Folhinha_Aula_5_Ecologia.pdf</div>
-        <div class="pdf-hint">Clique para abrir em tela cheia</div>
+      <div id="fd-pdf-viewer" class="pdf-viewer">
+        <div style="font-size:13px;color:var(--text3);">Nenhum PDF anexado a esta folhinha.</div>
       </div>
     </div>
   </div>
+
   <div id="fd-lista" style="display:none">
     <div class="card">
       <div class="card-header"><span class="card-title">Registrar resultado da lista original</span></div>
       <p style="font-size:13px;color:var(--text3);margin-bottom:1rem;">Digite quantas você acertou do total de questões da folhinha.</p>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
-        <input type="number" id="fd-ac" placeholder="14" min="0" style="width:70px;text-align:center;font-size:18px;">
+        <input type="number" id="fd-ac" placeholder="ex: 14" min="0" style="width:80px;text-align:center;font-size:18px;">
         <span style="font-size:22px;color:var(--text3);">/</span>
-        <input type="number" id="fd-tot" placeholder="20" min="0" style="width:70px;text-align:center;font-size:18px;">
+        <input type="number" id="fd-tot" placeholder="ex: 20" min="0" style="width:80px;text-align:center;font-size:18px;">
         <span style="font-size:13px;color:var(--text3);">questões</span>
         <button class="btn btn-primary" onclick="salvarLista()">Salvar</button>
       </div>
       <div id="fd-lista-fb" style="display:none;" class="alert alert-ok"></div>
-      <div class="field"><label>Quais questões errou? (opcional)</label><textarea placeholder="Ex: Errei q.3 — confundi mutualismo com comensalismo..."></textarea></div>
-      <button class="btn btn-ghost">Salvar anotações</button>
+      <div class="field"><label>Quais questões errou? (opcional)</label><textarea id="fd-lista-notas" placeholder="Ex: Errei q.3 — confundi mutualismo com comensalismo..."></textarea></div>
+      <button class="btn btn-ghost" onclick="salvarNotasLista()">Salvar anotações</button>
     </div>
   </div>
+
   <div id="fd-ia" style="display:none">
     <div class="card">
       <div class="card-header"><span class="card-title">Exercícios gerados por IA</span></div>
-      <div id="fd-ia-loading" style="display:flex;align-items:center;gap:8px;padding:1rem 0;font-size:13px;color:var(--text3);">
-        <span class="mono">Gerando exercícios com base no PDF...</span>
+      <div id="fd-ia-loading" style="display:none;align-items:center;gap:8px;padding:1rem 0;font-size:13px;color:var(--text3);">
+        <span class="mono">Gerando exercícios...</span>
       </div>
-      <div id="fd-ia-content" style="display:none;">
-        <div class="q-row"><span class="q-num">1.</span><div class="q-body"><div class="q-text">O Princípio de Gause afirma que duas espécies com mesmo nicho em mesmo habitat resultam em?</div><div class="q-meta"><span class="badge badge-bio">BIO</span><span style="font-size:11px;color:var(--text3);">Ecologia · Folha 05</span></div></div><div class="q-btns"><button class="qbtn" id="ia1c" onclick="markQ(1,'c')">✓</button><button class="qbtn" id="ia1e" onclick="markQ(1,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-        <div class="q-row"><span class="q-num">2.</span><div class="q-body"><div class="q-text">Líquens são exemplos de qual tipo de relação ecológica?</div><div class="q-meta"><span class="badge badge-bio">BIO</span></div></div><div class="q-btns"><button class="qbtn" id="ia2c" onclick="markQ(2,'c')">✓</button><button class="qbtn" id="ia2e" onclick="markQ(2,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-        <div class="q-row"><span class="q-num">3.</span><div class="q-body"><div class="q-text">Na curva em S, o que representa a capacidade suporte (K)?</div><div class="q-meta"><span class="badge badge-bio">BIO</span></div></div><div class="q-btns"><button class="qbtn" id="ia3c" onclick="markQ(3,'c')">✓</button><button class="qbtn" id="ia3e" onclick="markQ(3,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-        <div class="q-row"><span class="q-num">4.</span><div class="q-body"><div class="q-text">Qual a diferença entre sucessão primária e secundária?</div><div class="q-meta"><span class="badge badge-bio">BIO</span></div></div><div class="q-btns"><button class="qbtn" id="ia4c" onclick="markQ(4,'c')">✓</button><button class="qbtn" id="ia4e" onclick="markQ(4,'e')">✗</button></div><input class="nota-input" placeholder="anotação..."></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:.5rem;">
-          <span id="ia-score" class="mono" style="font-size:12px;color:var(--text3);">0 / 4 respondidas</span>
-          <button class="btn btn-ghost" style="font-size:12px;">+ Gerar mais</button>
-        </div>
+      <div id="fd-ia-content">
+        <div style="font-size:13px;color:var(--text3);padding:1rem 0;">Clique em "Gerar exercícios" para criar questões sobre esta folhinha.</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:.5rem;">
+        <span id="fd-ia-score" class="mono" style="font-size:12px;color:var(--text3);">0 respondidas</span>
+        <button class="btn btn-ghost" onclick="gerarExerciciosIA()">Gerar exercícios com IA</button>
       </div>
     </div>
   </div>
+
   <div id="fd-flash" style="display:none">
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
@@ -609,24 +606,24 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
       <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
         <div style="font-size:13px;color:var(--text);">Acertos nos flashcards</div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <input type="number" placeholder="18" min="0" style="width:60px;text-align:center;font-size:13px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;">
+          <input type="number" id="fd-flash-ac" placeholder="ex: 18" min="0" style="width:60px;text-align:center;font-size:13px;">
           <span style="font-size:12px;color:var(--text3);">/</span>
-          <input type="number" placeholder="20" min="0" style="width:50px;text-align:center;font-size:13px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:6px;">
-          <button class="btn-sm">Salvar</button>
+          <input type="number" id="fd-flash-tot" placeholder="20" min="0" style="width:50px;text-align:center;font-size:13px;">
+          <button class="btn-sm" onclick="salvarFlashcards()">Salvar</button>
         </div>
       </div>
     </div>
   </div>
+
   <div id="fd-notas" style="display:none">
     <div class="card" style="margin-bottom:1rem;">
       <div class="card-header"><span class="card-title">Anotações gerais</span></div>
-      <textarea class="field" style="margin:0;width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-sans);font-size:13px;padding:10px;min-height:100px;resize:vertical;">Prof falou que cai muito no ENEM. Prestar atenção nas curvas de crescimento e no Princípio de Gause.</textarea>
-      <button class="btn btn-ghost" style="margin-top:8px;">Salvar</button>
+      <textarea id="fd-notas-texto" class="field" style="margin:0;width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Syne',sans-serif;font-size:13px;padding:10px;min-height:100px;resize:vertical;"></textarea>
+      <button class="btn btn-ghost" style="margin-top:8px;" onclick="salvarAnotacoes()">Salvar</button>
     </div>
     <div class="card">
       <div class="card-header"><span class="card-title">Erros registrados</span></div>
-      <div style="padding:10px 0;border-bottom:1px solid var(--border);"><div class="mono" style="font-size:11px;color:var(--text3);margin-bottom:4px;">18 abr · Lista original</div><div style="font-size:13px;color:var(--text);">Confundiu mutualismo com comensalismo na questão 3.</div></div>
-      <div style="padding:10px 0;"><div class="mono" style="font-size:11px;color:var(--text3);margin-bottom:4px;">18 abr · Exercício IA</div><div style="font-size:13px;color:var(--text);">Não lembrou da diferença entre ectoparasita e endoparasita.</div></div>
+      <div id="fd-erros"><div style="font-size:13px;color:var(--text3);">Nenhum erro registrado.</div></div>
     </div>
   </div>
 </div>
@@ -1164,24 +1161,41 @@ function abrirFolhinha(id) {
   if (!f) return;
   currentFolhinha = f;
   
-  // Preencher header
-  document.querySelector('#page-folhinha-detalhe h2').textContent = f.nome;
+  // Header
+  const nomeEl = document.getElementById('fd-nome');
+  if(nomeEl) nomeEl.textContent = f.nome;
   
-  // Preencher visão geral
-  const revs = DB.revisoes.filter(r => r.folhinha_id === id);
+  const badgeEl = document.getElementById('fd-badge');
+  if(badgeEl) { badgeEl.textContent = matLabel(f.materia); badgeEl.className = 'badge badge-' + matBadge(f.materia); }
+  
+  const metaEl = document.getElementById('fd-meta');
+  if(metaEl) metaEl.textContent = (f.frente||'') + ' · ' + (f.numero_aula||'') + ' · adicionada ' + (f.criado_em ? f.criado_em.split('T')[0] : '');
+  
+  const impDot = document.getElementById('fd-imp-dot');
+  const impLabel = document.getElementById('fd-imp-label');
+  if(impDot) impDot.className = 'imp ' + (f.importancia==='alto'?'imp-alto':f.importancia==='medio'?'imp-med':'imp-baixo');
+  if(impLabel) { impLabel.textContent = f.importancia==='alto'?'muito cai':f.importancia==='medio'?'médio':'pouco cai'; impLabel.style.color = f.importancia==='alto'?'var(--red)':f.importancia==='medio'?'var(--orange)':'var(--accent)'; }
+  
+  const proxEl = document.getElementById('fd-proxima');
+  if(proxEl) proxEl.textContent = f.proxima_revisao ? 'Próxima revisão: ' + f.proxima_revisao : 'Sem revisão agendada';
+  
+  // Revisões
+  const revs = DB.revisoes.filter(r => r.folhinha_id === id).sort((a,b) => new Date(b.data_revisao) - new Date(a.data_revisao));
   const ultimaRev = revs[0];
-  if (ultimaRev) {
-    const totLista = ultimaRev.total_lista || 0;
-    const acLista = ultimaRev.acertos_lista || 0;
-    document.getElementById('fd-lista-val').textContent = acLista + ' / ' + totLista;
-    const totIA = ultimaRev.total_ia || 0;
-    const acIA = ultimaRev.acertos_ia || 0;
-    document.getElementById('fd-ia-val').textContent = acIA + ' / ' + totIA;
+  
+  const listaValEl = document.getElementById('fd-lista-val');
+  const iaValEl = document.getElementById('fd-ia-val');
+  if(ultimaRev) {
+    if(listaValEl) listaValEl.textContent = (ultimaRev.acertos_lista||0) + ' / ' + (ultimaRev.total_lista||0);
+    if(iaValEl) iaValEl.textContent = (ultimaRev.acertos_ia||0) + ' / ' + (ultimaRev.total_ia||0);
+  } else {
+    if(listaValEl) listaValEl.textContent = '—';
+    if(iaValEl) iaValEl.textContent = '—';
   }
   
   // Histórico
   const histEl = document.getElementById('fd-hist');
-  if (histEl) {
+  if(histEl) {
     histEl.innerHTML = revs.length === 0
       ? '<div style="font-size:13px;color:var(--text3);">Nenhuma revisão feita ainda.</div>'
       : revs.map((r,i) => {
@@ -1189,11 +1203,44 @@ function abrirFolhinha(id) {
           const acertos = (r.acertos_lista||0)+(r.acertos_ia||0);
           const pct = total > 0 ? Math.round(acertos/total*100) : 0;
           const color = pct >= 70 ? 'var(--accent)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
-          return '<div class="row"><span class="mono" style="font-size:12px;color:var(--text3);min-width:130px;">' + (r.data_revisao||'') + ' · ' + (i+1) + 'ª revisão</span>' +
-            '<div class="bar-bg" style="flex:1;max-width:120px;"><div class="bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
-            '<span class="mono" style="font-size:13px;color:' + color + ';min-width:36px;text-align:right">' + pct + '%</span></div>';
+          return `<div class="row">
+            <span class="mono" style="font-size:12px;color:var(--text3);min-width:130px;">${r.data_revisao||''} · ${i+1}ª revisão</span>
+            <div class="bar-bg" style="flex:1;max-width:120px;"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
+            <span class="mono" style="font-size:13px;color:${color};min-width:36px;text-align:right">${pct}%</span>
+          </div>`;
         }).join('');
   }
+  
+  // Resumo
+  const resumoEl = document.getElementById('fd-resumo');
+  if(resumoEl) {
+    resumoEl.innerHTML = `
+      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Matéria</span><span style="font-size:13px;">${f.materia||'—'} · ${f.frente||'—'}</span></div>
+      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Revisões feitas</span><span style="font-size:13px;">${revs.length} de 5</span></div>
+      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Status</span><span class="tag ${f.status==='consolidada'?'tag-ok':'tag-warn'}">${f.status==='consolidada'?'consolidada':'em andamento'}</span></div>
+    `;
+  }
+  
+  // Anotações
+  const notasEl = document.getElementById('fd-notas-texto');
+  if(notasEl) notasEl.value = f.anotacao || '';
+  
+  // PDF viewer
+  const pdfEl = document.getElementById('fd-pdf-viewer');
+  if(pdfEl) {
+    if(f.pdf_url) {
+      pdfEl.innerHTML = `<iframe src="${f.pdf_url}" style="width:100%;height:500px;border:none;border-radius:var(--radius-sm);"></iframe>`;
+    } else {
+      pdfEl.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:2rem;text-align:center;">Nenhum PDF anexado a esta folhinha.</div>';
+    }
+  }
+  
+  // Reset IA tab
+  const iaContent = document.getElementById('fd-ia-content');
+  if(iaContent) iaContent.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:1rem 0;">Clique em "Gerar exercícios" para criar questões sobre esta folhinha.</div>';
+  const iaScore = document.getElementById('fd-ia-score');
+  if(iaScore) iaScore.textContent = '0 respondidas';
+  window._iaRespsCurrentFolhinha = {};
   
   goTo('folhinha-detalhe');
 }
@@ -1700,6 +1747,108 @@ function iniciarRevisoes() {
 }
 
 // ─── DELETAR FOLHINHA ──────────────────────────────────────
+async function salvarAnotacoes() {
+  if(!currentFolhinha || !currentUser) return;
+  const texto = document.getElementById('fd-notas-texto')?.value || '';
+  await sb.from('folhinhas').update({ anotacao: texto }).eq('id', currentFolhinha.id);
+  currentFolhinha.anotacao = texto;
+  const f = DB.folhinhas.find(x => x.id === currentFolhinha.id);
+  if(f) f.anotacao = texto;
+  alert('Anotação salva!');
+}
+
+async function salvarNotasLista() {
+  if(!currentFolhinha || !currentUser) return;
+  const notas = document.getElementById('fd-lista-notas')?.value || '';
+  // Save as anotacao_erros in latest revisão
+  const revs = DB.revisoes.filter(r => r.folhinha_id === currentFolhinha.id);
+  if(revs.length > 0) {
+    await sb.from('revisoes').update({ anotacao_erros: notas }).eq('id', revs[0].id);
+    alert('Anotação de erros salva!');
+  }
+}
+
+async function salvarFlashcards() {
+  if(!currentFolhinha || !currentUser) return;
+  const ac = parseInt(document.getElementById('fd-flash-ac')?.value) || 0;
+  const tot = parseInt(document.getElementById('fd-flash-tot')?.value) || 0;
+  const revs = DB.revisoes.filter(r => r.folhinha_id === currentFolhinha.id);
+  if(revs.length > 0) {
+    await sb.from('revisoes').update({ acertos_flashcard: ac, total_flashcard: tot }).eq('id', revs[0].id);
+    revs[0].acertos_flashcard = ac; revs[0].total_flashcard = tot;
+    alert('Flashcards salvos: ' + ac + '/' + tot);
+  }
+}
+
+async function gerarExerciciosIA() {
+  if(!currentFolhinha) return;
+  const loadEl = document.getElementById('fd-ia-loading');
+  const contentEl = document.getElementById('fd-ia-content');
+  const btn = document.querySelector('#fd-ia button.btn-ghost');
+  if(loadEl) loadEl.style.display = 'flex';
+  if(contentEl) contentEl.innerHTML = '';
+  if(btn) { btn.disabled = true; btn.textContent = 'Gerando...'; }
+  
+  try {
+    const topico = currentFolhinha.nome + (currentFolhinha.materia ? ' - ' + currentFolhinha.materia : '');
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: 'Gere 5 questões dissertativas curtas de vestibular sobre: ' + topico + '. Responda APENAS com JSON: {"questoes":[{"num":1,"texto":"pergunta"}]}' }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '';
+    let questoes = [];
+    try { questoes = JSON.parse(text.replace(/```json|```/g,'').trim()).questoes || []; } catch(e) { questoes = [{num:1,texto:'Explique os principais conceitos de: ' + topico}]; }
+    
+    window._iaRespsCurrentFolhinha = {};
+    const total = questoes.length;
+    
+    if(contentEl) {
+      contentEl.innerHTML = questoes.map(q => `
+        <div class="q-row">
+          <span class="q-num">${q.num}.</span>
+          <div class="q-body"><div class="q-text">${q.texto}</div></div>
+          <div class="q-btns">
+            <button class="qbtn" id="fdia${q.num}c" onclick="marcarIAFolhinha(${q.num},'c',${total})">✓</button>
+            <button class="qbtn" id="fdia${q.num}e" onclick="marcarIAFolhinha(${q.num},'e',${total})">✗</button>
+          </div>
+          <input class="nota-input" placeholder="anotação...">
+        </div>`).join('');
+    }
+  } catch(err) {
+    if(contentEl) contentEl.innerHTML = '<div style="font-size:13px;color:var(--red);padding:1rem;">Erro ao gerar exercícios. Verifique sua conexão.</div>';
+  }
+  if(loadEl) loadEl.style.display = 'none';
+  if(btn) { btn.disabled = false; btn.textContent = 'Gerar exercícios com IA'; }
+}
+
+function marcarIAFolhinha(n, tipo, total) {
+  if(!window._iaRespsCurrentFolhinha) window._iaRespsCurrentFolhinha = {};
+  window._iaRespsCurrentFolhinha[n] = tipo;
+  ['c','e'].forEach(t => { const el = document.getElementById('fdia'+n+t); if(el) el.className='qbtn'; });
+  const el = document.getElementById('fdia'+n+(tipo==='c'?'c':'e'));
+  if(el) el.className = 'qbtn ' + (tipo==='c'?'certo':'errado');
+  const resps = Object.keys(window._iaRespsCurrentFolhinha).length;
+  const certas = Object.values(window._iaRespsCurrentFolhinha).filter(v=>v==='c').length;
+  const scoreEl = document.getElementById('fd-ia-score');
+  if(scoreEl) scoreEl.textContent = resps + ' / ' + total + ' respondidas · ' + certas + ' certas';
+  const iaValEl = document.getElementById('fd-ia-val');
+  if(iaValEl) iaValEl.textContent = certas + ' / ' + resps;
+  // Auto-save to DB
+  if(currentFolhinha && currentUser) {
+    const revs = DB.revisoes.filter(r => r.folhinha_id === currentFolhinha.id);
+    if(revs.length > 0) {
+      sb.from('revisoes').update({ acertos_ia: certas, total_ia: resps }).eq('id', revs[0].id);
+      revs[0].acertos_ia = certas; revs[0].total_ia = resps;
+    }
+  }
+}
+
 async function deletarFolhinha(id, event) {
   event.stopPropagation();
   if (!confirm('Deletar esta folhinha? Isso apagará todas as revisões associadas.')) return;
