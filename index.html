@@ -644,71 +644,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <button class="btn-sm" onclick="filtrarDesemp('atencao',this)">Precisam atenção</button>
     <button class="btn-sm" onclick="filtrarDesemp('bom',this)">Consolidadas</button>
   </div>
-  <div id="desemp-lista">
-    <div class="card" style="margin-bottom:.75rem;border-color:rgba(255,92,92,0.2)" data-status="atencao">
-      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
-        <span class="badge badge-quim">QUÍM</span><span style="font-size:14px;font-weight:600;flex:1;">Química</span>
-        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:31%;background:var(--red)"></div></div>
-        <span class="mono" style="font-size:14px;color:var(--red);min-width:36px;text-align:right">31%</span>
-        <span style="font-size:12px;color:var(--text3);">›</span>
-      </div>
-      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Química Geral</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 28%</span><span class="tag tag-urg">fraca</span></div>
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 2 — Química Orgânica</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 35%</span><span class="tag tag-urg">fraca</span></div>
-      </div>
-    </div>
-    <div class="card" style="margin-bottom:.75rem;border-color:rgba(255,92,92,0.15)" data-status="atencao">
-      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
-        <span class="badge badge-fis">FÍS</span><span style="font-size:14px;font-weight:600;flex:1;">Física</span>
-        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:40%;background:var(--purple)"></div></div>
-        <span class="mono" style="font-size:14px;color:var(--purple);min-width:36px;text-align:right">40%</span>
-        <span style="font-size:12px;color:var(--text3);">›</span>
-      </div>
-      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Mecânica</span><span class="mono" style="font-size:11px;color:var(--text3);">4 folhinhas · 38%</span><span class="tag tag-urg">fraca</span></div>
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 3 — Eletromagnetismo</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 38%</span><span class="tag tag-urg">fraca</span></div>
-      </div>
-    </div>
-    <div class="card" style="margin-bottom:.75rem;" data-status="medio">
-      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
-        <span class="badge badge-mat">MAT</span><span style="font-size:14px;font-weight:600;flex:1;">Matemática</span>
-        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:55%;background:var(--orange)"></div></div>
-        <span class="mono" style="font-size:14px;color:var(--orange);min-width:36px;text-align:right">55%</span>
-        <span style="font-size:12px;color:var(--text3);">›</span>
-      </div>
-      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Álgebra</span><span class="mono" style="font-size:11px;color:var(--text3);">5 folhinhas · 52%</span><span class="tag tag-warn">média</span></div>
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 2 — Geometria</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 61%</span><span class="tag tag-warn">média</span></div>
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 3 — Estatística</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 70%</span><span class="tag tag-ok">boa</span></div>
-      </div>
-    </div>
-    <div class="card" style="margin-bottom:.75rem;" data-status="bom">
-      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
-        <span class="badge badge-bio">BIO</span><span style="font-size:14px;font-weight:600;flex:1;">Biologia</span>
-        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:72%;background:var(--green)"></div></div>
-        <span class="mono" style="font-size:14px;color:var(--green);min-width:36px;text-align:right">72%</span>
-        <span style="font-size:12px;color:var(--text3);">›</span>
-      </div>
-      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Citologia e Genética</span><span class="mono" style="font-size:11px;color:var(--text3);">4 folhinhas · 80%</span><span class="tag tag-ok">consolidada</span></div>
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 2 — Ecologia</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 65%</span><span class="tag tag-warn">média</span></div>
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 3 — Evolução e Zoologia</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 75%</span><span class="tag tag-ok">consolidada</span></div>
-      </div>
-    </div>
-    <div class="card" data-status="bom">
-      <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="toggleDesemp(this)">
-        <span class="badge badge-port">PORT</span><span style="font-size:14px;font-weight:600;flex:1;">Português</span>
-        <div class="bar-bg" style="width:100px;"><div class="bar-fill" style="width:88%;background:var(--accent)"></div></div>
-        <span class="mono" style="font-size:14px;color:var(--accent);min-width:36px;text-align:right">88%</span>
-        <span style="font-size:12px;color:var(--text3);">›</span>
-      </div>
-      <div class="desemp-frentes" style="display:none;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);">
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 1 — Gramática</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 91%</span><span class="tag tag-ok">consolidada</span></div>
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 2 — Literatura</span><span class="mono" style="font-size:11px;color:var(--text3);">3 folhinhas · 85%</span><span class="tag tag-ok">consolidada</span></div>
-        <div class="row"><span style="font-size:13px;flex:1;">Frente 3 — Interpretação</span><span class="mono" style="font-size:11px;color:var(--text3);">2 folhinhas · 88%</span><span class="tag tag-ok">consolidada</span></div>
-      </div>
-    </div>
-  </div>
+  <div id="desemp-lista"><div style="font-size:13px;color:var(--text3);padding:2rem;text-align:center;">Carregando dados de desempenho...</div></div>
 </div>
 
 <!-- ===== REVISAO MENSAL ===== -->
@@ -931,6 +867,8 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     <button class="btn btn-primary" onclick="saveEssay()">Salvar redação</button>
   </div>
 </div>
+</div>
+</main>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
