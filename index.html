@@ -1133,126 +1133,93 @@ function renderItensRevisao(f, ultimaRev) {
   const container = document.getElementById('fd-itens-revisao');
   if(!container) return;
   
-  // Determine which items to show based on folhinha settings
-  const mostrarLista = true; // sempre mostra lista original
+  const mostrarLista = true;
   const mostrarIA = f.exercicios_ia !== false;
   const mostrarFlash = f.flashcards === true;
   
+  const renderItem = (tipo, titulo, subtitulo, ac, tot) => {
+    const feito = tot > 0;
+    const pct = feito ? Math.round(ac/tot*100) : 0;
+    const color = pct >= 70 ? 'var(--accent)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
+    return `<div class="card" style="margin-bottom:.75rem;${feito ? 'border-color:rgba(200,241,53,0.25);' : ''}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;">
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--text);">${titulo}</div>
+          <div style="font-size:12px;color:var(--text3);">${subtitulo}</div>
+        </div>
+        ${feito
+          ? `<span class="tag tag-ok" style="font-size:12px;padding:4px 10px;">✓ ${ac}/${tot} · <span style="color:${color}">${pct}%</span></span>`
+          : '<span class="tag tag-warn">pendente</span>'}
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span style="font-size:13px;color:var(--text2);">Acertos:</span>
+        <input type="number" id="fd-${tipo}-ac" value="${feito ? ac : ''}" placeholder="ex: 14" min="0"
+          style="width:75px;text-align:center;font-size:16px;"
+          oninput="validarAcertos('${tipo}')">
+        <span style="font-size:18px;color:var(--text3);">/</span>
+        <input type="number" id="fd-${tipo}-tot" value="${feito ? tot : ''}" placeholder="ex: 20" min="1"
+          style="width:75px;text-align:center;font-size:16px;"
+          oninput="validarAcertos('${tipo}')">
+        <button class="btn btn-primary" style="font-size:13px;" onclick="concluirItem('${tipo}')">
+          ${feito ? 'Atualizar' : 'Marcar como feito'}
+        </button>
+        <span id="fd-${tipo}-erro" style="font-size:12px;color:var(--red);display:none;">Acertos não pode ser maior que o total!</span>
+      </div>
+      ${tipo === 'lista' ? `<div class="field" style="margin-top:.75rem;margin-bottom:0;">
+        <label>O que errou? (opcional)</label>
+        <textarea id="fd-lista-notas" placeholder="Ex: Errei a q.3 — confundi mutualismo com comensalismo..." style="min-height:55px;">${ultimaRev?.anotacao_erros||''}</textarea>
+      </div>` : ''}
+    </div>`;
+  };
+  
   let html = '';
+  if(mostrarLista) html += renderItem('lista', 'Lista original da folhinha', 'Exercícios que vieram na folhinha impressa', ultimaRev?.acertos_lista||0, ultimaRev?.total_lista||0);
+  if(mostrarIA)   html += renderItem('ia',    'Exercícios extras (NotebookLM)', 'Exercícios gerados no NotebookLM', ultimaRev?.acertos_ia||0, ultimaRev?.total_ia||0);
+  if(mostrarFlash) html += renderItem('flash', 'Flashcards (NotebookLM)', 'Treino com flashcards no NotebookLM', ultimaRev?.acertos_flashcard||0, ultimaRev?.total_flashcard||0);
   
-  // ── Lista original da folhinha ──
-  if(mostrarLista) {
-    const acLista = ultimaRev?.acertos_lista || 0;
-    const totLista = ultimaRev?.total_lista || 0;
-    const feitaLista = totLista > 0;
-    html += `<div class="card" style="margin-bottom:.75rem;${feitaLista?'border-color:rgba(200,241,53,0.3);':''}">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${feitaLista?'0':'1rem'};">
-        <div>
-          <div style="font-size:14px;font-weight:500;color:var(--text);">Lista original da folhinha</div>
-          <div style="font-size:12px;color:var(--text3);">Exercícios que vieram na folhinha impressa</div>
-        </div>
-        ${feitaLista 
-          ? `<span class="tag tag-ok">feita · ${acLista}/${totLista} (${Math.round(acLista/totLista*100)}%)</span>`
-          : '<span class="tag tag-warn">pendente</span>'}
-      </div>
-      ${!feitaLista ? `
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <span style="font-size:13px;color:var(--text2);">Acertos:</span>
-        <input type="number" id="fd-lista-ac" placeholder="ex: 14" min="0" style="width:75px;text-align:center;font-size:16px;">
-        <span style="font-size:18px;color:var(--text3);">/</span>
-        <input type="number" id="fd-lista-tot" placeholder="ex: 20" min="0" style="width:75px;text-align:center;font-size:16px;">
-        <button class="btn btn-primary" style="font-size:13px;" onclick="concluirItem('lista')">Marcar como feita</button>
-      </div>
-      <div class="field" style="margin-top:.75rem;margin-bottom:0;"><label>O que errou? (opcional)</label>
-        <textarea id="fd-lista-notas" placeholder="Ex: Errei a q.3 — confundi mutualismo com comensalismo..." style="min-height:60px;"></textarea>
-      </div>` : ''}
-    </div>`;
-  }
+  // Check if all active items are done
+  const listaOk = !mostrarLista || (ultimaRev?.total_lista > 0);
+  const iaOk    = !mostrarIA   || (ultimaRev?.total_ia > 0);
+  const flashOk = !mostrarFlash|| (ultimaRev?.total_flashcard > 0);
+  const tudo = listaOk && iaOk && flashOk;
   
-  // ── Exercícios IA (NotebookLM) ──
-  if(mostrarIA) {
-    const acIA = ultimaRev?.acertos_ia || 0;
-    const totIA = ultimaRev?.total_ia || 0;
-    const feitaIA = totIA > 0;
-    html += `<div class="card" style="margin-bottom:.75rem;${feitaIA?'border-color:rgba(200,241,53,0.3);':''}">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${feitaIA?'0':'1rem'};">
-        <div>
-          <div style="font-size:14px;font-weight:500;color:var(--text);">Exercícios extras (NotebookLM)</div>
-          <div style="font-size:12px;color:var(--text3);">Exercícios gerados no NotebookLM com base no conteúdo</div>
-        </div>
-        ${feitaIA
-          ? `<span class="tag tag-ok">feito · ${acIA}/${totIA} (${Math.round(acIA/totIA*100)}%)</span>`
-          : '<span class="tag tag-warn">pendente</span>'}
-      </div>
-      ${!feitaIA ? `
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <span style="font-size:13px;color:var(--text2);">Acertos:</span>
-        <input type="number" id="fd-ia-ac" placeholder="ex: 18" min="0" style="width:75px;text-align:center;font-size:16px;">
-        <span style="font-size:18px;color:var(--text3);">/</span>
-        <input type="number" id="fd-ia-tot" placeholder="ex: 20" min="0" style="width:75px;text-align:center;font-size:16px;">
-        <button class="btn btn-primary" style="font-size:13px;" onclick="concluirItem('ia')">Marcar como feito</button>
-      </div>` : ''}
-    </div>`;
-  }
-  
-  // ── Flashcards (NotebookLM) ──
-  if(mostrarFlash) {
-    const acFlash = ultimaRev?.acertos_flashcard || 0;
-    const totFlash = ultimaRev?.total_flashcard || 0;
-    const feitaFlash = totFlash > 0;
-    html += `<div class="card" style="margin-bottom:.75rem;${feitaFlash?'border-color:rgba(200,241,53,0.3);':''}">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${feitaFlash?'0':'1rem'};">
-        <div>
-          <div style="font-size:14px;font-weight:500;color:var(--text);">Flashcards (NotebookLM)</div>
-          <div style="font-size:12px;color:var(--text3);">Treino com flashcards no NotebookLM</div>
-        </div>
-        ${feitaFlash
-          ? `<span class="tag tag-ok">feito · ${acFlash}/${totFlash} (${Math.round(acFlash/totFlash*100)}%)</span>`
-          : '<span class="tag tag-warn">pendente</span>'}
-      </div>
-      ${!feitaFlash ? `
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <span style="font-size:13px;color:var(--text2);">Acertos:</span>
-        <input type="number" id="fd-flash-ac" placeholder="ex: 18" min="0" style="width:75px;text-align:center;font-size:16px;">
-        <span style="font-size:18px;color:var(--text3);">/</span>
-        <input type="number" id="fd-flash-tot" placeholder="20" min="0" style="width:75px;text-align:center;font-size:16px;">
-        <button class="btn btn-primary" style="font-size:13px;" onclick="concluirItem('flash')">Marcar como feito</button>
-      </div>` : ''}
-    </div>`;
-  }
-  
-  // ── Botão finalizar revisão ──
-  const tudo = (!mostrarLista || (ultimaRev?.total_lista > 0)) &&
-               (!mostrarIA || (ultimaRev?.total_ia > 0)) &&
-               (!mostrarFlash || (ultimaRev?.total_flashcard > 0));
-  
-  html += `<div style="display:flex;justify-content:flex-end;margin-top:.5rem;">
-    <button class="btn btn-primary" onclick="finalizarRevisaoFolhinha()" ${tudo?'':''}style="font-size:14px;">
-      ${tudo ? 'Revisão concluída ✓' : 'Finalizar revisão'}
+  html += `<div style="display:flex;justify-content:flex-end;margin-top:.25rem;">
+    <button class="btn btn-primary" onclick="finalizarRevisaoFolhinha()" style="font-size:14px;padding:10px 24px;">
+      ${tudo ? '✓ Revisão concluída — Finalizar' : 'Finalizar revisão'}
     </button>
   </div>`;
   
   container.innerHTML = html;
 }
 
+function validarAcertos(tipo) {
+  const acEl  = document.getElementById('fd-' + tipo + '-ac');
+  const totEl = document.getElementById('fd-' + tipo + '-tot');
+  const erroEl = document.getElementById('fd-' + tipo + '-erro');
+  if(!acEl || !totEl || !erroEl) return;
+  const ac = parseInt(acEl.value) || 0;
+  const tot = parseInt(totEl.value) || 0;
+  if(tot > 0 && ac > tot) {
+    acEl.style.borderColor = 'var(--red)';
+    erroEl.style.display = 'inline';
+  } else {
+    acEl.style.borderColor = '';
+    erroEl.style.display = 'none';
+  }
+}
+
+
 async function concluirItem(tipo) {
   if(!currentFolhinha || !currentUser) return;
   
-  let ac = 0, tot = 0, notas = '';
-  if(tipo === 'lista') {
-    ac = parseInt(document.getElementById('fd-lista-ac')?.value) || 0;
-    tot = parseInt(document.getElementById('fd-lista-tot')?.value) || 0;
-    notas = document.getElementById('fd-lista-notas')?.value || '';
-    if(tot === 0) { alert('Digite o total de questões!'); return; }
-  } else if(tipo === 'ia') {
-    ac = parseInt(document.getElementById('fd-ia-ac')?.value) || 0;
-    tot = parseInt(document.getElementById('fd-ia-tot')?.value) || 0;
-    if(tot === 0) { alert('Digite o total de exercícios!'); return; }
-  } else if(tipo === 'flash') {
-    ac = parseInt(document.getElementById('fd-flash-ac')?.value) || 0;
-    tot = parseInt(document.getElementById('fd-flash-tot')?.value) || 0;
-    if(tot === 0) { alert('Digite o total de flashcards!'); return; }
-  }
+  const acEl  = document.getElementById('fd-' + tipo + '-ac');
+  const totEl = document.getElementById('fd-' + tipo + '-tot');
+  const ac  = parseInt(acEl?.value)  || 0;
+  const tot = parseInt(totEl?.value) || 0;
+  const notas = tipo === 'lista' ? (document.getElementById('fd-lista-notas')?.value || '') : '';
+  
+  if(tot === 0) { alert('Digite o total de questões!'); totEl?.focus(); return; }
+  if(ac > tot)  { alert('Os acertos não podem ser maiores que o total de questões!'); acEl?.focus(); return; }
   
   const hoje = new Date().toISOString().split('T')[0];
   
