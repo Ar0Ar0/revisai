@@ -361,8 +361,6 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     </div>
   </nav>
  <div class="sidebar-footer">
-  <button class="btn-upload" onclick="goTo('upload')" style="margin-bottom:8px;">+ Upload em lote</button>
-  
   <!-- Botão Login com Google -->
   <button id="google-login-btn" onclick="signInWithGoogle()" style="width:100%; background: white; color: #333; border: 1px solid #ddd; border-radius: var(--radius-sm); padding: 8px; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
     <svg width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.26-.16-1.86H9v3.52h4.84c-.2 1.06-.82 1.96-1.74 2.56v2.12h2.82c1.66-1.52 2.62-3.76 2.62-6.34z"/><path fill="#34A853" d="M9 18c2.4 0 4.42-.8 5.9-2.16l-2.82-2.12c-.78.52-1.78.82-3.08.82-2.36 0-4.36-1.6-5.08-3.74H1.04v2.2C2.52 15.98 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.92 10.8c-.2-.6-.3-1.24-.3-1.9s.1-1.3.3-1.9V4.8H1.04C.38 6.12 0 7.52 0 9s.38 2.88 1.04 4.2l2.88-2.2z"/><path fill="#EA4335" d="M9 3.54c1.3 0 2.48.46 3.4 1.36l2.54-2.54C13.42.94 11.4 0 9 0 5.48 0 2.52 2.02 1.04 4.8l2.88 2.2C4.64 5.14 6.64 3.54 9 3.54z"/></svg>
@@ -459,60 +457,68 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 <!-- ===== NOVA FOLHINHA ===== -->
 <div id="page-nova-folhinha" class="page">
   <div class="back-btn" onclick="goTo('folhinhas')">← Folhinhas</div>
-  <div class="page-header"><h2>Nova folhinha</h2><p>Adicione pelo seu computador ou registre só o tópico</p></div>
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab(this,'tab-drive','tab-topico')">Arquivo PDF</button>
-    <button class="tab" onclick="switchTab(this,'tab-topico','tab-drive')">Só o tópico</button>
-  </div>
-  <div id="tab-drive">
-    <input type="file" id="file-input-folhinha" accept=".pdf" style="display:none" onchange="handleFolhinhaFile(this)">
-    <div class="drop-zone" onclick="document.getElementById('file-input-folhinha').click()" style="margin-bottom:1.5rem;">
-      <div class="drop-title">Selecionar PDF do computador</div>
-      <div class="drop-hint">Clique para escolher o arquivo .pdf da folhinha</div>
-    </div>
-    <div id="file-sel-result" style="display:none;" class="alert alert-ok"></div>
-  </div>
-  <div id="tab-topico" style="display:none">
-    <div class="field"><label>Nome do tópico</label><input type="text" id="nf-topico-nome" placeholder="Ex: Revolução Francesa, Funções do 2º grau..."></div>
-  </div>
+  <div class="page-header"><h2>Adicionar folhinhas</h2><p>Escolha a matéria e adicione várias folhinhas de uma vez</p></div>
+
   <div class="card" style="margin-bottom:1rem;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+    <div class="card-header"><span class="card-title">Configuração da matéria</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;">
       <div class="field" style="margin:0"><label>Matéria</label>
         <select id="nf-materia" onchange="updateFrentes(this)">
           <option value="">Selecionar...</option>
-          <option value="bio">Biologia</option><option value="mat">Matemática</option><option value="port">Português</option>
-          <option value="fis">Física</option><option value="hist">História</option><option value="quim">Química</option>
+          <option value="bio">Biologia</option><option value="mat">Matemática</option>
+          <option value="port">Português</option><option value="fis">Física</option>
+          <option value="hist">História</option><option value="quim">Química</option>
           <option value="geo">Geografia</option><option value="red">Redação</option>
         </select>
       </div>
-      <div class="field" style="margin:0"><label>Nº da aula / folha</label><input type="text" id="nf-numero" placeholder="Ex: Folha 05"></div>
-    </div>
-    <div class="field">
-      <label>Frente</label>
-      <div id="frente-tags" style="display:flex;gap:6px;flex-wrap:wrap;">
-        <span style="font-size:12px;color:var(--text3);">Selecione a matéria primeiro</span>
+      <div class="field" style="margin:0">
+        <label>Frente</label>
+        <div id="frente-tags" style="display:flex;gap:6px;flex-wrap:wrap;padding-top:4px;">
+          <span style="font-size:12px;color:var(--text3);">Selecione a matéria primeiro</span>
+        </div>
+      </div>
+      <div class="field" style="margin:0">
+        <label>Importância no vestibular</label>
+        <div class="imp-btns">
+          <button class="imp-opt" onclick="selImpNf(this,'baixo')">pouco</button>
+          <button class="imp-opt sel-medio" onclick="selImpNf(this,'medio')">médio</button>
+          <button class="imp-opt" onclick="selImpNf(this,'alto')">muito</button>
+        </div>
       </div>
     </div>
-    <div class="field">
-      <label>Importância no vestibular</label>
-      <div class="imp-btns">
-        <button class="imp-opt" onclick="selImpNf(this,'baixo')">pouco cai</button>
-        <button class="imp-opt sel-medio" onclick="selImpNf(this,'medio')">médio</button>
-        <button class="imp-opt" onclick="selImpNf(this,'alto')">muito cai</button>
-      </div>
-    </div>
-    <div class="field" style="margin:0"><label>Anotação inicial (opcional)</label><textarea id="nf-anotacao" placeholder="Ex: Prof falou que cai muito no ENEM..."></textarea></div>
   </div>
+
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-header"><span class="card-title">Adicionar folhinhas</span><span style="font-size:12px;color:var(--text3);" id="nf-count">0 adicionadas nesta sessão</span></div>
+
+    <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:1rem;">
+      <div class="field" style="margin:0;flex:1;"><label>Nome / tópico da folhinha</label>
+        <input type="text" id="nf-topico-nome" placeholder="Ex: Funções do 2º grau, Revolução Francesa..." onkeydown="if(event.key==='Enter')salvarUmaFolhinha()">
+      </div>
+      <div class="field" style="margin:0;width:120px;"><label>Nº da folha</label>
+        <input type="text" id="nf-numero" placeholder="Ex: Folha 05">
+      </div>
+      <button class="btn btn-primary" onclick="salvarUmaFolhinha()" style="margin-bottom:0;flex-shrink:0;">+ Adicionar</button>
+    </div>
+
+    <div id="nf-lista-adicionadas" style="display:none;">
+      <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">Folhinhas adicionadas agora</div>
+      <div id="nf-itens"></div>
+    </div>
+  </div>
+
   <div class="card" style="margin-bottom:1rem;">
     <div class="card-header"><span class="card-title">Configurações de revisão</span></div>
-    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Repetição espaçada automática</div><div class="ts">1d → 3d → 1sem → 2sem → 1mês</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
-    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Exercícios extras por IA</div><div class="ts">Gerados com base no PDF ou tópico</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
-    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Flashcards (NotebookLM)</div><div class="ts">Lembra você de gerar os flashcards</div></div><button class="toggle off" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
-    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Notificação push + email</div><div class="ts">Aviso no dia da revisão</div></div><button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Repetição espaçada automática</div><div class="ts">1d → 3d → 1sem → 2sem → 1mês</div></div><button class="toggle on" id="tog-espacada" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Exercícios extras por IA (NotebookLM)</div><div class="ts">Lembra você de gerar os exercícios no NotebookLM</div></div><button class="toggle on" id="tog-exercicios" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Flashcards (NotebookLM)</div><div class="ts">Lembra você de gerar os flashcards</div></div><button class="toggle off" id="tog-flashcards" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+    <div class="toggle-wrap"><div class="toggle-info"><div class="tl">Notificação push + email</div><div class="ts">Aviso no dia da revisão</div></div><button class="toggle on" id="tog-notif" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
   </div>
+
+  <div id="nf-feedback" style="display:none;" class="alert alert-ok" style="margin-bottom:1rem;"></div>
+
   <div class="actions">
-    <button class="btn btn-primary" onclick="salvarNovaFolhinha()">Salvar folhinha</button>
-    <button class="btn btn-ghost" onclick="goTo('folhinhas')">Cancelar</button>
+    <button class="btn btn-ghost" onclick="goTo('folhinhas')">Concluir e voltar</button>
   </div>
 </div>
 
@@ -529,101 +535,25 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
         <span id="fd-imp-label" style="font-size:11px;" class="mono"></span>
       </div>
     </div>
-    <span class="tag tag-info" id="fd-proxima" style="white-space:nowrap;">—</span>
-  </div>
-  <div class="tabs">
-    <button class="tab active" onclick="switchTabMulti(this,'fd-visao',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Visão geral</button>
-    <button class="tab" onclick="switchTabMulti(this,'fd-pdf',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">PDF</button>
-    <button class="tab" onclick="switchTabMulti(this,'fd-lista',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Lista original</button>
-    <button class="tab" onclick="switchTabMulti(this,'fd-ia',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Exercícios IA</button>
-    <button class="tab" onclick="switchTabMulti(this,'fd-flash',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Flashcards</button>
-    <button class="tab" onclick="switchTabMulti(this,'fd-notas',['fd-visao','fd-pdf','fd-lista','fd-ia','fd-flash','fd-notas'])">Anotações</button>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+      <span class="tag tag-info" id="fd-proxima" style="white-space:nowrap;">—</span>
+      <span class="tag" id="fd-revisao-num" style="background:rgba(255,255,255,0.05);color:var(--text3);white-space:nowrap;">—</span>
+    </div>
   </div>
 
-  <div id="fd-visao">
-    <div class="grid2" style="margin-bottom:1rem;">
-      <div class="metric"><div class="metric-label">Lista original</div><div class="metric-value" id="fd-lista-val">—</div></div>
-      <div class="metric"><div class="metric-label">Exercícios IA</div><div class="metric-value" id="fd-ia-val">—</div></div>
-    </div>
-    <div class="card" style="margin-bottom:1rem;">
+  <!-- ITENS DE REVISÃO — dinâmicos baseados nos toggles da folhinha -->
+  <div id="fd-itens-revisao" style="margin-bottom:1.5rem;"></div>
+
+  <!-- HISTÓRICO + ANOTAÇÕES -->
+  <div class="grid2">
+    <div class="card">
       <div class="card-header"><span class="card-title">Histórico de revisões</span></div>
       <div id="fd-hist"><div style="font-size:13px;color:var(--text3);">Nenhuma revisão feita ainda.</div></div>
     </div>
     <div class="card">
-      <div class="card-header"><span class="card-title">Resumo</span></div>
-      <div id="fd-resumo"></div>
-    </div>
-  </div>
-
-  <div id="fd-pdf" style="display:none">
-    <div class="card">
-      <div class="card-header"><span class="card-title">Visualizar PDF</span></div>
-      <div id="fd-pdf-viewer" class="pdf-viewer">
-        <div style="font-size:13px;color:var(--text3);">Nenhum PDF anexado a esta folhinha.</div>
-      </div>
-    </div>
-  </div>
-
-  <div id="fd-lista" style="display:none">
-    <div class="card">
-      <div class="card-header"><span class="card-title">Registrar resultado da lista original</span></div>
-      <p style="font-size:13px;color:var(--text3);margin-bottom:1rem;">Digite quantas você acertou do total de questões da folhinha.</p>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
-        <input type="number" id="fd-ac" placeholder="ex: 14" min="0" style="width:80px;text-align:center;font-size:18px;">
-        <span style="font-size:22px;color:var(--text3);">/</span>
-        <input type="number" id="fd-tot" placeholder="ex: 20" min="0" style="width:80px;text-align:center;font-size:18px;">
-        <span style="font-size:13px;color:var(--text3);">questões</span>
-        <button class="btn btn-primary" onclick="salvarLista()">Salvar</button>
-      </div>
-      <div id="fd-lista-fb" style="display:none;" class="alert alert-ok"></div>
-      <div class="field"><label>Quais questões errou? (opcional)</label><textarea id="fd-lista-notas" placeholder="Ex: Errei q.3 — confundi mutualismo com comensalismo..."></textarea></div>
-      <button class="btn btn-ghost" onclick="salvarNotasLista()">Salvar anotações</button>
-    </div>
-  </div>
-
-  <div id="fd-ia" style="display:none">
-    <div class="card">
-      <div class="card-header"><span class="card-title">Exercícios gerados por IA</span></div>
-      <div id="fd-ia-loading" style="display:none;align-items:center;gap:8px;padding:1rem 0;font-size:13px;color:var(--text3);">
-        <span class="mono">Gerando exercícios...</span>
-      </div>
-      <div id="fd-ia-content">
-        <div style="font-size:13px;color:var(--text3);padding:1rem 0;">Clique em "Gerar exercícios" para criar questões sobre esta folhinha.</div>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:.5rem;">
-        <span id="fd-ia-score" class="mono" style="font-size:12px;color:var(--text3);">0 respondidas</span>
-        <button class="btn btn-ghost" onclick="gerarExerciciosIA()">Gerar exercícios com IA</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="fd-flash" style="display:none">
-    <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
-        <div><div style="font-size:13px;color:var(--text);">Flashcards no NotebookLM</div><div style="font-size:11px;color:var(--text3);">Gerar a partir do PDF da folhinha</div></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span id="fc-status" class="tag tag-warn">Pendente</span><button class="btn-sm" onclick="marcarFC()">Marcar feito</button></div>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
-        <div style="font-size:13px;color:var(--text);">Acertos nos flashcards</div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <input type="number" id="fd-flash-ac" placeholder="ex: 18" min="0" style="width:60px;text-align:center;font-size:13px;">
-          <span style="font-size:12px;color:var(--text3);">/</span>
-          <input type="number" id="fd-flash-tot" placeholder="20" min="0" style="width:50px;text-align:center;font-size:13px;">
-          <button class="btn-sm" onclick="salvarFlashcards()">Salvar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="fd-notas" style="display:none">
-    <div class="card" style="margin-bottom:1rem;">
-      <div class="card-header"><span class="card-title">Anotações gerais</span></div>
-      <textarea id="fd-notas-texto" class="field" style="margin:0;width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Syne',sans-serif;font-size:13px;padding:10px;min-height:100px;resize:vertical;"></textarea>
-      <button class="btn btn-ghost" style="margin-top:8px;" onclick="salvarAnotacoes()">Salvar</button>
-    </div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">Erros registrados</span></div>
-      <div id="fd-erros"><div style="font-size:13px;color:var(--text3);">Nenhum erro registrado.</div></div>
+      <div class="card-header"><span class="card-title">Anotações</span></div>
+      <textarea id="fd-notas-texto" style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Syne',sans-serif;font-size:13px;padding:10px;min-height:80px;resize:vertical;"></textarea>
+      <button class="btn btn-ghost" style="margin-top:8px;font-size:12px;" onclick="salvarAnotacoes()">Salvar anotação</button>
     </div>
   </div>
 </div>
@@ -789,25 +719,6 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
   </div>
 </div>
 
-<!-- ===== UPLOAD ===== -->
-<div id="page-upload" class="page">
-  <div class="back-btn" onclick="goTo('dashboard')">← Dashboard</div>
-  <div class="page-header"><h2>Upload em lote</h2><p>Selecione vários PDFs de uma vez — o site detecta matéria e frente pelo nome do arquivo</p></div>
-  <div class="alert alert-info" style="margin-bottom:1.5rem;">O site lê o nome do arquivo e tenta preencher matéria e frente automaticamente. Corrija o que estiver errado antes de salvar.</div>
-  <input type="file" id="file-input-upload" multiple accept=".pdf" style="display:none" onchange="handleFileUpload(this)">
-<div id="upload-drop" class="drop-zone" onclick="document.getElementById('file-input-upload').click()" style="margin-bottom:1.5rem;">
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" style="margin:0 auto 10px"><path d="M6 27L13 16L19 27H6Z" fill="#0F9D58"/><path d="M19 27L26 16L32 27H19Z" fill="#4285F4"/><path d="M12 16L18 6L24 16H12Z" fill="#FBBC04"/></svg>
-    <div class="drop-title">Selecionar PDFs do Google Drive ou computador</div>
-    <div class="drop-hint">Clique para abrir · suporta vários arquivos de uma vez</div>
-  </div>
-  <div id="upload-list" style="display:none;">
-    <div id="upload-header" style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">Selecione arquivos acima</div>
-    <div class="actions">
-      <button class="btn btn-primary" onclick="salvarTodasFolhinhas()">Salvar todas as folhinhas</button>
-      <button class="btn btn-ghost" onclick="goTo('dashboard')">Cancelar</button>
-    </div>
-  </div>
-</div>
 
 <!-- ===== REDAÇÕES ===== -->
 <div id="page-redacoes" class="page">
@@ -972,7 +883,7 @@ function goTo(pageId) {
   const page = document.getElementById('page-' + pageId);
   if (page) page.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const navMap = { dashboard:'dashboard', folhinhas:'folhinhas', 'nova-folhinha':'folhinhas', 'folhinha-detalhe':'folhinhas', desempenho:'desempenho', simulados:'simulados', leituras:'leituras', 'revisao-mensal':'revisao-mensal', upload:'upload', redacoes:'redacoes', 'redacao-detalhe':'redacoes' };
+  const navMap = { dashboard:'dashboard', folhinhas:'folhinhas', 'nova-folhinha':'folhinhas', 'folhinha-detalhe':'folhinhas', desempenho:'desempenho', simulados:'simulados', leituras:'leituras', 'revisao-mensal':'revisao-mensal',  redacoes:'redacoes', 'redacao-detalhe':'redacoes' };
   document.querySelectorAll('.nav-item').forEach(n => { if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+navMap[pageId]+"'")) n.classList.add('active'); });
   window.scrollTo(0,0);
 }
@@ -1162,179 +1073,384 @@ function abrirFolhinha(id) {
   currentFolhinha = f;
   
   // Header
-  const nomeEl = document.getElementById('fd-nome');
-  if(nomeEl) nomeEl.textContent = f.nome;
-  
+  const set = (elId, val) => { const el = document.getElementById(elId); if(el) el.textContent = val; };
+  const nomeEl = document.getElementById('fd-nome'); if(nomeEl) nomeEl.textContent = f.nome;
   const badgeEl = document.getElementById('fd-badge');
   if(badgeEl) { badgeEl.textContent = matLabel(f.materia); badgeEl.className = 'badge badge-' + matBadge(f.materia); }
-  
-  const metaEl = document.getElementById('fd-meta');
-  if(metaEl) metaEl.textContent = (f.frente||'') + ' · ' + (f.numero_aula||'') + ' · adicionada ' + (f.criado_em ? f.criado_em.split('T')[0] : '');
-  
+  set('fd-meta', (f.frente||'') + (f.numero_aula ? ' · ' + f.numero_aula : ''));
   const impDot = document.getElementById('fd-imp-dot');
   const impLabel = document.getElementById('fd-imp-label');
   if(impDot) impDot.className = 'imp ' + (f.importancia==='alto'?'imp-alto':f.importancia==='medio'?'imp-med':'imp-baixo');
-  if(impLabel) { impLabel.textContent = f.importancia==='alto'?'muito cai':f.importancia==='medio'?'médio':'pouco cai'; impLabel.style.color = f.importancia==='alto'?'var(--red)':f.importancia==='medio'?'var(--orange)':'var(--accent)'; }
-  
+  if(impLabel) { 
+    impLabel.textContent = f.importancia==='alto'?'muito cai':f.importancia==='medio'?'médio':'pouco cai'; 
+    impLabel.style.color = f.importancia==='alto'?'var(--red)':f.importancia==='medio'?'var(--orange)':'var(--accent)';
+  }
   const proxEl = document.getElementById('fd-proxima');
-  if(proxEl) proxEl.textContent = f.proxima_revisao ? 'Próxima revisão: ' + f.proxima_revisao : 'Sem revisão agendada';
-  
-  // Revisões
-  const revs = DB.revisoes.filter(r => r.folhinha_id === id).sort((a,b) => new Date(b.data_revisao) - new Date(a.data_revisao));
-  const ultimaRev = revs[0];
-  
-  const listaValEl = document.getElementById('fd-lista-val');
-  const iaValEl = document.getElementById('fd-ia-val');
-  if(ultimaRev) {
-    if(listaValEl) listaValEl.textContent = (ultimaRev.acertos_lista||0) + ' / ' + (ultimaRev.total_lista||0);
-    if(iaValEl) iaValEl.textContent = (ultimaRev.acertos_ia||0) + ' / ' + (ultimaRev.total_ia||0);
-  } else {
-    if(listaValEl) listaValEl.textContent = '—';
-    if(iaValEl) iaValEl.textContent = '—';
-  }
-  
-  // Histórico
-  const histEl = document.getElementById('fd-hist');
-  if(histEl) {
-    histEl.innerHTML = revs.length === 0
-      ? '<div style="font-size:13px;color:var(--text3);">Nenhuma revisão feita ainda.</div>'
-      : revs.map((r,i) => {
-          const total = (r.total_lista||0)+(r.total_ia||0);
-          const acertos = (r.acertos_lista||0)+(r.acertos_ia||0);
-          const pct = total > 0 ? Math.round(acertos/total*100) : 0;
-          const color = pct >= 70 ? 'var(--accent)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
-          return `<div class="row">
-            <span class="mono" style="font-size:12px;color:var(--text3);min-width:130px;">${r.data_revisao||''} · ${i+1}ª revisão</span>
-            <div class="bar-bg" style="flex:1;max-width:120px;"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
-            <span class="mono" style="font-size:13px;color:${color};min-width:36px;text-align:right">${pct}%</span>
-          </div>`;
-        }).join('');
-  }
-  
-  // Resumo
-  const resumoEl = document.getElementById('fd-resumo');
-  if(resumoEl) {
-    resumoEl.innerHTML = `
-      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Matéria</span><span style="font-size:13px;">${f.materia||'—'} · ${f.frente||'—'}</span></div>
-      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Revisões feitas</span><span style="font-size:13px;">${revs.length} de 5</span></div>
-      <div class="row"><span style="font-size:12px;color:var(--text3);min-width:110px;">Status</span><span class="tag ${f.status==='consolidada'?'tag-ok':'tag-warn'}">${f.status==='consolidada'?'consolidada':'em andamento'}</span></div>
-    `;
-  }
+  if(proxEl) proxEl.textContent = f.proxima_revisao ? 'Próxima: ' + f.proxima_revisao : 'Sem revisão agendada';
+  const numEl = document.getElementById('fd-revisao-num');
+  if(numEl) numEl.textContent = (f.numero_revisao||1) + 'ª revisão';
   
   // Anotações
   const notasEl = document.getElementById('fd-notas-texto');
   if(notasEl) notasEl.value = f.anotacao || '';
   
-  // PDF viewer
-  const pdfEl = document.getElementById('fd-pdf-viewer');
-  if(pdfEl) {
-    if(f.pdf_url) {
-      pdfEl.innerHTML = `<iframe src="${f.pdf_url}" style="width:100%;height:500px;border:none;border-radius:var(--radius-sm);"></iframe>`;
+  // Histórico
+  const revs = DB.revisoes.filter(r => r.folhinha_id === id).sort((a,b) => new Date(b.data_revisao) - new Date(a.data_revisao));
+  const histEl = document.getElementById('fd-hist');
+  if(histEl) {
+    if(revs.length === 0) {
+      histEl.innerHTML = '<div style="font-size:13px;color:var(--text3);">Nenhuma revisão feita ainda.</div>';
     } else {
-      pdfEl.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:2rem;text-align:center;">Nenhum PDF anexado a esta folhinha.</div>';
+      histEl.innerHTML = revs.map((r,i) => {
+        const parts = [];
+        if(r.total_lista > 0) parts.push('Lista: ' + r.acertos_lista + '/' + r.total_lista);
+        if(r.total_ia > 0) parts.push('IA: ' + r.acertos_ia + '/' + r.total_ia);
+        if(r.total_flashcard > 0) parts.push('Flash: ' + r.acertos_flashcard + '/' + r.total_flashcard);
+        const pct = calcPctRevisao(r);
+        const color = pct >= 70 ? 'var(--accent)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
+        return `<div class="row">
+          <span class="mono" style="font-size:11px;color:var(--text3);min-width:90px;">${r.data_revisao||''}</span>
+          <span style="font-size:12px;color:var(--text2);flex:1;">${parts.join(' · ') || '—'}</span>
+          <span class="mono" style="font-size:13px;color:${color};min-width:36px;text-align:right;">${pct}%</span>
+        </div>`;
+      }).join('');
     }
   }
   
-  // Reset IA tab
-  const iaContent = document.getElementById('fd-ia-content');
-  if(iaContent) iaContent.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:1rem 0;">Clique em "Gerar exercícios" para criar questões sobre esta folhinha.</div>';
-  const iaScore = document.getElementById('fd-ia-score');
-  if(iaScore) iaScore.textContent = '0 respondidas';
-  window._iaRespsCurrentFolhinha = {};
+  // Build dynamic revision items based on folhinha toggles
+  renderItensRevisao(f, revs[0]);
   
   goTo('folhinha-detalhe');
 }
 
+function calcPctRevisao(r) {
+  const tot = (r.total_lista||0) + (r.total_ia||0) + (r.total_flashcard||0);
+  const ac = (r.acertos_lista||0) + (r.acertos_ia||0) + (r.acertos_flashcard||0);
+  return tot > 0 ? Math.round(ac/tot*100) : 0;
+}
+
+function renderItensRevisao(f, ultimaRev) {
+  const container = document.getElementById('fd-itens-revisao');
+  if(!container) return;
+  
+  // Determine which items to show based on folhinha settings
+  const mostrarLista = true; // sempre mostra lista original
+  const mostrarIA = f.exercicios_ia !== false;
+  const mostrarFlash = f.flashcards === true;
+  
+  let html = '';
+  
+  // ── Lista original da folhinha ──
+  if(mostrarLista) {
+    const acLista = ultimaRev?.acertos_lista || 0;
+    const totLista = ultimaRev?.total_lista || 0;
+    const feitaLista = totLista > 0;
+    html += `<div class="card" style="margin-bottom:.75rem;${feitaLista?'border-color:rgba(200,241,53,0.3);':''}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${feitaLista?'0':'1rem'};">
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--text);">Lista original da folhinha</div>
+          <div style="font-size:12px;color:var(--text3);">Exercícios que vieram na folhinha impressa</div>
+        </div>
+        ${feitaLista 
+          ? `<span class="tag tag-ok">feita · ${acLista}/${totLista} (${Math.round(acLista/totLista*100)}%)</span>`
+          : '<span class="tag tag-warn">pendente</span>'}
+      </div>
+      ${!feitaLista ? `
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span style="font-size:13px;color:var(--text2);">Acertos:</span>
+        <input type="number" id="fd-lista-ac" placeholder="ex: 14" min="0" style="width:75px;text-align:center;font-size:16px;">
+        <span style="font-size:18px;color:var(--text3);">/</span>
+        <input type="number" id="fd-lista-tot" placeholder="ex: 20" min="0" style="width:75px;text-align:center;font-size:16px;">
+        <button class="btn btn-primary" style="font-size:13px;" onclick="concluirItem('lista')">Marcar como feita</button>
+      </div>
+      <div class="field" style="margin-top:.75rem;margin-bottom:0;"><label>O que errou? (opcional)</label>
+        <textarea id="fd-lista-notas" placeholder="Ex: Errei a q.3 — confundi mutualismo com comensalismo..." style="min-height:60px;"></textarea>
+      </div>` : ''}
+    </div>`;
+  }
+  
+  // ── Exercícios IA (NotebookLM) ──
+  if(mostrarIA) {
+    const acIA = ultimaRev?.acertos_ia || 0;
+    const totIA = ultimaRev?.total_ia || 0;
+    const feitaIA = totIA > 0;
+    html += `<div class="card" style="margin-bottom:.75rem;${feitaIA?'border-color:rgba(200,241,53,0.3);':''}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${feitaIA?'0':'1rem'};">
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--text);">Exercícios extras (NotebookLM)</div>
+          <div style="font-size:12px;color:var(--text3);">Exercícios gerados no NotebookLM com base no conteúdo</div>
+        </div>
+        ${feitaIA
+          ? `<span class="tag tag-ok">feito · ${acIA}/${totIA} (${Math.round(acIA/totIA*100)}%)</span>`
+          : '<span class="tag tag-warn">pendente</span>'}
+      </div>
+      ${!feitaIA ? `
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span style="font-size:13px;color:var(--text2);">Acertos:</span>
+        <input type="number" id="fd-ia-ac" placeholder="ex: 18" min="0" style="width:75px;text-align:center;font-size:16px;">
+        <span style="font-size:18px;color:var(--text3);">/</span>
+        <input type="number" id="fd-ia-tot" placeholder="ex: 20" min="0" style="width:75px;text-align:center;font-size:16px;">
+        <button class="btn btn-primary" style="font-size:13px;" onclick="concluirItem('ia')">Marcar como feito</button>
+      </div>` : ''}
+    </div>`;
+  }
+  
+  // ── Flashcards (NotebookLM) ──
+  if(mostrarFlash) {
+    const acFlash = ultimaRev?.acertos_flashcard || 0;
+    const totFlash = ultimaRev?.total_flashcard || 0;
+    const feitaFlash = totFlash > 0;
+    html += `<div class="card" style="margin-bottom:.75rem;${feitaFlash?'border-color:rgba(200,241,53,0.3);':''}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${feitaFlash?'0':'1rem'};">
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--text);">Flashcards (NotebookLM)</div>
+          <div style="font-size:12px;color:var(--text3);">Treino com flashcards no NotebookLM</div>
+        </div>
+        ${feitaFlash
+          ? `<span class="tag tag-ok">feito · ${acFlash}/${totFlash} (${Math.round(acFlash/totFlash*100)}%)</span>`
+          : '<span class="tag tag-warn">pendente</span>'}
+      </div>
+      ${!feitaFlash ? `
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span style="font-size:13px;color:var(--text2);">Acertos:</span>
+        <input type="number" id="fd-flash-ac" placeholder="ex: 18" min="0" style="width:75px;text-align:center;font-size:16px;">
+        <span style="font-size:18px;color:var(--text3);">/</span>
+        <input type="number" id="fd-flash-tot" placeholder="20" min="0" style="width:75px;text-align:center;font-size:16px;">
+        <button class="btn btn-primary" style="font-size:13px;" onclick="concluirItem('flash')">Marcar como feito</button>
+      </div>` : ''}
+    </div>`;
+  }
+  
+  // ── Botão finalizar revisão ──
+  const tudo = (!mostrarLista || (ultimaRev?.total_lista > 0)) &&
+               (!mostrarIA || (ultimaRev?.total_ia > 0)) &&
+               (!mostrarFlash || (ultimaRev?.total_flashcard > 0));
+  
+  html += `<div style="display:flex;justify-content:flex-end;margin-top:.5rem;">
+    <button class="btn btn-primary" onclick="finalizarRevisaoFolhinha()" ${tudo?'':''}style="font-size:14px;">
+      ${tudo ? 'Revisão concluída ✓' : 'Finalizar revisão'}
+    </button>
+  </div>`;
+  
+  container.innerHTML = html;
+}
+
+async function concluirItem(tipo) {
+  if(!currentFolhinha || !currentUser) return;
+  
+  let ac = 0, tot = 0, notas = '';
+  if(tipo === 'lista') {
+    ac = parseInt(document.getElementById('fd-lista-ac')?.value) || 0;
+    tot = parseInt(document.getElementById('fd-lista-tot')?.value) || 0;
+    notas = document.getElementById('fd-lista-notas')?.value || '';
+    if(tot === 0) { alert('Digite o total de questões!'); return; }
+  } else if(tipo === 'ia') {
+    ac = parseInt(document.getElementById('fd-ia-ac')?.value) || 0;
+    tot = parseInt(document.getElementById('fd-ia-tot')?.value) || 0;
+    if(tot === 0) { alert('Digite o total de exercícios!'); return; }
+  } else if(tipo === 'flash') {
+    ac = parseInt(document.getElementById('fd-flash-ac')?.value) || 0;
+    tot = parseInt(document.getElementById('fd-flash-tot')?.value) || 0;
+    if(tot === 0) { alert('Digite o total de flashcards!'); return; }
+  }
+  
+  const hoje = new Date().toISOString().split('T')[0];
+  
+  // Find or create today's revisao
+  let rev = DB.revisoes.find(r => r.folhinha_id === currentFolhinha.id && r.data_revisao === hoje);
+  
+  if(rev) {
+    // Update existing
+    const update = {};
+    if(tipo === 'lista') { update.acertos_lista = ac; update.total_lista = tot; update.anotacao_erros = notas; }
+    if(tipo === 'ia') { update.acertos_ia = ac; update.total_ia = tot; }
+    if(tipo === 'flash') { update.acertos_flashcard = ac; update.total_flashcard = tot; }
+    await sb.from('revisoes').update(update).eq('id', rev.id);
+    Object.assign(rev, update);
+  } else {
+    // Create new revisao
+    const payload = {
+      user_id: currentUser.id,
+      folhinha_id: currentFolhinha.id,
+      numero_revisao: currentFolhinha.numero_revisao || 1,
+      data_revisao: hoje,
+      acertos_lista: tipo==='lista' ? ac : 0,
+      total_lista: tipo==='lista' ? tot : 0,
+      acertos_ia: tipo==='ia' ? ac : 0,
+      total_ia: tipo==='ia' ? tot : 0,
+      acertos_flashcard: tipo==='flash' ? ac : 0,
+      total_flashcard: tipo==='flash' ? tot : 0,
+      anotacao_erros: notas
+    };
+    const { data } = await sb.from('revisoes').insert(payload).select();
+    if(data) { rev = data[0]; DB.revisoes.unshift(rev); }
+  }
+  
+  // Re-render items to show as "done"
+  const revs = DB.revisoes.filter(r => r.folhinha_id === currentFolhinha.id).sort((a,b) => new Date(b.data_revisao) - new Date(a.data_revisao));
+  renderItensRevisao(currentFolhinha, revs[0]);
+  
+  // Also refresh history
+  const histEl = document.getElementById('fd-hist');
+  if(histEl && revs.length > 0) {
+    histEl.innerHTML = revs.map(r => {
+      const parts = [];
+      if(r.total_lista > 0) parts.push('Lista: ' + r.acertos_lista + '/' + r.total_lista);
+      if(r.total_ia > 0) parts.push('IA: ' + r.acertos_ia + '/' + r.total_ia);
+      if(r.total_flashcard > 0) parts.push('Flash: ' + r.acertos_flashcard + '/' + r.total_flashcard);
+      const pct = calcPctRevisao(r);
+      const color = pct >= 70 ? 'var(--accent)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
+      return `<div class="row">
+        <span class="mono" style="font-size:11px;color:var(--text3);min-width:90px;">${r.data_revisao||''}</span>
+        <span style="font-size:12px;color:var(--text2);flex:1;">${parts.join(' · ') || '—'}</span>
+        <span class="mono" style="font-size:13px;color:${color};min-width:36px;text-align:right;">${pct}%</span>
+      </div>`;
+    }).join('');
+  }
+}
+
+async function finalizarRevisaoFolhinha() {
+  if(!currentFolhinha || !currentUser) return;
+  
+  const hoje = new Date().toISOString().split('T')[0];
+  const rev = DB.revisoes.find(r => r.folhinha_id === currentFolhinha.id && r.data_revisao === hoje);
+  
+  if(!rev) { alert('Complete pelo menos um item antes de finalizar!'); return; }
+  
+  // Calculate performance
+  const pct = calcPctRevisao(rev);
+  
+  // Advance revision number and schedule next
+  const numRev = (currentFolhinha.numero_revisao || 1);
+  const intervalos = [1, 3, 7, 14, 30];
+  const diasProx = pct >= 60
+    ? intervalos[Math.min(numRev, intervalos.length - 1)]
+    : intervalos[Math.max(0, Math.min(numRev - 1, intervalos.length - 1))]; // reset if poor
+  
+  const proxData = new Date();
+  proxData.setDate(proxData.getDate() + diasProx);
+  const proxStr = proxData.toISOString().split('T')[0];
+  
+  const novoNum = numRev + 1;
+  const novoStatus = novoNum > 5 && pct >= 70 ? 'consolidada' : 'em_andamento';
+  
+  await sb.from('folhinhas').update({
+    proxima_revisao: proxStr,
+    ultima_revisao: hoje,
+    numero_revisao: novoNum,
+    status: novoStatus
+  }).eq('id', currentFolhinha.id).eq('user_id', currentUser.id);
+  
+  // Update local cache
+  currentFolhinha.proxima_revisao = proxStr;
+  currentFolhinha.ultima_revisao = hoje;
+  currentFolhinha.numero_revisao = novoNum;
+  currentFolhinha.status = novoStatus;
+  const f = DB.folhinhas.find(x => x.id === currentFolhinha.id);
+  if(f) { f.proxima_revisao = proxStr; f.ultima_revisao = hoje; f.numero_revisao = novoNum; f.status = novoStatus; }
+  
+  // Update header
+  const proxEl = document.getElementById('fd-proxima');
+  if(proxEl) proxEl.textContent = 'Próxima: ' + proxStr;
+  const numEl = document.getElementById('fd-revisao-num');
+  if(numEl) numEl.textContent = novoNum + 'ª revisão';
+  
+  renderDashboard();
+  
+  const msg = novoStatus === 'consolidada'
+    ? '🎉 Parabéns! Folhinha consolidada após ' + (novoNum-1) + ' revisões!'
+    : `✓ Revisão concluída! ${pct}% de aproveitamento.
+Próxima revisão em ${diasProx} dia${diasProx>1?'s':''} (${proxStr}).`;
+  alert(msg);
+  
+  // Re-render items showing all done
+  renderItensRevisao(currentFolhinha, rev);
+}
+
+
 let currentFolhinha = null;
 
 // ─── SALVAR FOLHINHA ──────────────────────────────────────
-async function salvarNovaFolhinha() {
+async function salvarUmaFolhinha() {
   if (!currentUser) { alert('Faça login primeiro!'); return; }
   
   const materia = document.getElementById('nf-materia')?.value || '';
-  const numero = document.getElementById('nf-numero')?.value || '';
-  const anotacao = document.getElementById('nf-anotacao')?.value || '';
-  const topicoNome = document.getElementById('nf-topico-nome')?.value || '';
-  const fileResult = document.getElementById('file-sel-result');
-  const nomeInput = (fileResult && fileResult.style.display !== 'none')
-    ? (window._pendingFolhinhaFile?.name?.replace('.pdf','') || 'Folhinha')
-    : (topicoNome || 'Folhinha');
+  if (!materia) { alert('Selecione a matéria primeiro!'); return; }
   
+  const topicoNome = document.getElementById('nf-topico-nome')?.value?.trim() || '';
+  if (!topicoNome) { alert('Digite o nome ou tópico da folhinha!'); document.getElementById('nf-topico-nome')?.focus(); return; }
+  
+  const numero = document.getElementById('nf-numero')?.value?.trim() || '';
   const frente = document.querySelector('#frente-tags .sel-medio')?.textContent || '';
-  const imp = document.querySelector('#page-nova-folhinha .imp-btns .sel-alto') ? 'alto' : document.querySelector('#page-nova-folhinha .imp-btns .sel-medio') ? 'medio' : 'baixo';
+  const imp = document.querySelector('#page-nova-folhinha .imp-btns .sel-alto') ? 'alto' 
+             : document.querySelector('#page-nova-folhinha .imp-btns .sel-medio') ? 'medio' : 'baixo';
   
   const hoje = new Date();
   const proxima = new Date(hoje); proxima.setDate(proxima.getDate() + 1);
   
+  // Get materia label
+  const materiaLabels = {bio:'Biologia',mat:'Matemática',port:'Português',fis:'Física',hist:'História',quim:'Química',geo:'Geografia',red:'Redação'};
+  const materiaLabel = materiaLabels[materia] || materia;
+  
+  const btn = document.querySelector('#page-nova-folhinha .btn-primary');
+  if(btn) { btn.disabled = true; btn.textContent = 'Salvando...'; }
+  
   const { data, error } = await sb.from('folhinhas').insert({
     user_id: currentUser.id,
-    nome: nomeInput || ('Folha ' + numero),
-    materia,
+    nome: topicoNome,
+    materia: materiaLabel,
     frente,
     numero_aula: numero,
     importancia: imp,
-    anotacao,
+    repeticao_espacada: document.getElementById('tog-espacada')?.classList.contains('on') ?? true,
+    exercicios_ia: document.getElementById('tog-exercicios')?.classList.contains('on') ?? true,
+    flashcards: document.getElementById('tog-flashcards')?.classList.contains('on') ?? false,
+    notificacoes: document.getElementById('tog-notif')?.classList.contains('on') ?? true,
     proxima_revisao: proxima.toISOString().split('T')[0],
     numero_revisao: 1,
     status: 'em_andamento',
     criado_em: hoje.toISOString()
   }).select();
   
-  if (error) { alert('Erro ao salvar: ' + error.message); return; }
+  if (error) { alert('Erro ao salvar: ' + error.message); if(btn){btn.disabled=false;btn.textContent='+ Adicionar';} return; }
+  
   DB.folhinhas.unshift(data[0]);
-  renderFolhinhasList();
+  
+  // Show in the list below
+  const lista = document.getElementById('nf-lista-adicionadas');
+  const itens = document.getElementById('nf-itens');
+  const countEl = document.getElementById('nf-count');
+  if(lista) lista.style.display = 'block';
+  
+  if(itens) {
+    const div = document.createElement('div');
+    div.className = 'row';
+    div.innerHTML = `<span class="badge badge-${matBadge(materiaLabel)}">${matLabel(materiaLabel)}</span>
+      <span style="font-size:13px;flex:1;">${topicoNome}${numero?' · '+numero:''}</span>
+      <span class="tag tag-ok">salva</span>`;
+    itens.insertBefore(div, itens.firstChild);
+  }
+  
+  // Update count
+  const current = parseInt(countEl?.textContent) || 0;
+  if(countEl) countEl.textContent = (current + 1) + ' adicionada' + (current + 1 !== 1 ? 's' : '') + ' nesta sessão';
+  
+  // Clear name field only, keep materia/frente/imp
+  const nomeInput = document.getElementById('nf-topico-nome');
+  const numInput = document.getElementById('nf-numero');
+  if(nomeInput) { nomeInput.value = ''; nomeInput.focus(); }
+  if(numInput) numInput.value = '';
+  
+  if(btn) { btn.disabled = false; btn.textContent = '+ Adicionar'; }
+  
   renderDashboard();
-  goTo('folhinhas');
-  alert('Folhinha salva!');
 }
+
+// Keep old name as alias for compatibility
+async function salvarNovaFolhinha() { return salvarUmaFolhinha(); }
+
 
 // ─── SALVAR RESULTADO DE LISTA ────────────────────────────
-async function salvarLista() {
-  const a = parseInt(document.getElementById('fd-ac').value);
-  const t = parseInt(document.getElementById('fd-tot').value);
-  if (isNaN(a) || isNaN(t) || t <= 0) return;
-  
-  const pct = Math.round((a/t)*100);
-  document.getElementById('fd-lista-val').textContent = a + ' / ' + t;
-  const fb = document.getElementById('fd-lista-fb');
-  fb.style.display = 'block';
-  fb.textContent = 'Salvo! ' + a + '/' + t + ' — ' + pct + '% de acerto.';
-  
-  if (!currentUser || !currentFolhinha) return;
-  
-  // Verificar se já existe revisão hoje
-  const hoje = new Date().toISOString().split('T')[0];
-  const revHoje = DB.revisoes.find(r => r.folhinha_id === currentFolhinha.id && r.data_revisao === hoje);
-  
-  if (revHoje) {
-    await sb.from('revisoes').update({ acertos_lista: a, total_lista: t }).eq('id', revHoje.id);
-    revHoje.acertos_lista = a; revHoje.total_lista = t;
-  } else {
-    const proxima = calcProximaRevisao(currentFolhinha.numero_revisao || 1);
-    const { data } = await sb.from('revisoes').insert({
-      user_id: currentUser.id,
-      folhinha_id: currentFolhinha.id,
-      numero_revisao: currentFolhinha.numero_revisao || 1,
-      data_revisao: hoje,
-      acertos_lista: a, total_lista: t
-    }).select();
-    if (data) DB.revisoes.unshift(data[0]);
-    
-    // Atualizar próxima revisão e número
-    const novoNum = (currentFolhinha.numero_revisao || 1) + 1;
-    const novoStatus = novoNum > 5 && pct >= 70 ? 'consolidada' : 'em_andamento';
-    await sb.from('folhinhas').update({
-      proxima_revisao: proxima,
-      numero_revisao: novoNum,
-      ultima_revisao: hoje,
-      status: novoStatus
-    }).eq('id', currentFolhinha.id);
-    currentFolhinha.proxima_revisao = proxima;
-    currentFolhinha.numero_revisao = novoNum;
-    currentFolhinha.status = novoStatus;
-  }
-}
-
 function calcProximaRevisao(numRevisao) {
   const intervalos = [1, 3, 7, 14, 30];
   const dias = intervalos[Math.min(numRevisao - 1, intervalos.length - 1)];
@@ -1768,87 +1884,6 @@ async function salvarNotasLista() {
   }
 }
 
-async function salvarFlashcards() {
-  if(!currentFolhinha || !currentUser) return;
-  const ac = parseInt(document.getElementById('fd-flash-ac')?.value) || 0;
-  const tot = parseInt(document.getElementById('fd-flash-tot')?.value) || 0;
-  const revs = DB.revisoes.filter(r => r.folhinha_id === currentFolhinha.id);
-  if(revs.length > 0) {
-    await sb.from('revisoes').update({ acertos_flashcard: ac, total_flashcard: tot }).eq('id', revs[0].id);
-    revs[0].acertos_flashcard = ac; revs[0].total_flashcard = tot;
-    alert('Flashcards salvos: ' + ac + '/' + tot);
-  }
-}
-
-async function gerarExerciciosIA() {
-  if(!currentFolhinha) return;
-  const loadEl = document.getElementById('fd-ia-loading');
-  const contentEl = document.getElementById('fd-ia-content');
-  const btn = document.querySelector('#fd-ia button.btn-ghost');
-  if(loadEl) loadEl.style.display = 'flex';
-  if(contentEl) contentEl.innerHTML = '';
-  if(btn) { btn.disabled = true; btn.textContent = 'Gerando...'; }
-  
-  try {
-    const topico = currentFolhinha.nome + (currentFolhinha.materia ? ' - ' + currentFolhinha.materia : '');
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1500,
-        messages: [{ role: 'user', content: 'Gere 5 questões dissertativas curtas de vestibular sobre: ' + topico + '. Responda APENAS com JSON: {"questoes":[{"num":1,"texto":"pergunta"}]}' }]
-      })
-    });
-    const data = await response.json();
-    const text = data.content?.[0]?.text || '';
-    let questoes = [];
-    try { questoes = JSON.parse(text.replace(/```json|```/g,'').trim()).questoes || []; } catch(e) { questoes = [{num:1,texto:'Explique os principais conceitos de: ' + topico}]; }
-    
-    window._iaRespsCurrentFolhinha = {};
-    const total = questoes.length;
-    
-    if(contentEl) {
-      contentEl.innerHTML = questoes.map(q => `
-        <div class="q-row">
-          <span class="q-num">${q.num}.</span>
-          <div class="q-body"><div class="q-text">${q.texto}</div></div>
-          <div class="q-btns">
-            <button class="qbtn" id="fdia${q.num}c" onclick="marcarIAFolhinha(${q.num},'c',${total})">✓</button>
-            <button class="qbtn" id="fdia${q.num}e" onclick="marcarIAFolhinha(${q.num},'e',${total})">✗</button>
-          </div>
-          <input class="nota-input" placeholder="anotação...">
-        </div>`).join('');
-    }
-  } catch(err) {
-    if(contentEl) contentEl.innerHTML = '<div style="font-size:13px;color:var(--red);padding:1rem;">Erro ao gerar exercícios. Verifique sua conexão.</div>';
-  }
-  if(loadEl) loadEl.style.display = 'none';
-  if(btn) { btn.disabled = false; btn.textContent = 'Gerar exercícios com IA'; }
-}
-
-function marcarIAFolhinha(n, tipo, total) {
-  if(!window._iaRespsCurrentFolhinha) window._iaRespsCurrentFolhinha = {};
-  window._iaRespsCurrentFolhinha[n] = tipo;
-  ['c','e'].forEach(t => { const el = document.getElementById('fdia'+n+t); if(el) el.className='qbtn'; });
-  const el = document.getElementById('fdia'+n+(tipo==='c'?'c':'e'));
-  if(el) el.className = 'qbtn ' + (tipo==='c'?'certo':'errado');
-  const resps = Object.keys(window._iaRespsCurrentFolhinha).length;
-  const certas = Object.values(window._iaRespsCurrentFolhinha).filter(v=>v==='c').length;
-  const scoreEl = document.getElementById('fd-ia-score');
-  if(scoreEl) scoreEl.textContent = resps + ' / ' + total + ' respondidas · ' + certas + ' certas';
-  const iaValEl = document.getElementById('fd-ia-val');
-  if(iaValEl) iaValEl.textContent = certas + ' / ' + resps;
-  // Auto-save to DB
-  if(currentFolhinha && currentUser) {
-    const revs = DB.revisoes.filter(r => r.folhinha_id === currentFolhinha.id);
-    if(revs.length > 0) {
-      sb.from('revisoes').update({ acertos_ia: certas, total_ia: resps }).eq('id', revs[0].id);
-      revs[0].acertos_ia = certas; revs[0].total_ia = resps;
-    }
-  }
-}
-
 async function deletarFolhinha(id, event) {
   event.stopPropagation();
   if (!confirm('Deletar esta folhinha? Isso apagará todas as revisões associadas.')) return;
@@ -1957,8 +1992,6 @@ function selImpNf(btn,nivel){btn.closest('.imp-btns').querySelectorAll('button')
 function selImp(btn,nivel){btn.closest('.imp-btns').querySelectorAll('button').forEach(b=>{b.className='imp-opt';});btn.classList.add('sel-'+nivel);}
 function simFolhinha(){document.getElementById('file-sel-result').style.display='block';}
 function simUpload(){document.getElementById('upload-drop').style.display='none';document.getElementById('upload-list').style.display='block';}
-function marcarFC(){document.getElementById('fc-status').className='tag tag-ok';document.getElementById('fc-status').textContent='Feito';}
-
 function handleFolhinhaFile(input) {
   const file = input.files[0];
   if (!file) return;
