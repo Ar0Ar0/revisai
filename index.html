@@ -528,8 +528,11 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
     </div>
 
     <div id="nf-lista-adicionadas" style="display:none;">
-      <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">Folhinhas adicionadas agora</div>
-      <div id="nf-itens"></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(200,241,53,0.06);border:1px solid rgba(200,241,53,0.2);border-radius:var(--radius-sm);">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><polyline points="2,7 5.5,10.5 12,3.5" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span id="nf-ultima-salva" style="font-size:13px;color:var(--text);">—</span>
+        <span style="font-size:12px;color:var(--text3);margin-left:auto;" id="nf-count-inline">1 salva</span>
+      </div>
     </div>
   </div>
 
@@ -553,7 +556,17 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
   <div class="back-btn" onclick="goTo('folhinhas')">← Folhinhas</div>
   <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;gap:1rem;">
     <div>
-      <h2 id="fd-nome" style="font-size:22px;font-weight:700;margin-bottom:4px;">—</h2>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <h2 id="fd-nome" style="font-size:22px;font-weight:700;">—</h2>
+        <button class="btn-sm" onclick="editarNomeFolhinha()" id="fd-edit-btn" style="font-size:11px;flex-shrink:0;">✎ Editar</button>
+      </div>
+      <div id="fd-edit-form" style="display:none;margin-bottom:8px;">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="fd-edit-nome" style="font-size:16px;max-width:400px;" placeholder="Nome da folhinha">
+          <button class="btn btn-primary" style="font-size:13px;" onclick="salvarNomeFolhinha()">Salvar</button>
+          <button class="btn btn-ghost" style="font-size:13px;" onclick="cancelarEditNome()">Cancelar</button>
+        </div>
+      </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <span class="badge" id="fd-badge">—</span>
         <span style="font-size:12px;color:var(--text3);" class="mono" id="fd-meta">—</span>
@@ -1524,24 +1537,22 @@ async function salvarUmaFolhinha() {
   
   DB.folhinhas.unshift(data[0]);
   
-  // Show in the list below
+  // Show confirmation bar
   const lista = document.getElementById('nf-lista-adicionadas');
-  const itens = document.getElementById('nf-itens');
-  const countEl = document.getElementById('nf-count');
   if(lista) lista.style.display = 'block';
   
-  if(itens) {
-    const div = document.createElement('div');
-    div.className = 'row';
-    div.innerHTML = `<span class="badge badge-${matBadge(materiaLabel)}">${matLabel(materiaLabel)}</span>
-      <span style="font-size:13px;flex:1;">${topicoNome}${numero?' · '+numero:''}</span>
-      <span class="tag tag-ok">salva</span>`;
-    itens.insertBefore(div, itens.firstChild);
-  }
+  // Track session count
+  window._nfSessaoCount = (window._nfSessaoCount || 0) + 1;
+  const count = window._nfSessaoCount;
   
-  // Update count
-  const current = parseInt(countEl?.textContent) || 0;
-  if(countEl) countEl.textContent = (current + 1) + ' adicionada' + (current + 1 !== 1 ? 's' : '') + ' nesta sessão';
+  const ultimaEl = document.getElementById('nf-ultima-salva');
+  if(ultimaEl) ultimaEl.textContent = topicoNome + (numero ? ' · ' + numero : '') + ' (' + materiaLabel + ')';
+  
+  const countInlineEl = document.getElementById('nf-count-inline');
+  if(countInlineEl) countInlineEl.textContent = count + ' salva' + (count !== 1 ? 's' : '');
+  
+  const countEl = document.getElementById('nf-count');
+  if(countEl) countEl.textContent = count + ' adicionada' + (count !== 1 ? 's' : '') + ' nesta sessão';
   
   // Clear name field only, keep materia/frente/imp
   const nomeInput = document.getElementById('nf-topico-nome');
@@ -1995,6 +2006,40 @@ async function salvarNotasLista() {
     await sb.from('revisoes').update({ anotacao_erros: notas }).eq('id', revs[0].id);
     alert('Anotação de erros salva!');
   }
+}
+
+function editarNomeFolhinha() {
+  const nome = document.getElementById('fd-nome')?.textContent || '';
+  const input = document.getElementById('fd-edit-nome');
+  const form = document.getElementById('fd-edit-form');
+  const btn = document.getElementById('fd-edit-btn');
+  if(input) input.value = nome;
+  if(form) form.style.display = 'block';
+  if(btn) btn.style.display = 'none';
+  input?.focus();
+  input?.select();
+}
+
+function cancelarEditNome() {
+  document.getElementById('fd-edit-form').style.display = 'none';
+  document.getElementById('fd-edit-btn').style.display = '';
+}
+
+async function salvarNomeFolhinha() {
+  if(!currentFolhinha || !currentUser) return;
+  const novoNome = document.getElementById('fd-edit-nome')?.value?.trim();
+  if(!novoNome) { alert('O nome não pode ser vazio!'); return; }
+  
+  await sb.from('folhinhas').update({ nome: novoNome }).eq('id', currentFolhinha.id).eq('user_id', currentUser.id);
+  
+  currentFolhinha.nome = novoNome;
+  const f = DB.folhinhas.find(x => x.id === currentFolhinha.id);
+  if(f) f.nome = novoNome;
+  
+  const nomeEl = document.getElementById('fd-nome');
+  if(nomeEl) nomeEl.textContent = novoNome;
+  cancelarEditNome();
+  renderFolhinhasList();
 }
 
 async function deletarFolhinha(id, event) {
