@@ -484,7 +484,10 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
 
   <div class="card" style="margin-bottom:1rem;">
     <div class="card-header"><span class="card-title">Configuração da matéria</span></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;">
+      <div class="field" style="margin:0"><label>Data da aula</label>
+        <input type="date" id="nf-data-aula">
+      </div>
       <div class="field" style="margin:0"><label>Matéria</label>
         <select id="nf-materia" onchange="updateFrentes(this)">
           <option value="">Selecionar...</option>
@@ -1194,9 +1197,12 @@ function abrirFolhinha(id) {
 }
 
 function calcPctRevisao(r) {
-  const tot = (r.total_lista||0) + (r.total_ia||0) + (r.total_flashcard||0);
-  const ac = (r.acertos_lista||0) + (r.acertos_ia||0) + (r.acertos_flashcard||0);
-  return tot > 0 ? Math.round(ac/tot*100) : 0;
+  // Ignore -1/-1 (sem exercícios) items
+  let tot = 0, ac = 0;
+  if(r.total_lista > 0)     { tot += r.total_lista;     ac += r.acertos_lista; }
+  if(r.total_ia > 0)        { tot += r.total_ia;        ac += r.acertos_ia; }
+  if(r.total_flashcard > 0) { tot += r.total_flashcard; ac += r.acertos_flashcard; }
+  return tot > 0 ? Math.round(ac/tot*100) : -1; // -1 = sem dados numéricos
 }
 
 function renderItensRevisao(f, ultimaRev) {
@@ -1208,8 +1214,9 @@ function renderItensRevisao(f, ultimaRev) {
   const mostrarFlash = f.flashcards === true;
   
   const renderItem = (tipo, titulo, subtitulo, ac, tot) => {
-    const feito = tot > 0;
-    const pct = feito ? Math.round(ac/tot*100) : 0;
+    const semExercicios = tot === -1;
+    const feito = tot > 0 || semExercicios;
+    const pct = (feito && !semExercicios) ? Math.round(ac/tot*100) : 0;
     const color = pct >= 70 ? 'var(--accent)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
     return `<div class="card" style="margin-bottom:.75rem;${feito ? 'border-color:rgba(200,241,53,0.25);' : ''}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;">
@@ -1218,7 +1225,9 @@ function renderItensRevisao(f, ultimaRev) {
           <div style="font-size:12px;color:var(--text3);">${subtitulo}</div>
         </div>
         ${feito
-          ? `<span class="tag tag-ok" style="font-size:12px;padding:4px 10px;">✓ ${ac}/${tot} · <span style="color:${color}">${pct}%</span></span>`
+          ? semExercicios
+            ? '<span class="tag" style="background:rgba(255,255,255,0.06);color:var(--text3);font-size:12px;padding:4px 10px;">sem exercícios</span>'
+            : `<span class="tag tag-ok" style="font-size:12px;padding:4px 10px;">✓ ${ac}/${tot} · <span style="color:${color}">${pct}%</span></span>`
           : '<span class="tag tag-warn">pendente</span>'}
       </div>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
@@ -1260,6 +1269,66 @@ function renderItensRevisao(f, ultimaRev) {
   </div>`;
   
   container.innerHTML = html;
+}
+
+function concluirSemExercicios(tipo) {
+  // Mark as "no exercises" — use sentinel value -1/-1 to indicate skipped
+  if(!currentFolhinha || !currentUser) return;
+  const hoje = new Date().toISOString().split('T')[0];
+  
+  // Find or create today's revisao with -1/-1 marker
+  const save = async () => {
+    let rev = DB.revisoes.find(r => r.folhinha_id === currentFolhinha.id && r.data_revisao === hoje);
+    const update = {};
+    if(tipo === 'lista') { update.acertos_lista = -1; update.total_lista = -1; }
+    if(tipo === 'ia')    { update.acertos_ia = -1;    update.total_ia = -1; }
+    if(tipo === 'flash') { update.acertos_flashcard = -1; update.total_flashcard = -1; }
+    
+    if(rev) {
+      await sb.from('revisoes').update(update).eq('id', rev.id);
+      Object.assign(rev, update);
+    } else {
+      const payload = { user_id: currentUser.id, folhinha_id: currentFolhinha.id,
+        numero_revisao: currentFolhinha.numero_revisao || 1, data_revisao: hoje,
+        acertos_lista: tipo==='lista'?-1:0, total_lista: tipo==='lista'?-1:0,
+        acertos_ia: tipo==='ia'?-1:0, total_ia: tipo==='ia'?-1:0,
+        acertos_flashcard: tipo==='flash'?-1:0, total_flashcard: tipo==='flash'?-1:0 };
+      const { data } = await sb.from('revisoes').insert(payload).select();
+      if(data) { rev = data[0]; DB.revisoes.unshift(rev); }
+    }
+    const revs = DB.revisoes.filter(r => r.folhinha_id === currentFolhinha.id).sort((a,b) => new Date(b.data_revisao)-new Date(a.data_revisao));
+    renderItensRevisao(currentFolhinha, revs[0]);
+  };
+  save();
+}
+
+function reabrirItem(tipo) {
+  // Force re-render with empty values so user can edit
+  if(!currentFolhinha) return;
+  const revs = DB.revisoes.filter(r => r.folhinha_id === currentFolhinha.id).sort((a,b) => new Date(b.data_revisao)-new Date(a.data_revisao));
+  const rev = revs[0];
+  if(!rev) return;
+  // Temporarily zero out to show edit mode
+  const backup = {};
+  if(tipo==='lista') { backup.al=rev.acertos_lista; backup.tl=rev.total_lista; rev.acertos_lista=0; rev.total_lista=0; }
+  if(tipo==='ia')    { backup.ai=rev.acertos_ia;    backup.ti=rev.total_ia;    rev.acertos_ia=0;    rev.total_ia=0; }
+  if(tipo==='flash') { backup.af=rev.acertos_flashcard; backup.tf=rev.total_flashcard; rev.acertos_flashcard=0; rev.total_flashcard=0; }
+  renderItensRevisao(currentFolhinha, rev);
+  // Pre-fill the inputs with previous values
+  requestAnimationFrame(() => {
+    if(tipo==='lista') { 
+      const ac=document.getElementById('fd-lista-ac'); const tot=document.getElementById('fd-lista-tot');
+      if(ac&&backup.al>0) ac.value=backup.al; if(tot&&backup.tl>0) tot.value=backup.tl;
+    }
+    if(tipo==='ia') {
+      const ac=document.getElementById('fd-ia-ac'); const tot=document.getElementById('fd-ia-tot');
+      if(ac&&backup.ai>0) ac.value=backup.ai; if(tot&&backup.ti>0) tot.value=backup.ti;
+    }
+  });
+  // Restore rev object
+  if(tipo==='lista') { rev.acertos_lista=backup.al; rev.total_lista=backup.tl; }
+  if(tipo==='ia')    { rev.acertos_ia=backup.ai;    rev.total_ia=backup.ti; }
+  if(tipo==='flash') { rev.acertos_flashcard=backup.af; rev.total_flashcard=backup.tf; }
 }
 
 function validarAcertos(tipo) {
@@ -1422,8 +1491,10 @@ async function salvarUmaFolhinha() {
   const imp = document.querySelector('#page-nova-folhinha .imp-btns .sel-alto') ? 'alto' 
              : document.querySelector('#page-nova-folhinha .imp-btns .sel-medio') ? 'medio' : 'baixo';
   
+  const dataAulaStr = document.getElementById('nf-data-aula')?.value || new Date().toISOString().split('T')[0];
+  const dataAula = new Date(dataAulaStr + 'T12:00:00');
+  const proxima = new Date(dataAula); proxima.setDate(proxima.getDate() + 1);
   const hoje = new Date();
-  const proxima = new Date(hoje); proxima.setDate(proxima.getDate() + 1);
   
   // Get materia label
   const materiaLabels = {bio:'Biologia',mat:'Matemática',port:'Português',fis:'Física',hist:'História',quim:'Química',geo:'Geografia',red:'Redação'};
@@ -1894,8 +1965,13 @@ async function finalizarRevisaoMensal() {
 
 function iniciarRevisoes() {
   const hoje = new Date().toISOString().split('T')[0];
-  const pendentes = DB.folhinhas.filter(f => f.proxima_revisao <= hoje);
-  if (pendentes.length === 0) { alert('Nenhuma revisão pendente hoje!'); return; }
+  // Priority: atrasadas first (by date asc), then hoje
+  const atrasadas = DB.folhinhas
+    .filter(f => f.proxima_revisao && f.proxima_revisao < hoje)
+    .sort((a,b) => a.proxima_revisao < b.proxima_revisao ? -1 : 1);
+  const deHoje = DB.folhinhas.filter(f => f.proxima_revisao === hoje);
+  const pendentes = [...atrasadas, ...deHoje];
+  if (pendentes.length === 0) { alert('Nenhuma revisão pendente!'); return; }
   abrirFolhinha(pendentes[0].id);
 }
 
