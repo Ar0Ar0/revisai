@@ -2458,7 +2458,7 @@ async function salvarRevisaoMensal() {
   DB.simulados.unshift(data[0]);
   
   const toast = document.createElement('div');
-  toast.style.cssText = 'position:fixed;top:20px;right:20px;background:var(--bg2);border:1px solid var(--accent);color:var(--accent);padding:12px 20px;border-radius:var(--radius-sm);font-size:13px;z-index:9999;font-family:'DM Mono',monospace;';
+  toast.style.cssText = 'position:fixed;top:20px;right:20px;background:var(--bg2);border:1px solid var(--accent);color:var(--accent);padding:12px 20px;border-radius:var(--radius-sm);font-size:13px;z-index:9999;font-family:monospace;';
   toast.textContent = '✓ Revisão mensal salva · ' + pct + '%';
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 3000);
@@ -2500,5 +2500,3 @@ function renderResultadoMensal() {
     </div>`;
   }).join('');
 }
-
-
