@@ -588,6 +588,12 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
         <span style="font-size:12px;color:var(--text3);" class="mono" id="fd-meta">—</span>
         <span id="fd-imp-dot" class="imp"></span>
         <span id="fd-imp-label" style="font-size:11px;" class="mono"></span>
+        <span style="font-size:11px;color:var(--text3);margin-left:4px;">·</span>
+        <div id="fd-imp-btns" style="display:flex;gap:4px;">
+          <button class="imp-opt" id="fd-imp-baixo" onclick="editarImportancia('baixo')" style="font-size:10px;padding:2px 7px;">pouco</button>
+          <button class="imp-opt" id="fd-imp-medio" onclick="editarImportancia('medio')" style="font-size:10px;padding:2px 7px;">médio</button>
+          <button class="imp-opt" id="fd-imp-alto" onclick="editarImportancia('alto')" style="font-size:10px;padding:2px 7px;">muito</button>
+        </div>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
@@ -1013,6 +1019,89 @@ const frentesMap = {
   red:['Frente 1 — Argumentação','Frente 2 — Estrutura e repertório']
 };
 
+function updateFrentes(sel) {
+  const val = sel.value;
+  const box = document.getElementById('frente-tags');
+  if(!box) return;
+  if(!val) {
+    box.innerHTML = '<span style="font-size:12px;color:var(--color-text-secondary);">Selecione a matéria primeiro</span>';
+    return;
+  }
+  const frentes = frentesMap[val] || [];
+  box.innerHTML = frentes.map(f =>
+    `<button class="imp-opt" onclick="selFrente(this)" style="font-size:12px;">${f}</button>`
+  ).join('');
+}
+
+function selFrente(el) {
+  el.closest('#frente-tags').querySelectorAll('button').forEach(b => b.classList.remove('sel-medio'));
+  el.classList.add('sel-medio');
+}
+
+function selImpNf(btn, nivel) {
+  btn.closest('.imp-btns').querySelectorAll('button').forEach(b => { b.className = 'imp-opt'; });
+  btn.classList.add('sel-' + nivel);
+  atualizarTipoAdicao();
+}
+
+function selImp(btn, nivel) {
+  btn.closest('.imp-btns').querySelectorAll('button').forEach(b => { b.className = 'imp-opt'; });
+  btn.classList.add('sel-' + nivel);
+}
+
+function editarNomeFolhinha() {
+  const nome = document.getElementById('fd-nome')?.textContent || '';
+  const input = document.getElementById('fd-edit-nome');
+  const form  = document.getElementById('fd-edit-form');
+  const btn   = document.getElementById('fd-edit-btn');
+  if(input) input.value = nome;
+  if(form)  form.style.display = 'block';
+  if(btn)   btn.style.display  = 'none';
+  input?.focus(); input?.select();
+}
+
+function cancelarEditNome() {
+  const form = document.getElementById('fd-edit-form');
+  const btn  = document.getElementById('fd-edit-btn');
+  if(form) form.style.display = 'none';
+  if(btn)  btn.style.display  = '';
+}
+
+async function salvarNomeFolhinha() {
+  if(!currentFolhinha || !currentUser) return;
+  const novoNome = document.getElementById('fd-edit-nome')?.value?.trim();
+  if(!novoNome) { alert('O nome não pode ser vazio!'); return; }
+  await sb.from('folhinhas').update({ nome: novoNome })
+    .eq('id', currentFolhinha.id).eq('user_id', currentUser.id);
+  currentFolhinha.nome = novoNome;
+  const f = DB.folhinhas.find(x => x.id === currentFolhinha.id);
+  if(f) f.nome = novoNome;
+  const nomeEl = document.getElementById('fd-nome');
+  if(nomeEl) nomeEl.textContent = novoNome;
+  cancelarEditNome();
+  renderFolhinhasList();
+}
+
+async function editarImportancia(novaImp) {
+  if(!currentFolhinha || !currentUser) return;
+  await sb.from('folhinhas').update({ importancia: novaImp })
+    .eq('id', currentFolhinha.id).eq('user_id', currentUser.id);
+  currentFolhinha.importancia = novaImp;
+  const f = DB.folhinhas.find(x => x.id === currentFolhinha.id);
+  if(f) f.importancia = novaImp;
+  // Re-render header importance indicator
+  const impDot = document.getElementById('fd-imp-dot');
+  const impLabel = document.getElementById('fd-imp-label');
+  if(impDot) impDot.className = 'imp ' + (novaImp==='alto'?'imp-alto':novaImp==='medio'?'imp-med':'imp-baixo');
+  if(impLabel) {
+    impLabel.textContent = novaImp==='alto'?'muito cai':novaImp==='medio'?'médio':'pouco cai';
+    impLabel.style.color = novaImp==='alto'?'var(--red)':novaImp==='medio'?'var(--orange)':'var(--accent)';
+  }
+  renderFolhinhasList();
+}
+
+
+
 function goTo(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const page = document.getElementById('page-' + pageId);
@@ -1164,9 +1253,10 @@ function renderUrgencias() {
 
   const urgFraco = document.getElementById('dash-urg-fraco');
   if (urgFraco) {
-    urgFraco.innerHTML = fracas.length === 0
-      ? '<div style="font-size:13px;color:var(--text3);padding:.5rem 0;">Nenhuma folhinha com desempenho crítico.</div>'
-      : fracas.map(f => {
+    if (fracas.length === 0) {
+      urgFraco.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:.5rem 0;">Nenhuma folhinha com desempenho crítico.</div>';
+    } else {
+      urgFraco.innerHTML = fracas.map(f => {
           const r = ultimaRevPorFolhinha[f.id];
           const tot = (r.total_lista>0?r.total_lista:0)+(r.total_ia>0?r.total_ia:0);
           const ac  = (r.total_lista>0?r.acertos_lista:0)+(r.total_ia>0?r.acertos_ia:0);
@@ -1184,6 +1274,7 @@ function renderUrgencias() {
             <button class="btn-sm" onclick="event.stopPropagation();abrirFolhinha('${f.id}')">Revisar</button>
           </div>`;
         }).join('');
+    }
   }
 
   // ── Sem revisar há muito tempo: ordenadas pelas mais antigas primeiro ──
@@ -1195,10 +1286,10 @@ function renderUrgencias() {
         // Never reviewed — count days since created
         const criado = new Date(f.criado_em || hojeStr);
         const diff = Math.floor((hoje - criado) / 86400000);
-        return diff > 7;
+        return diff > 2; // show after 2 days if never reviewed
       }
       const diff = Math.floor((hoje - new Date(f.ultima_revisao)) / 86400000);
-      return diff > 7;
+      return diff > 3;
     })
     .sort((a, b) => {
       // Never reviewed goes last; otherwise oldest first
@@ -1216,7 +1307,7 @@ function renderUrgencias() {
           const base = f.ultima_revisao ? new Date(f.ultima_revisao) : new Date(f.criado_em || hojeStr);
           const diff = Math.floor((hoje - base) / 86400000);
           const label = f.ultima_revisao ? 'há ' + diff + ' dia' + (diff!==1?'s':'') : 'nunca revisada';
-          const color = diff > 20 ? 'var(--red)' : 'var(--orange)';
+          const color = diff > 10 ? 'var(--red)' : 'var(--orange)';
           return `<div class="row" style="cursor:pointer" onclick="abrirFolhinha('${f.id}')">
             <span class="badge badge-${matBadge(f.materia)}">${matLabel(f.materia)}</span>
             <div style="flex:1;min-width:0">
@@ -1359,6 +1450,12 @@ function abrirFolhinha(id) {
     impLabel.textContent = f.importancia==='alto'?'muito cai':f.importancia==='medio'?'médio':'pouco cai'; 
     impLabel.style.color = f.importancia==='alto'?'var(--red)':f.importancia==='medio'?'var(--orange)':'var(--accent)';
   }
+  // Highlight current importancia button
+  ['baixo','medio','alto'].forEach(v => {
+    const btn = document.getElementById('fd-imp-' + v);
+    if(!btn) return;
+    btn.className = 'imp-opt' + (f.importancia === v ? ' sel-' + v : '');
+  });
   const proxEl = document.getElementById('fd-proxima');
   if(proxEl) proxEl.textContent = f.proxima_revisao ? 'Próxima: ' + f.proxima_revisao : 'Sem revisão agendada';
   const numEl = document.getElementById('fd-revisao-num');
