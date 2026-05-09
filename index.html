@@ -410,6 +410,7 @@ body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text
         <div class="actions" style="margin-top:.75rem;">
           <button class="btn btn-primary" onclick="iniciarRevisoes()">Iniciar revisões</button>
           <button class="btn btn-ghost" onclick="goTo('nova-folhinha')">+ Nova folhinha</button>
+          <button class="btn btn-ghost" id="btn-reagendar" onclick="reagendarAtrasadas()" style="color:var(--orange);border-color:rgba(255,154,60,0.3);">Reagendar atrasadas</button>
         </div>
       </div>
     </div>
@@ -1814,7 +1815,7 @@ async function salvarUmaFolhinha() {
     const tomorrowStr = tomorrow.toISOString().split('T')[0];
     proximaStr = contarRevisoesDia(tomorrowStr) < LIMITE_DIARIO
       ? tomorrowStr
-      : proximoDiaDisponivel(tomorrowStr, 7);
+      : proximoDiaDisponivel(tomorrowStr, 60);
   }
   
   // Get materia label
@@ -1879,7 +1880,7 @@ async function salvarNovaFolhinha() { return salvarUmaFolhinha(); }
 
 // ─── SALVAR RESULTADO DE LISTA ────────────────────────────
 // ─── LIMITE DIÁRIO + RECUPERAÇÃO ─────────────────────────────
-const LIMITE_DIARIO = 3;
+const LIMITE_DIARIO = 6;
 
 function contarRevisoesDia(dataStr) {
   // Count how many folhinhas have proxima_revisao on dataStr
@@ -1911,8 +1912,7 @@ function calcProximaRevisaoRecuperacao(importancia) {
   d.setDate(d.getDate() + 1); // start from tomorrow
   const startStr = d.toISOString().split('T')[0];
   
-  return proximoDiaDisponivel(startStr.replace(/.$/, String(parseInt(startStr.slice(-1))-1)), maxDias) 
-      || proximoDiaDisponivel(startStr, 30);
+  return proximoDiaDisponivel(startStr, maxDias) || proximoDiaDisponivel(startStr, 60);
 }
 
 function calcProximaRevisao(numRevisao, pct, importancia) {
